@@ -50,6 +50,23 @@
     color: #a5acbd;
     text-shadow: 0 1px 6px rgba(0,0,0,0.6);
   }
+  .info .name-link, .info .leader-link { pointer-events: auto; }
+  .name-link { display: inline-block; text-decoration: none; color: inherit; }
+  .name-link h2 { transition: color .15s; }
+  .name-link:hover h2 { color: #c9a26b; }
+  .leader-link {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #c9a26b;
+    text-decoration: none;
+    border: 1px solid rgba(201, 162, 107, 0.4);
+    border-radius: 999px;
+    padding: 4px 16px;
+    transition: all .15s;
+  }
+  .leader-link:hover { background: #c9a26b; color: #0a0e14; }
   .info .links {
     margin-top: 18px;
     pointer-events: auto;
@@ -113,8 +130,9 @@
 <canvas id="sky"></canvas>
 <canvas id="stage"></canvas>
 <div class="info">
-  <h2>董怀昊</h2>
+  <a class="name-link" href="about.html#who"><h2>董怀昊</h2></a>
   <p class="role">北京航空航天大学 · 飞行器适航技术</p>
+  <a class="leader-link" href="about.html#leader">烛逢领队 · 老虎</a>
   <div class="links">
     <a href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
   </div>
