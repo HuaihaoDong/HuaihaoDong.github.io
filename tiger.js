@@ -14,25 +14,39 @@
     '.tiger-body.flip { animation: tg-flip .6s ease; }',
     '@keyframes tg-sway { 0%,100%{transform:rotate(0)} 50%{transform:rotate(-3deg)} }',
     '@keyframes tg-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }',
-    '@keyframes tg-flip { 0%{transform:rotate(0)} 50%{transform:rotate(180deg) scaleY(.9)} 100%{transform:rotate(360deg)} }'
+    '@keyframes tg-flip { 0%{transform:rotate(0)} 50%{transform:rotate(180deg) scaleY(.9)} 100%{transform:rotate(360deg)} }',
+    '#tiger .tail { transform-box: fill-box; transform-origin: 10% 88%; animation: tail-wag 1.8s ease-in-out infinite; }',
+    '@keyframes tail-wag { 0%,100%{transform:rotate(0)} 50%{transform:rotate(-18deg)} }',
+    '.tiger-body.sleep .tail { animation: none; }'
   ].join('\n');
   document.head.appendChild(style);
 
   // 注入老虎 DOM
-  var svg = '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">'
-    + '<ellipse cx="32" cy="44" rx="21" ry="17" fill="#f5a623"/>'
-    + '<ellipse cx="32" cy="50" rx="13" ry="9" fill="#fce4c8"/>'
-    + '<circle cx="32" cy="24" r="16" fill="#f5a623"/>'
-    + '<circle cx="19" cy="12" r="5.5" fill="#f5a623"/><circle cx="19" cy="12" r="2.5" fill="#e88f3a"/>'
-    + '<circle cx="45" cy="12" r="5.5" fill="#f5a623"/><circle cx="45" cy="12" r="2.5" fill="#e88f3a"/>'
-    + '<circle cx="26" cy="23" r="2.6" fill="#3a2a1a"/>'
-    + '<circle cx="38" cy="23" r="2.6" fill="#3a2a1a"/>'
-    + '<ellipse cx="32" cy="28" rx="2.6" ry="1.9" fill="#3a2a1a"/>'
-    + '<path d="M32 28 L32 31 M28 30 L36 30" stroke="#3a2a1a" stroke-width="1" stroke-linecap="round"/>'
-    + '<text x="32" y="15" font-size="7" fill="#3a2a1a" text-anchor="middle" font-weight="bold">王</text>'
-    + '<path d="M52 46 Q60 40 55 30" stroke="#f5a623" stroke-width="5.5" fill="none" stroke-linecap="round"/>'
-    + '<ellipse cx="24" cy="58" rx="6.5" ry="4" fill="#f5a623"/>'
-    + '<ellipse cx="40" cy="58" rx="6.5" ry="4" fill="#f5a623"/>'
+  var svg = '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'
+    + '<path class="tail" d="M72 78 Q88 72 85 54 Q83 45 78 48" stroke="#fb923c" stroke-width="9" fill="none" stroke-linecap="round"/>'
+    + '<circle cx="78" cy="48" r="4.5" fill="#7c2d12"/>'
+    + '<ellipse cx="50" cy="78" rx="31" ry="24" fill="#fb923c"/>'
+    + '<ellipse cx="50" cy="82" rx="18" ry="12" fill="#fff7ed"/>'
+    + '<path d="M25 70 q4 9 0 18" stroke="#c2410c" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    + '<path d="M75 70 q-4 9 0 18" stroke="#c2410c" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    + '<circle cx="50" cy="40" r="28" fill="#fb923c"/>'
+    + '<ellipse cx="22" cy="48" rx="7" ry="10" fill="#fb923c"/>'
+    + '<ellipse cx="78" cy="48" rx="7" ry="10" fill="#fb923c"/>'
+    + '<ellipse cx="30" cy="18" rx="9.5" ry="12" fill="#fb923c"/>'
+    + '<ellipse cx="30" cy="18" rx="5" ry="7.5" fill="#fda4af"/>'
+    + '<ellipse cx="70" cy="18" rx="9.5" ry="12" fill="#fb923c"/>'
+    + '<ellipse cx="70" cy="18" rx="5" ry="7.5" fill="#fda4af"/>'
+    + '<path d="M50 16 v10 M44 16 l-3.5 8 M56 16 l3.5 8 M42 26 h16" stroke="#7c2d12" stroke-width="3" stroke-linecap="round" fill="none"/>'
+    + '<ellipse cx="40" cy="41" rx="5.5" ry="7" fill="#3f3f46"/>'
+    + '<ellipse cx="60" cy="41" rx="5.5" ry="7" fill="#3f3f46"/>'
+    + '<circle cx="42.5" cy="38.5" r="2.3" fill="#fff"/>'
+    + '<circle cx="62.5" cy="38.5" r="2.3" fill="#fff"/>'
+    + '<ellipse cx="50" cy="50" rx="4.5" ry="3.5" fill="#7c2d12"/>'
+    + '<path d="M50 53.5 v4 M46 56 q4 4 8 0" stroke="#7c2d12" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
+    + '<circle cx="33" cy="48" r="5" fill="#fda4af" opacity="0.55"/>'
+    + '<circle cx="67" cy="48" r="5" fill="#fda4af" opacity="0.55"/>'
+    + '<ellipse cx="38" cy="96" rx="10" ry="5.5" fill="#fb923c"/>'
+    + '<ellipse cx="62" cy="96" rx="10" ry="5.5" fill="#fb923c"/>'
     + '</svg>';
 
   var tiger = document.createElement('div');
