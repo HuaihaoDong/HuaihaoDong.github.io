@@ -4,59 +4,169 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>董怀昊 | 个人主页</title>
-<meta name="description" content="北京航空航天大学飞行器适航技术方向研究生，航发无损探伤与故障诊断。">
-<link rel="stylesheet" href="style.css">
+<meta name="description" content="北京航空航天大学飞行器适航技术方向研究生，航空发动机无损探伤与故障诊断，户外领队。">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #000;
+    color: #eaffea;
+    font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    overflow: hidden;
+  }
+  #matrix {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    display: block;
+  }
+  .center {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    pointer-events: none;
+  }
+  .card {
+    pointer-events: auto;
+    text-align: center;
+    max-width: 560px;
+    width: 100%;
+    padding: 52px 44px 46px;
+    background: rgba(0, 0, 0, 0.58);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 65, 0.35);
+    border-radius: 18px;
+    box-shadow: 0 0 50px rgba(0, 255, 65, 0.18), inset 0 0 40px rgba(0, 255, 65, 0.05);
+  }
+  .avatar {
+    width: 92px; height: 92px;
+    border-radius: 50%;
+    margin: 0 auto 22px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 42px;
+    color: #00ff41;
+    border: 2px solid #00ff41;
+    background: rgba(0, 255, 65, 0.07);
+    box-shadow: 0 0 28px rgba(0, 255, 65, 0.45);
+    letter-spacing: 2px;
+  }
+  h1 { font-size: 34px; font-weight: 600; letter-spacing: 6px; color: #eaffea; }
+  .role { margin-top: 12px; font-size: 15px; color: #a8d8a8; letter-spacing: 1px; }
+  .muted { margin-top: 4px; font-size: 13px; color: #6fa06f; letter-spacing: 1px; }
+  .tags {
+    margin-top: 22px;
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  }
+  .tags span {
+    font-size: 12px;
+    color: #00ff41;
+    border: 1px solid rgba(0, 255, 65, 0.4);
+    padding: 4px 14px;
+    border-radius: 999px;
+    letter-spacing: 1px;
+  }
+  .links {
+    margin-top: 26px;
+    display: flex; gap: 12px; justify-content: center;
+  }
+  .links a {
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 9px 24px;
+    border-radius: 8px;
+    letter-spacing: 1px;
+    transition: all .15s;
+  }
+  .links a.solid {
+    color: #001a00;
+    background: #00ff41;
+    box-shadow: 0 0 18px rgba(0, 255, 65, 0.35);
+  }
+  .links a.ghost {
+    color: #00ff41;
+    border: 1px solid #00ff41;
+  }
+  .links a:hover { transform: translateY(-2px); opacity: .9; }
+  footer {
+    position: fixed;
+    left: 0; right: 0; bottom: 18px;
+    z-index: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #3f6f3f;
+    letter-spacing: 1px;
+    pointer-events: none;
+  }
+  @media (max-width: 600px) {
+    .card { padding: 40px 24px 36px; }
+    h1 { font-size: 27px; letter-spacing: 4px; }
+    .avatar { width: 78px; height: 78px; font-size: 36px; }
+  }
+</style>
 </head>
 <body>
-<div class="wrap">
-  <header class="hero">
+<canvas id="matrix"></canvas>
+<div class="center">
+  <div class="card">
     <div class="avatar">董</div>
     <h1>董怀昊</h1>
     <p class="role">北京航空航天大学 · 飞行器适航技术</p>
     <p class="muted">航空发动机无损探伤与故障诊断</p>
-    <div class="links">
-      <a href="https://github.com/HuaihaoDong">GitHub</a>
-      <a href="mailto:your@email.com">邮箱</a>
-    </div>
-  </header>
-
-  <section class="block">
-    <h2>关于</h2>
-    <p>研究生在读，主攻航空发动机无损探伤与故障诊断，关注信号处理与机器学习在设备健康监测中的应用。本科毕业于重庆邮电大学机械设计制造及其自动化专业。业余喜欢户外徒步，已走过 19 个省份。</p>
-  </section>
-
-  <section class="block">
-    <h2>关键词</h2>
     <div class="tags">
-      <span>无损检测</span>
+      <span>户外领队</span>
+      <span>无损探伤</span>
       <span>故障诊断</span>
-      <span>振动信号分析</span>
       <span>机器学习</span>
       <span>适航技术</span>
     </div>
-  </section>
-
-  <section class="block">
-    <h2>项目</h2>
-    <div class="cards">
-      <a class="card" href="#">
-        <h3>项目二</h3>
-        <p>一句话说明这个项目做了什么，解决什么问题。</p>
-        <span class="more">查看</span>
-      </a>
-      <a class="card" href="#">
-        <h3>项目三</h3>
-        <p>一句话说明这个项目做了什么，解决什么问题。</p>
-        <span class="more">查看</span>
-      </a>
+    <div class="links">
+      <a class="solid" href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
     </div>
-  </section>
-
-  <footer>
-    <span>2026 董怀昊</span>
-    <span class="dot">·</span>
-    <span>本站托管于 GitHub Pages</span>
-  </footer>
+  </div>
 </div>
+<footer>© 2026 董怀昊 · 本站托管于 GitHub Pages</footer>
+<script>
+(function () {
+  var canvas = document.getElementById('matrix');
+  var ctx = canvas.getContext('2d');
+  var w, h, fontSize = 16, columns, drops;
+  var chars = '01';
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    columns = Math.floor(w / fontSize);
+    drops = [];
+    for (var i = 0; i < columns; i++) {
+      drops[i] = Math.floor(Math.random() * h / fontSize);
+    }
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    ctx.fillRect(0, 0, w, h);
+    ctx.font = fontSize + 'px "Courier New", monospace';
+    for (var i = 0; i < columns; i++) {
+      var ch = chars[(Math.random() * chars.length) | 0];
+      var x = i * fontSize;
+      var y = drops[i] * fontSize;
+      ctx.fillStyle = Math.random() < 0.1 ? '#dfffdf' : '#00ff41';
+      ctx.fillText(ch, x, y);
+      if (y > h && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
 </body>
 </html>
