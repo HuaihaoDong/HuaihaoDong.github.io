@@ -9,8 +9,8 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
-    background: #000;
-    color: #f2f2f2;
+    background: #060a12;
+    color: #eaf1ff;
     font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     overflow: hidden;
   }
@@ -33,13 +33,13 @@
     font-size: 22px;
     font-weight: 500;
     letter-spacing: 8px;
-    color: #ffffff;
+    color: #eaf1ff;
   }
   .info .role {
     margin-top: 10px;
     font-size: 14px;
     letter-spacing: 1px;
-    color: #9a9a9a;
+    color: #7d89ad;
   }
   .info .links {
     margin-top: 18px;
@@ -49,16 +49,16 @@
     display: inline-block;
     font-size: 13px;
     letter-spacing: 1px;
-    color: #e6e6e6;
+    color: #8b7bff;
     text-decoration: none;
-    border: 1px solid rgba(230, 230, 230, 0.5);
+    border: 1px solid rgba(139, 123, 255, 0.5);
     border-radius: 999px;
     padding: 6px 20px;
     transition: all .15s;
   }
   .info .links a:hover {
-    background: #e6e6e6;
-    color: #1a1a1a;
+    background: #8b7bff;
+    color: #0a0814;
   }
   @media (max-width: 600px) {
     .info { bottom: 40px; }
@@ -85,11 +85,26 @@
   var mouse = { x: -9999, y: -9999 };
   var radius = 110;   // 鼠标影响半径（px）
 
+  // 极光渐变两端：青绿 -> 蓝紫
+  var c1 = [0x4e, 0xf0, 0xbd];
+  var c2 = [0x7a, 0x6b, 0xff];
+  var time = 0;
+
+  // 预计算颜色查找表，避免每帧拼字符串
+  var LUT_N = 128;
+  var LUT = [];
+  for (var j = 0; j < LUT_N; j++) {
+    var k = j / (LUT_N - 1);
+    var r = Math.round(c1[0] + (c2[0] - c1[0]) * k);
+    var g = Math.round(c1[1] + (c2[1] - c1[1]) * k);
+    var b = Math.round(c1[2] + (c2[2] - c1[2]) * k);
+    LUT[j] = 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
   function build() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
 
-    // 字号自适应：让文字宽度约占屏幕 86%
     fs = 200;
     do {
       ctx.font = 'bold ' + fs + 'px Consolas, "Courier New", monospace';
@@ -97,10 +112,9 @@
       fs -= 2;
     } while (fs > 12);
 
-    gap = Math.max(3, Math.round(fs / 26));   // 采样间距
-    charSize = gap * 1.6;                     // 单个字符的绘制大小
+    gap = Math.max(3, Math.round(fs / 26));
+    charSize = gap * 1.6;
 
-    // 离屏画布采样文字像素点
     var off = document.createElement('canvas');
     off.width = w; off.height = h;
     var octx = off.getContext('2d');
@@ -109,7 +123,7 @@
     octx.textAlign = 'center';
     octx.textBaseline = 'middle';
     var cx = w / 2;
-    var cy = h * 0.40;   // 文字略偏上，底部留给信息
+    var cy = h * 0.40;
     octx.fillText(text, cx, cy);
 
     var data = octx.getImageData(0, 0, w, h).data;
@@ -121,7 +135,8 @@
           particles.push({
             tx: x, ty: y,
             x: Math.random() * w, y: Math.random() * h,
-            ch: Math.random() < 0.5 ? '0' : '1'
+            ch: Math.random() < 0.5 ? '0' : '1',
+            phase: Math.random() * Math.PI * 2
           });
         }
       }
@@ -143,17 +158,18 @@
   }, { passive: true });
 
   function frame() {
-    // 半透明黑覆盖，制造运动拖尾
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+    ctx.fillStyle = 'rgba(6, 10, 18, 0.22)';
     ctx.fillRect(0, 0, w, h);
     ctx.font = charSize + 'px Consolas, "Courier New", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
+    time += 0.008;
+
     for (var i = 0; i < particles.length; i++) {
       var p = particles[i];
 
-      // 鼠标排斥：靠近鼠标的粒子被推开
+      // 鼠标排斥
       var dx = p.x - mouse.x;
       var dy = p.y - mouse.y;
       var d2 = dx * dx + dy * dy;
@@ -162,17 +178,17 @@
         var f = (radius - d) / radius;
         p.x += (dx / d) * f * 26;
         p.y += (dy / d) * f * 26;
-        p.ch = Math.random() < 0.5 ? '0' : '1'; // 被推的字符快速跳动
+        p.ch = Math.random() < 0.5 ? '0' : '1';
       }
 
-      // 回弹到文字位置（汇聚动画也靠这一句）
       p.x += (p.tx - p.x) * 0.08;
       p.y += (p.ty - p.y) * 0.08;
 
-      // 微弱字符切换，保持“数字活感”
       if (Math.random() < 0.02) p.ch = Math.random() < 0.5 ? '0' : '1';
 
-      ctx.fillStyle = '#e6e6e6';
+      // 极光：颜色随时间 + 相位流动
+      var t = (Math.sin(time + p.phase) + 1) / 2;
+      ctx.fillStyle = LUT[Math.round(t * (LUT_N - 1))];
       ctx.fillText(p.ch, p.x, p.y);
     }
     requestAnimationFrame(frame);
