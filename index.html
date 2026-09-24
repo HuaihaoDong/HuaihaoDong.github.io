@@ -9,252 +9,175 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
-    background: #04070a;
-    color: #d9f4ff;
+    background: #000;
+    color: #e6ffe6;
     font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     overflow: hidden;
   }
-
-  /* CRT 扫描线叠加层 */
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 3;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.10) 0px,
-      rgba(0, 0, 0, 0.10) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-    mix-blend-mode: normal;
-  }
-
-  #matrix {
+  #stage {
     position: fixed;
     inset: 0;
     z-index: 0;
     display: block;
+    cursor: crosshair;
   }
-
-  .center {
+  .info {
     position: fixed;
-    inset: 0;
+    left: 0; right: 0;
+    bottom: 64px;
     z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+    text-align: center;
     pointer-events: none;
   }
-
-  .card {
-    position: relative;
-    pointer-events: auto;
-    text-align: center;
-    max-width: 580px;
-    width: 100%;
-    padding: 52px 44px 46px;
-    background: rgba(4, 10, 14, 0.62);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 229, 255, 0.38);
-    border-radius: 16px;
-    box-shadow:
-      0 0 60px rgba(0, 229, 255, 0.16),
-      inset 0 0 46px rgba(0, 229, 255, 0.05);
+  .info h2 {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 8px;
+    color: #eaffe6;
   }
-
-  /* HUD 四角括号 */
-  .card::before, .card::after {
-    content: "";
-    position: absolute;
-    width: 20px; height: 20px;
-    border: 2px solid #00e5ff;
-    filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.9));
-  }
-  .card::before { top: -3px; left: -3px; border-right: none; border-bottom: none; }
-  .card::after { bottom: -3px; right: -3px; border-left: none; border-top: none; }
-
-  .avatar {
-    width: 92px; height: 92px;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 42px;
-    color: #00e5ff;
-    border: 2px solid #00e5ff;
-    background: rgba(0, 229, 255, 0.07);
-    box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
-    letter-spacing: 2px;
-  }
-
-  .prompt {
-    font-family: Consolas, "Courier New", monospace;
-    font-size: 12px;
-    color: #6a9aa8;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-  }
-
-  h1 {
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: 6px;
-    color: #eafdff;
-    text-shadow: 0 0 18px rgba(0, 229, 255, 0.55);
-  }
-
-  .cursor {
-    display: inline-block;
-    width: 12px; height: 28px;
-    background: #00e5ff;
-    margin-left: 8px;
-    vertical-align: -4px;
-    box-shadow: 0 0 12px rgba(0, 229, 255, 0.9);
-    animation: blink 1s steps(2) infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  .role { margin-top: 14px; font-size: 15px; color: #8fc3d4; letter-spacing: 1px; }
-  .muted { margin-top: 4px; font-size: 13px; color: #6a9aa8; letter-spacing: 1px; }
-
-  .tags {
-    margin-top: 24px;
-    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-  }
-  .tags span {
-    font-size: 12px;
-    color: #00e5ff;
-    border: 1px solid rgba(0, 229, 255, 0.4);
-    background: rgba(0, 229, 255, 0.04);
-    padding: 4px 14px;
-    border-radius: 999px;
-    letter-spacing: 1px;
-  }
-
-  .links {
-    margin-top: 28px;
-    display: flex; gap: 12px; justify-content: center;
-  }
-  .links a {
+  .info .role {
+    margin-top: 10px;
     font-size: 14px;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 9px 24px;
-    border-radius: 8px;
     letter-spacing: 1px;
+    color: #7fae7f;
+  }
+  .info .links {
+    margin-top: 18px;
+    pointer-events: auto;
+  }
+  .info .links a {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #00ff41;
+    text-decoration: none;
+    border: 1px solid rgba(0, 255, 65, 0.5);
+    border-radius: 999px;
+    padding: 6px 20px;
     transition: all .15s;
   }
-  .links a.solid {
-    color: #001318;
-    background: #00e5ff;
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+  .info .links a:hover {
+    background: #00ff41;
+    color: #001a00;
   }
-  .links a.ghost {
-    color: #00e5ff;
-    border: 1px solid #00e5ff;
-  }
-  .links a:hover { transform: translateY(-2px); opacity: .9; }
-
-  footer {
-    position: fixed;
-    left: 0; right: 0; bottom: 18px;
-    z-index: 1;
-    text-align: center;
-    font-size: 12px;
-    color: #35555f;
-    letter-spacing: 1px;
-    pointer-events: none;
-  }
-
   @media (max-width: 600px) {
-    .card { padding: 40px 24px 36px; }
-    h1 { font-size: 28px; letter-spacing: 4px; }
-    .cursor { width: 9px; height: 22px; }
-    .avatar { width: 78px; height: 78px; font-size: 36px; }
+    .info { bottom: 40px; }
+    .info h2 { font-size: 18px; letter-spacing: 5px; }
   }
 </style>
 </head>
 <body>
-<canvas id="matrix"></canvas>
-<div class="center">
-  <div class="card">
-    <div class="avatar">董</div>
-    <p class="prompt">$ whoami</p>
-    <h1>董怀昊<span class="cursor"></span></h1>
-    <p class="role">北京航空航天大学 · 飞行器适航技术</p>
-    <p class="muted">航空发动机无损探伤与故障诊断</p>
-    <div class="tags">
-      <span>户外领队</span>
-      <span>无损探伤</span>
-      <span>故障诊断</span>
-      <span>机器学习</span>
-      <span>适航技术</span>
-    </div>
-    <div class="links">
-      <a class="solid" href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
-    </div>
+<canvas id="stage"></canvas>
+<div class="info">
+  <h2>董怀昊</h2>
+  <p class="role">北京航空航天大学 · 飞行器适航技术</p>
+  <div class="links">
+    <a href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
   </div>
 </div>
-<footer>© 2026 董怀昊 · 本站托管于 GitHub Pages</footer>
 <script>
 (function () {
-  var canvas = document.getElementById('matrix');
+  var canvas = document.getElementById('stage');
   var ctx = canvas.getContext('2d');
-  var w, h, fontSize = 16, columns, drops;
-  var extra = 'ABCDEF<>{}[]();+-*/=$#@';
+  var w, h, fs, gap, charSize;
+  var text = 'DONG HUAIHAO';
+  var particles = [];
+  var mouse = { x: -9999, y: -9999 };
+  var radius = 110;   // 鼠标影响半径（px）
 
-  function resize() {
+  function build() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
-    columns = Math.floor(w / fontSize);
-    drops = [];
-    for (var i = 0; i < columns; i++) {
-      drops[i] = Math.floor(Math.random() * h / fontSize);
+
+    // 字号自适应：让文字宽度约占屏幕 86%
+    fs = 200;
+    do {
+      ctx.font = 'bold ' + fs + 'px Consolas, "Courier New", monospace';
+      if (ctx.measureText(text).width <= w * 0.86) break;
+      fs -= 2;
+    } while (fs > 12);
+
+    gap = Math.max(3, Math.round(fs / 26));   // 采样间距
+    charSize = gap * 1.6;                     // 单个字符的绘制大小
+
+    // 离屏画布采样文字像素点
+    var off = document.createElement('canvas');
+    off.width = w; off.height = h;
+    var octx = off.getContext('2d');
+    octx.font = 'bold ' + fs + 'px Consolas, "Courier New", monospace';
+    octx.fillStyle = '#fff';
+    octx.textAlign = 'center';
+    octx.textBaseline = 'middle';
+    var cx = w / 2;
+    var cy = h * 0.40;   // 文字略偏上，底部留给信息
+    octx.fillText(text, cx, cy);
+
+    var data = octx.getImageData(0, 0, w, h).data;
+    particles = [];
+    for (var y = 0; y < h; y += gap) {
+      for (var x = 0; x < w; x += gap) {
+        var idx = (y * w + x) * 4 + 3;
+        if (data[idx] > 128) {
+          particles.push({
+            tx: x, ty: y,
+            x: Math.random() * w, y: Math.random() * h,
+            ch: Math.random() < 0.5 ? '0' : '1'
+          });
+        }
+      }
     }
   }
-  resize();
-  window.addEventListener('resize', resize);
 
-  function draw() {
-    ctx.fillStyle = 'rgba(4, 7, 10, 0.10)';
+  build();
+  window.addEventListener('resize', build);
+
+  window.addEventListener('mousemove', function (e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('touchmove', function (e) {
+    if (e.touches.length) {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  function frame() {
+    // 半透明黑覆盖，制造运动拖尾
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
     ctx.fillRect(0, 0, w, h);
-    ctx.font = fontSize + 'px Consolas, "Courier New", monospace';
+    ctx.font = charSize + 'px Consolas, "Courier New", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
 
-    for (var i = 0; i < columns; i++) {
-      var r = Math.random();
-      var ch;
-      // 82% 是 0/1，其余混入代码字符，制造“代码瀑布”感
-      if (r < 0.82) {
-        ch = Math.random() < 0.5 ? '0' : '1';
-      } else {
-        ch = extra[(Math.random() * extra.length) | 0];
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+
+      // 鼠标排斥：靠近鼠标的粒子被推开
+      var dx = p.x - mouse.x;
+      var dy = p.y - mouse.y;
+      var d2 = dx * dx + dy * dy;
+      if (d2 < radius * radius && d2 > 0.01) {
+        var d = Math.sqrt(d2);
+        var f = (radius - d) / radius;
+        p.x += (dx / d) * f * 26;
+        p.y += (dy / d) * f * 26;
+        p.ch = Math.random() < 0.5 ? '0' : '1'; // 被推的字符快速跳动
       }
 
-      var x = i * fontSize;
-      var y = drops[i] * fontSize;
+      // 回弹到文字位置（汇聚动画也靠这一句）
+      p.x += (p.tx - p.x) * 0.08;
+      p.y += (p.ty - p.y) * 0.08;
 
-      // 12% 字符高亮 + 辉光，模拟终端闪烁
-      if (Math.random() < 0.12) {
-        ctx.fillStyle = '#eaffff';
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#00e5ff';
-      } else {
-        ctx.fillStyle = '#00e5ff';
-        ctx.shadowBlur = 0;
-      }
-      ctx.fillText(ch, x, y);
-      ctx.shadowBlur = 0;
+      // 微弱字符切换，保持“数字活感”
+      if (Math.random() < 0.02) p.ch = Math.random() < 0.5 ? '0' : '1';
 
-      if (y > h && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
+      ctx.fillStyle = '#00ff41';
+      ctx.fillText(p.ch, p.x, p.y);
     }
-    requestAnimationFrame(draw);
+    requestAnimationFrame(frame);
   }
-  draw();
+  frame();
 })();
 </script>
 </body>
