@@ -93,7 +93,7 @@
   var galaxy = null;
   var stars = [];
   var time = 0;
-  var LINK_DIST = 100;   // 连线距离阈值
+  var LINK_DIST = 118;   // 连线距离阈值
 
   function buildGalaxy() {
     var off = document.createElement('canvas');
@@ -178,7 +178,7 @@
     }
 
     // 近距离连线，形成星座网
-    sctx.lineWidth = 0.6;
+    sctx.lineWidth = 1.0;
     for (var a = 0; a < stars.length; a++) {
       for (var b = a + 1; b < stars.length; b++) {
         var dx = stars[a].x - stars[b].x;
@@ -186,7 +186,7 @@
         var d2 = dx * dx + dy * dy;
         if (d2 < LINK_DIST * LINK_DIST) {
           var d = Math.sqrt(d2);
-          var alpha = (1 - d / LINK_DIST) * 0.22;
+          var alpha = (1 - d / LINK_DIST) * 0.32;
           sctx.strokeStyle = 'rgba(180, 200, 255, ' + alpha.toFixed(3) + ')';
           sctx.beginPath();
           sctx.moveTo(stars[a].x, stars[a].y);
