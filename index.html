@@ -9,8 +9,8 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
-    background: #0a0a14;
-    color: #e8e8f2;
+    background: #f6f7fa;
+    color: #1a1a2e;
     font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     overflow: hidden;
   }
@@ -31,15 +31,15 @@
   }
   .info h2 {
     font-size: 22px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 8px;
-    color: #e8e8f2;
+    color: #10244e;
   }
   .info .role {
     margin-top: 10px;
     font-size: 14px;
     letter-spacing: 1px;
-    color: #7d7d92;
+    color: #6b7a94;
   }
   .info .links {
     margin-top: 18px;
@@ -49,16 +49,16 @@
     display: inline-block;
     font-size: 13px;
     letter-spacing: 1px;
-    color: #05d9e8;
+    color: #002fa7;
     text-decoration: none;
-    border: 1px solid rgba(5, 217, 232, 0.5);
+    border: 1px solid rgba(0, 47, 167, 0.4);
     border-radius: 999px;
     padding: 6px 20px;
     transition: all .15s;
   }
   .info .links a:hover {
-    background: #05d9e8;
-    color: #0a0a14;
+    background: #002fa7;
+    color: #ffffff;
   }
   @media (max-width: 600px) {
     .info { bottom: 40px; }
@@ -85,9 +85,9 @@
   var mouse = { x: -9999, y: -9999 };
   var radius = 110;   // 鼠标影响半径（px）
 
-  // 赛博霓虹渐变两端：洋红 -> 青
-  var c1 = [0xff, 0x2d, 0x6f];
-  var c2 = [0x05, 0xd9, 0xe8];
+  // 克莱因蓝渐变两端：深群青 -> 稍亮蓝
+  var c1 = [0x00, 0x2f, 0xa7];
+  var c2 = [0x33, 0x50, 0xd0];
 
   function lerpColor(k) {
     var r = Math.round(c1[0] + (c2[0] - c1[0]) * k);
@@ -131,7 +131,7 @@
             tx: x, ty: y,
             x: Math.random() * w, y: Math.random() * h,
             ch: Math.random() < 0.5 ? '0' : '1',
-            color: lerpColor(x / w)   // 从左到右 洋红 -> 青
+            color: lerpColor(x / w)   // 从左到右渐变
           });
         }
       }
@@ -153,7 +153,7 @@
   }, { passive: true });
 
   function frame() {
-    ctx.fillStyle = 'rgba(10, 10, 20, 0.22)';
+    ctx.fillStyle = 'rgba(246, 247, 250, 0.25)';
     ctx.fillRect(0, 0, w, h);
     ctx.font = charSize + 'px Consolas, "Courier New", monospace';
     ctx.textAlign = 'center';
