@@ -9,8 +9,8 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
-    background: #f6f7fa;
-    color: #1a1a2e;
+    background: #f6f0e5;
+    color: #3a2f1f;
     font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     overflow: hidden;
   }
@@ -33,13 +33,13 @@
     font-size: 22px;
     font-weight: 600;
     letter-spacing: 8px;
-    color: #10244e;
+    color: #3a2f1f;
   }
   .info .role {
     margin-top: 10px;
     font-size: 14px;
     letter-spacing: 1px;
-    color: #6b7a94;
+    color: #8a7d68;
   }
   .info .links {
     margin-top: 18px;
@@ -49,15 +49,15 @@
     display: inline-block;
     font-size: 13px;
     letter-spacing: 1px;
-    color: #002fa7;
+    color: #a87c4f;
     text-decoration: none;
-    border: 1px solid rgba(0, 47, 167, 0.4);
+    border: 1px solid rgba(168, 124, 79, 0.5);
     border-radius: 999px;
     padding: 6px 20px;
     transition: all .15s;
   }
   .info .links a:hover {
-    background: #002fa7;
+    background: #a87c4f;
     color: #ffffff;
   }
   @media (max-width: 600px) {
@@ -85,9 +85,9 @@
   var mouse = { x: -9999, y: -9999 };
   var radius = 110;   // 鼠标影响半径（px）
 
-  // 克莱因蓝渐变两端：深群青 -> 稍亮蓝
-  var c1 = [0x00, 0x2f, 0xa7];
-  var c2 = [0x33, 0x50, 0xd0];
+  // 香槟金渐变两端：香槟金 -> 深古铜金
+  var c1 = [0xb8, 0x91, 0x5a];
+  var c2 = [0x8a, 0x65, 0x30];
 
   function lerpColor(k) {
     var r = Math.round(c1[0] + (c2[0] - c1[0]) * k);
@@ -153,7 +153,7 @@
   }, { passive: true });
 
   function frame() {
-    ctx.fillStyle = 'rgba(246, 247, 250, 0.25)';
+    ctx.fillStyle = 'rgba(246, 240, 229, 0.25)';
     ctx.fillRect(0, 0, w, h);
     ctx.font = charSize + 'px Consolas, "Courier New", monospace';
     ctx.textAlign = 'center';
