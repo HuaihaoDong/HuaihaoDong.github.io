@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工具箱 | Tiger Captain</title>
+<meta name="description" content="常用工具合集：自研工具、在线工具、有趣网站">
+<link rel="stylesheet" href="common.css">
+<style>
+/* ===== 设计变量 ===== */
+:root{
+  --bg:#0B1120;
+  --panel:#141d33;
+  --panel2:#1a2540;
+  --border:#2a3a55;
+  --accent:#c9a26b;
+  --text:#e9e6e0;
+  --text2:#a5acbd;
+  --text3:#6b7488;
+  --mono:Consolas,"Courier New","PingFang SC",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  line-height:1.7;
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* ===== 星空背景 ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 6% 14%, rgba(240,244,255,0.45) 50%, transparent 51%),
+    radial-gradient(2px 2px at 15% 7%, rgba(186,208,255,0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 24% 22%, rgba(240,244,255,0.35) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 31% 12%, rgba(240,244,255,0.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 38% 38%, rgba(186,208,255,0.45) 50%, transparent 51%),
+    radial-gradient(2px 2px at 46% 9%, rgba(240,244,255,0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 53% 28%, rgba(240,244,255,0.3) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 61% 16%, rgba(186,208,255,0.55) 50%, transparent 51%),
+    radial-gradient(2px 2px at 68% 42%, rgba(240,244,255,0.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 76% 7%, rgba(240,244,255,0.5) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 83% 26%, rgba(186,208,255,0.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 89% 52%, rgba(240,244,255,0.6) 50%, transparent 51%),
+    radial-gradient(2px 2px at 94% 13%, rgba(240,244,255,0.45) 50%, transparent 51%),
+    radial-gradient(1px 1px at 8% 58%, rgba(186,208,255,0.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 17% 74%, rgba(240,244,255,0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 26% 88%, rgba(240,244,255,0.35) 50%, transparent 51%),
+    radial-gradient(2px 2px at 34% 64%, rgba(186,208,255,0.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 43% 80%, rgba(240,244,255,0.3) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 51% 56%, rgba(240,244,255,0.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 59% 87%, rgba(186,208,255,0.45) 50%, transparent 51%),
+    radial-gradient(2px 2px at 66% 68%, rgba(240,244,255,0.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 74% 49%, rgba(240,244,255,0.5) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 81% 74%, rgba(186,208,255,0.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 90% 84%, rgba(240,244,255,0.55) 50%, transparent 51%),
+    radial-gradient(2px 2px at 96% 38%, rgba(240,244,255,0.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 12% 40%, rgba(186,208,255,0.6) 50%, transparent 51%);
+}
+
+/* ===== 内容容器 ===== */
+.section{
+  position:relative;
+  z-index:1;
+  max-width:1080px;
+  margin:0 auto;
+  padding:112px 24px 80px;
+}
+.page-head{margin-bottom:8px}
+.page-sub{color:var(--text2);font-size:15px}
+
+.dot-title{
+  font-family:var(--mono);
+  font-size:32px;
+  letter-spacing:5px;
+  color:var(--text);
+  line-height:1.3;
+}
+.dot-title::before{
+  content:"●";
+  color:var(--accent);
+  font-size:13px;
+  margin-right:14px;
+  vertical-align:middle;
+}
+
+.block{margin-top:56px;scroll-margin-top:88px}
+.block:first-of-type{margin-top:48px}
+.section-title{
+  font-family:var(--mono);
+  font-size:20px;
+  letter-spacing:2px;
+  color:var(--text);
+  padding-left:14px;
+  border-left:3px solid var(--accent);
+  margin:0 0 22px;
+}
+.group-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--mono);
+  font-size:15px;
+  letter-spacing:1px;
+  color:var(--accent);
+  margin:30px 0 14px;
+}
+.group-title::before{content:"▸";color:var(--text3)}
+
+/* ===== 卡片网格 ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+/* ===== 卡片 ===== */
+.card{
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+  padding:20px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:10px;
+  transition:transform .2s ease, border-color .2s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:var(--accent);
+}
+.card-top{display:flex;align-items:flex-start;gap:12px}
+.card-icon{
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-size:20px;
+  line-height:1;
+}
+.card-head{min-width:0}
+.card-name{
+  font-family:var(--mono);
+  font-size:16px;
+  letter-spacing:.5px;
+  color:var(--text);
+  line-height:1.35;
+  word-break:break-word;
+}
+.card-meta{font-size:12px;color:var(--accent);margin-top:4px}
+.card-desc{font-size:14px;color:var(--text2)}
+.card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.card-links{display:flex;flex-wrap:wrap;gap:10px}
+
+/* ===== 标签 ===== */
+.tag{
+  display:inline-flex;
+  align-items:center;
+  padding:3px 11px;
+  font-size:12px;
+  line-height:1.6;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text2);
+  white-space:nowrap;
+}
+.tag.accent{border-color:var(--accent);color:var(--accent);background:transparent}
+.tag.open{border-color:#4f9d69;color:#7fc79a;background:transparent}
+
+/* ===== 按钮 ===== */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-height:44px;
+  padding:9px 16px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text2);
+  text-decoration:none;
+  font-size:14px;
+  transition:border-color .2s, color .2s;
+}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.is-disabled{
+  color:var(--text3);
+  opacity:.55;
+  pointer-events:none;
+  cursor:not-allowed;
+}
+
+/* ===== 占位块（预留） ===== */
+.placeholder{
+  border:1px dashed var(--border);
+  border-radius:8px;
+  padding:16px;
+  color:var(--text3);
+  font-size:13px;
+  text-align:center;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width:1024px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .section{padding:112px 20px 72px}
+}
+@media (max-width:768px){
+  .grid{grid-template-columns:1fr}
+  .section{padding:96px 16px 56px}
+  .navbar{padding:0 16px}
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
+  .dot-title{font-size:26px;letter-spacing:3px}
+  .card-name{font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="navbar" id="navbar">
+  <a class="nav-logo" href="index.html">Tiger Captain</a>
+  <nav class="nav-links" id="navLinks">
+    <a class="nav-item" href="index.html">首页</a>
+    <div class="nav-item nav-dropdown" id="aboutDropdown">
+      关于我 <span class="nav-caret">▾</span>
+      <div class="dropdown-menu">
+        <a href="about.html#who">何方神圣</a>
+        <a href="about.html#leader">烛逢老虎领队</a>
+        <a href="about.html#hobby">兴趣爱好</a>
+        <a href="about.html#research">科研</a>
+        <a href="about.html#friends">有趣的人</a>
+      </div>
+    </div>
+    <a class="nav-item" href="tools.html">工具箱</a>
+    <a class="nav-icon" href="https://github.com/HuaihaoDong" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">首页</a>
+    <div class="m-acc" id="mAbout">关于我 <span class="m-caret">▾</span></div>
+    <div class="m-sub" id="mAboutSub">
+      <a href="about.html#who">何方神圣</a>
+      <a href="about.html#leader">烛逢老虎领队</a>
+      <a href="about.html#hobby">兴趣爱好</a>
+      <a href="about.html#research">科研</a>
+      <a href="about.html#friends">有趣的人</a>
+    </div>
+    <a href="tools.html">工具箱</a>
+    <a href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<main class="section">
+  <header class="page-head">
+    <h1 class="dot-title">工具箱</h1>
+    <p class="page-sub">常用工具合集 · 自研工具 / 在线工具 / 有趣网站</p>
+  </header>
+
+  <!-- 区块 1：自研工具 -->
+  <section class="block" id="self">
+    <h2 class="section-title">自研工具</h2>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">📑</span>
+          <div class="card-head">
+            <h3 class="card-name">ZoteroCrossRef</h3>
+            <p class="card-meta">开源 · 作者 Wang Nan（wangnan.net）</p>
+          </div>
+        </div>
+        <p class="card-desc">在 MS Word 中为 Zotero 引用与参考文献表自动建立交叉引用的宏。</p>
+        <div class="card-tags">
+          <span class="tag open">开源</span>
+          <span class="tag">Word 宏</span>
+          <span class="tag">引用管理</span>
+        </div>
+        <div class="card-links">
+          <a class="btn" href="https://github.com/theFool-wn/ZoteroCrossRef" target="_blank" rel="noopener">GitHub 仓库</a>
+          <span class="btn is-disabled">在线使用 · 暂无实例</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🧮</span>
+          <div class="card-head">
+            <h3 class="card-name">SalaryTaxCalc</h3>
+            <p class="card-meta">开源 · 作者 Wang Nan（wangnan.net）</p>
+          </div>
+        </div>
+        <p class="card-desc">工资与劳务报酬个税速算。</p>
+        <div class="card-tags">
+          <span class="tag open">开源</span>
+          <span class="tag">个税计算</span>
+        </div>
+        <div class="card-links">
+          <a class="btn" href="https://github.com/theFool-wn/SalaryTaxCalc" target="_blank" rel="noopener">GitHub 仓库</a>
+          <span class="btn is-disabled">在线使用 · 暂无实例</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🧠</span>
+          <div class="card-head">
+            <h3 class="card-name">jsMind</h3>
+            <p class="card-meta">开源 · 作者 Wang Nan（wangnan.net）</p>
+          </div>
+        </div>
+        <p class="card-desc">简洁的在线思维导图。</p>
+        <div class="card-tags">
+          <span class="tag open">开源</span>
+          <span class="tag">思维导图</span>
+        </div>
+        <div class="card-links">
+          <a class="btn" href="https://github.com/theFool-wn/jsMind" target="_blank" rel="noopener">GitHub 仓库</a>
+          <a class="btn" href="https://wangnan.net/jsMind/" target="_blank" rel="noopener">在线使用 ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 区块 2：常用在线工具 -->
+  <section class="block" id="online">
+    <h2 class="section-title">常用在线工具</h2>
+
+    <h3 class="group-title">文档排版组</h3>
+    <div class="grid">
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">∑</span>
+          <div class="card-head"><h3 class="card-name">LaTeX 公式编辑器</h3></div>
+        </div>
+        <p class="card-desc">在线编辑 LaTeX 公式。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">公式编辑</span></div>
+        <div class="card-links"><a class="btn" href="https://www.latexlive.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">📋</span>
+          <div class="card-head"><h3 class="card-name">Tables Generator</h3></div>
+        </div>
+        <p class="card-desc">可视化生成 LaTeX/HTML 表格。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">表格生成</span></div>
+        <div class="card-links"><a class="btn" href="https://www.tablesgenerator.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🔀</span>
+          <div class="card-head"><h3 class="card-name">draw.io</h3></div>
+        </div>
+        <p class="card-desc">免费在线画流程图。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">流程图</span></div>
+        <div class="card-links"><a class="btn" href="https://www.drawio.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">📄</span>
+          <div class="card-head"><h3 class="card-name">Resume Builder</h3></div>
+        </div>
+        <p class="card-desc">在线简历制作。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">简历</span></div>
+        <div class="card-links"><a class="btn" href="https://dnd-resume.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">✏️</span>
+          <div class="card-head"><h3 class="card-name">ResumeEditor</h3></div>
+        </div>
+        <p class="card-desc">可拖拽简历编辑器。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">简历</span></div>
+        <div class="card-links"><a class="btn" href="https://windrunnermax.github.io/ResumeEditor/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🎨</span>
+          <div class="card-head"><h3 class="card-name">CanvasEditor</h3></div>
+        </div>
+        <p class="card-desc">基于 canvas 的简历排版编辑器。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">简历排版</span></div>
+        <div class="card-links"><a class="btn" href="https://windrunnermax.github.io/CanvasEditor/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+    </div>
+
+    <h3 class="group-title">文件处理组</h3>
+    <div class="grid">
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">📕</span>
+          <div class="card-head"><h3 class="card-name">PDF24 Tools</h3></div>
+        </div>
+        <p class="card-desc">免费在线 PDF 工具集。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">PDF</span></div>
+        <div class="card-links"><a class="btn" href="https://tools.pdf24.org/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🔍</span>
+          <div class="card-head"><h3 class="card-name">PearOCR</h3></div>
+        </div>
+        <p class="card-desc">免费不限次 OCR，纯本地计算。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">OCR 识别</span></div>
+        <div class="card-links"><a class="btn" href="https://pearocr.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🔄</span>
+          <div class="card-head"><h3 class="card-name">Online File Converter</h3></div>
+        </div>
+        <p class="card-desc">在线转换各类文件格式。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">格式转换</span></div>
+        <div class="card-links"><a class="btn" href="https://cdkm.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🖼️</span>
+          <div class="card-head"><h3 class="card-name">Image Converter</h3></div>
+        </div>
+        <p class="card-desc">浏览器端图片格式转换。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">图片转换</span></div>
+        <div class="card-links"><a class="btn" href="https://imageconverter.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">📁</span>
+          <div class="card-head"><h3 class="card-name">FolderPort</h3></div>
+        </div>
+        <p class="card-desc">在线文件夹分享。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">文件夹分享</span></div>
+        <div class="card-links"><a class="btn" href="https://folderport.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">📡</span>
+          <div class="card-head"><h3 class="card-name">FileTransfer</h3></div>
+        </div>
+        <p class="card-desc">基于 WebRTC/WebSocket 的 P2P 文件传输。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">P2P 传输</span></div>
+        <div class="card-links"><a class="btn" href="https://webrtc.touchczy.top/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+    </div>
+
+    <h3 class="group-title">数学工程组</h3>
+    <div class="grid">
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">📈</span>
+          <div class="card-head"><h3 class="card-name">Desmos</h3></div>
+        </div>
+        <p class="card-desc">多功能在线绘图计算器。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">绘图计算</span></div>
+        <div class="card-links"><a class="btn" href="https://www.desmos.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">∫</span>
+          <div class="card-head"><h3 class="card-name">MathDF</h3></div>
+        </div>
+        <p class="card-desc">微分积分等在线求解。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">数学求解</span></div>
+        <div class="card-links"><a class="btn" href="https://mathdf.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">⚙️</span>
+          <div class="card-head"><h3 class="card-name">CTMS</h3></div>
+        </div>
+        <p class="card-desc">MATLAB/Simulink 控制教程，密歇根大学。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">控制教程</span></div>
+        <div class="card-links"><a class="btn" href="https://ctms.engin.umich.edu/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+    </div>
+
+    <h3 class="group-title">百科组</h3>
+    <div class="grid">
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">📚</span>
+          <div class="card-head"><h3 class="card-name">Wikipedia</h3></div>
+        </div>
+        <p class="card-desc">自由的百科全书。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">百科</span></div>
+        <div class="card-links"><a class="btn" href="https://wikipedia.org/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 区块 3：有趣网站 -->
+  <section class="block" id="fun">
+    <h2 class="section-title">有趣网站</h2>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">✨</span>
+          <div class="card-head"><h3 class="card-name">Silk</h3></div>
+        </div>
+        <p class="card-desc">交互式生成艺术。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">生成艺术</span></div>
+        <div class="card-links"><a class="btn" href="http://weavesilk.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🌌</span>
+          <div class="card-head"><h3 class="card-name">100,000 Stars</h3></div>
+        </div>
+        <p class="card-desc">恒星邻居交互 3D 可视化。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">3D 可视化</span></div>
+        <div class="card-links"><a class="btn" href="https://stars.chromeexperiments.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <span class="card-icon">🏠</span>
+          <div class="card-head"><h3 class="card-name">有趣网站之家</h3></div>
+        </div>
+        <p class="card-desc">世界有趣网站合集。</p>
+        <div class="card-tags"><span class="tag accent">外链</span><span class="tag">合集</span></div>
+        <div class="card-links"><a class="btn" href="https://youquhome.com/" target="_blank" rel="noopener">打开 ↗</a></div>
+      </article>
+
+    </div>
+  </section>
+</main>
+
+<script src="nav.js"></script>
+<script src="tiger.js"></script>
+</body>
+</html>
