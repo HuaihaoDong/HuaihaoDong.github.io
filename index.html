@@ -10,7 +10,7 @@
   html, body { height: 100%; }
   body {
     background: #000;
-    color: #e6ffe6;
+    color: #e6f9ff;
     font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     overflow: hidden;
   }
@@ -33,13 +33,13 @@
     font-size: 22px;
     font-weight: 500;
     letter-spacing: 8px;
-    color: #eaffe6;
+    color: #eafaff;
   }
   .info .role {
     margin-top: 10px;
     font-size: 14px;
     letter-spacing: 1px;
-    color: #7fae7f;
+    color: #7fb2c4;
   }
   .info .links {
     margin-top: 18px;
@@ -49,16 +49,16 @@
     display: inline-block;
     font-size: 13px;
     letter-spacing: 1px;
-    color: #00ff41;
+    color: #00e5ff;
     text-decoration: none;
-    border: 1px solid rgba(0, 255, 65, 0.5);
+    border: 1px solid rgba(0, 229, 255, 0.5);
     border-radius: 999px;
     padding: 6px 20px;
     transition: all .15s;
   }
   .info .links a:hover {
-    background: #00ff41;
-    color: #001a00;
+    background: #00e5ff;
+    color: #001318;
   }
   @media (max-width: 600px) {
     .info { bottom: 40px; }
@@ -172,7 +172,7 @@
       // 微弱字符切换，保持“数字活感”
       if (Math.random() < 0.02) p.ch = Math.random() < 0.5 ? '0' : '1';
 
-      ctx.fillStyle = '#00ff41';
+      ctx.fillStyle = '#00e5ff';
       ctx.fillText(p.ch, p.x, p.y);
     }
     requestAnimationFrame(frame);
