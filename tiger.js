@@ -1,39 +1,38 @@
 /* ==========================================================================
    tiger.js —— 宠物老虎彩蛋：点哪跑哪 / 待机循环 / 方向翻转 / 点击互动
-   形象为真实幼虎照片（tiger.jpg，圆形裁剪），后续可替换其他形象
+   形象为精灵图逐帧动画（tiger-idle/run/sit/sleep/play 五套 strip）
    ========================================================================== */
 (function () {
-  // 注入老虎专属动效样式
   var style = document.createElement('style');
   style.textContent = [
-    '#tiger { width: 88px; height: 88px; }',
-    '.tiger-body { transition: transform .3s ease; transform-origin: 50% 100%; }',
-    '.tiger-body.idle { animation: tg-breathe 2.6s ease-in-out infinite; }',
-    '.tiger-body.sit { animation: tg-breathe 3.4s ease-in-out infinite; }',
-    '.tiger-body.run { animation: tg-bob .28s ease-in-out infinite; }',
-    '.tiger-body.sleep { transform: scaleY(.86) rotate(5deg); animation: none; }',
-    '.tiger-body.flip { animation: tg-flip .6s ease; }',
-    '#tiger .tiger-body img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 2px solid rgba(201, 162, 107, 0.5); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45); }',
-    '@keyframes tg-breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }',
-    '@keyframes tg-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }',
-    '@keyframes tg-flip { 0%{transform:rotate(0)} 50%{transform:rotate(180deg) scaleY(.92)} 100%{transform:rotate(360deg)} }'
+    '#tiger { width: 96px; height: 96px; }',
+    '#tiger .tiger-sprite { width: 100%; height: 100%; background-repeat: no-repeat; }',
+    '@keyframes tiger-frames { from { background-position: 0% 0; } to { background-position: 100% 0; } }'
   ].join('\n');
   document.head.appendChild(style);
 
-  // 注入老虎 DOM
   var tiger = document.createElement('div');
   tiger.id = 'tiger';
-  tiger.innerHTML = '<div class="tiger-body"><img src="tiger.jpg" alt="小老虎"></div>'
+  tiger.innerHTML = '<div class="tiger-sprite"></div>'
     + '<div class="tiger-bubble"></div>'
     + '<div class="tiger-zz">zZ</div>';
   document.body.appendChild(tiger);
 
-  var body = tiger.querySelector('.tiger-body');
+  var sprite = tiger.querySelector('.tiger-sprite');
   var bubble = tiger.querySelector('.tiger-bubble');
   var zz = tiger.querySelector('.tiger-zz');
 
-  var x = window.innerWidth - 110;
-  var y = window.innerHeight - 130;
+  // 动作定义：图片 / 帧数 / 循环时长（秒）
+  var ACTIONS = {
+    idle:  { img: 'tiger-idle.png',  frames: 4, dur: 1.2 },
+    run:   { img: 'tiger-run.png',   frames: 6, dur: 0.5 },
+    sit:   { img: 'tiger-sit.png',   frames: 2, dur: 1.6 },
+    sleep: { img: 'tiger-sleep.png', frames: 2, dur: 2.2 },
+    play:  { img: 'tiger-play.png',  frames: 2, dur: 0.4 }
+  };
+
+  var x = window.innerWidth - 116;
+  var y = window.innerHeight - 140;
   var tx = x, ty = y;
   var facing = 1;
   var running = false;
@@ -43,7 +42,10 @@
 
   function setState(s) {
     state = s;
-    body.className = 'tiger-body ' + s;
+    var a = ACTIONS[s];
+    sprite.style.backgroundImage = 'url(' + a.img + ')';
+    sprite.style.backgroundSize = (a.frames * 100) + '% 100%';
+    sprite.style.animation = 'tiger-frames ' + a.dur + 's steps(' + (a.frames - 1) + ') infinite';
     zz.classList.toggle('show', s === 'sleep');
   }
 
@@ -58,8 +60,8 @@
   // 点击页面空白：跑过去（点老虎本体不触发）
   document.addEventListener('click', function (e) {
     if (e.target.closest('#tiger')) return;
-    tx = e.clientX - 44;
-    ty = e.clientY - 56;
+    tx = e.clientX - 48;
+    ty = e.clientY - 62;
     running = true;
     clearTimeout(idleTimer);
     setState('run');
@@ -69,13 +71,13 @@
   tiger.addEventListener('click', function (e) {
     e.stopPropagation();
     running = false;
-    setState('flip');
+    setState('play');
     bubble.textContent = '嗷呜';
     bubble.classList.add('show');
     setTimeout(function () { bubble.classList.remove('show'); }, 1200);
     setTimeout(function () {
-      if (state === 'flip') { setState('idle'); idleLoop(); }
-    }, 650);
+      if (state === 'play') { setState('idle'); idleLoop(); }
+    }, 800);
   });
 
   // 页面不可见时暂停
@@ -107,6 +109,7 @@
   }
 
   tiger.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  setState('idle');
   idleLoop();
   loop();
 })();
