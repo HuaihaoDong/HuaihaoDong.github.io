@@ -94,11 +94,15 @@
   .lb-stage {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
+    touch-action: none;
   }
+  /* 缩放容器：zoom 变换放在包层，img 自身的 .swap 过渡互不干扰 */
+  .lb-zoom { line-height: 0; transform-origin: center center; will-change: transform; }
   .lb-img {
     max-width: calc(100vw - 48px); max-height: calc(100vh - 96px);
     object-fit: contain; border-radius: 4px;
     user-select: none; -webkit-user-select: none; -webkit-user-drag: none;
+    touch-action: none;
     transition: opacity .18s ease, transform .18s ease;
   }
   .lb-img.swap { opacity: 0; transform: scale(0.985); }
@@ -184,7 +188,9 @@
 
 <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="照片预览" aria-hidden="true">
   <div class="lb-stage" id="lbStage">
-    <img class="lb-img" id="lbImg" alt="">
+    <div class="lb-zoom" id="lbZoom">
+      <img class="lb-img" id="lbImg" alt="">
+    </div>
     <div class="lb-loading" id="lbLoading">加载中…</div>
     <div class="lb-error" id="lbError">图片加载失败</div>
     <button class="lb-close" id="lbClose" aria-label="关闭">×</button>
@@ -204,6 +210,7 @@
   // —— 灯箱元素 ——
   var lb = document.getElementById('lightbox');
   var lbStage = document.getElementById('lbStage');
+  var lbZoom = document.getElementById('lbZoom');
   var lbImg = document.getElementById('lbImg');
   var lbLoading = document.getElementById('lbLoading');
   var lbError = document.getElementById('lbError');
@@ -219,6 +226,53 @@
   var open = false;
   var swipeStart = null;
   var justSwiped = false;
+
+  // —— 缩放状态（transform 作用于 lbZoom 包层）——
+  var zoom = { s: 1, tx: 0, ty: 0 };
+  var pinch = null;   // 双指捏合起始信息
+  var panLast = null; // 单指平移上一帧
+
+  function applyZoom() {
+    if (zoom.s <= 1.01) {
+      zoom.s = 1; zoom.tx = 0; zoom.ty = 0;
+      lbZoom.style.transform = '';
+    } else {
+      lbZoom.style.transform = 'translate(' + zoom.tx + 'px,' + zoom.ty + 'px) scale(' + zoom.s + ')';
+    }
+  }
+
+  function resetZoom() { zoom.s = 1; zoom.tx = 0; zoom.ty = 0; applyZoom(); }
+
+  // 图片完全拖出视野的限制（留 120px 边）
+  function clampPan() {
+    var r = lbZoom.getBoundingClientRect();
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var margin = 120;
+    if (r.left < margin - r.width) zoom.tx += (margin - r.width) - r.left;
+    else if (r.left > vw - margin) zoom.tx -= r.left - (vw - margin);
+    if (r.top < margin - r.height) zoom.ty += (margin - r.height) - r.top;
+    else if (r.top > vh - margin) zoom.ty -= r.top - (vh - margin);
+  }
+
+  // 以屏幕上某点 (cx, cy) 为锚点缩放到 ns
+  function zoomAt(cx, cy, ns) {
+    ns = Math.min(Math.max(ns, 1), 5);
+    var r = lbZoom.getBoundingClientRect();
+    if (!r.width) return;
+    var px = (cx - r.left) / r.width;
+    var py = (cy - r.top) / r.height;
+    zoom.tx += (px - 0.5) * r.width * (zoom.s - ns) / zoom.s;
+    zoom.ty += (py - 0.5) * r.height * (zoom.s - ns) / zoom.s;
+    zoom.s = ns;
+    clampPan();
+    applyZoom();
+  }
+
+  function touchDist(e) {
+    var dx = e.touches[0].clientX - e.touches[1].clientX;
+    var dy = e.touches[0].clientY - e.touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
 
   function fmtDate(d) { return d.replace(/-/g, '.'); }
 
@@ -353,6 +407,7 @@
     lbCounter.textContent = (idx + 1) + ' / ' + seq.length;
     lbPrev.classList.toggle('hide', idx === 0);
     lbNext.classList.toggle('hide', idx === seq.length - 1);
+    resetZoom();
     preload();
   }
 
@@ -413,27 +468,92 @@
     if (e.target === lbStage) closeLightbox();
   });
 
-  // 移动端横滑切换
+  // ==================== 缩放与手势 ====================
+
+  // 桌面：滚轮缩放（以鼠标位置为锚点）、双击图片 1x ↔ 2x
+  lbStage.addEventListener('wheel', function (e) {
+    if (!open) return;
+    e.preventDefault();
+    var factor = e.deltaY < 0 ? 1.25 : 0.8;
+    zoomAt(e.clientX, e.clientY, zoom.s * factor);
+  }, { passive: false });
+
+  lbImg.addEventListener('dblclick', function (e) {
+    if (!open) return;
+    e.preventDefault();
+    if (zoom.s > 1.01) { resetZoom(); }
+    else { zoomAt(e.clientX, e.clientY, 2); }
+  });
+
+  // 移动端：双指捏合缩放 / 放大后单指拖动平移 / 1 倍时横滑切换
   lbStage.addEventListener('touchstart', function (e) {
-    if (!open || e.touches.length !== 1) return;
-    swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    if (!open) return;
+    if (e.touches.length === 2) {
+      pinch = {
+        dist: touchDist(e),
+        s: zoom.s,
+        r: lbZoom.getBoundingClientRect(),
+        cx: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        cy: (e.touches[0].clientY + e.touches[1].clientY) / 2
+      };
+      swipeStart = null;
+      panLast = null;
+    } else if (e.touches.length === 1) {
+      swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      panLast = { x: e.touches[0].clientX, y: e.touches[0].clientY, tx: zoom.tx, ty: zoom.ty };
+    }
   }, { passive: true });
 
   lbStage.addEventListener('touchmove', function (e) {
-    if (!open || !swipeStart) return;
+    if (!open) return;
     e.preventDefault();
+    // 双指捏合：以中点锚定缩放（中点移动时同时平移）
+    if (pinch && e.touches.length === 2) {
+      var ns = Math.min(Math.max(pinch.s * (touchDist(e) / pinch.dist), 1), 5);
+      var mx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      var my = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      var r0 = pinch.r;
+      if (r0.width) {
+        var u = (pinch.cx - r0.left) / r0.width;
+        var v = (pinch.cy - r0.top) / r0.height;
+        var w0 = r0.width / pinch.s;
+        var h0 = r0.height / pinch.s;
+        zoom.s = ns;
+        zoom.tx = mx - window.innerWidth / 2 + w0 * ns * (0.5 - u);
+        zoom.ty = my - window.innerHeight / 2 + h0 * ns * (0.5 - v);
+        clampPan();
+        applyZoom();
+      }
+    } else if (panLast && e.touches.length === 1 && zoom.s > 1.01) {
+      var t = e.touches[0];
+      zoom.tx = panLast.tx + (t.clientX - panLast.x);
+      zoom.ty = panLast.ty + (t.clientY - panLast.y);
+      clampPan();
+      applyZoom();
+    }
   }, { passive: false });
 
   lbStage.addEventListener('touchend', function (e) {
-    if (!open || !swipeStart) return;
-    var dx = e.changedTouches[0].clientX - swipeStart.x;
-    var dy = e.changedTouches[0].clientY - swipeStart.y;
-    swipeStart = null;
-    if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-      justSwiped = true;
-      setTimeout(function () { justSwiped = false; }, 350);
-      step(dx < 0 ? 1 : -1);
+    if (!open) return;
+    if (pinch) pinch = null;
+    // 双指变单指：重新起算平移起点，不做滑动切换
+    if (e.touches.length === 1) {
+      panLast = { x: e.touches[0].clientX, y: e.touches[0].clientY, tx: zoom.tx, ty: zoom.ty };
+      swipeStart = null;
+      return;
     }
+    // 全部抬起：仅 1 倍缩放时判定横滑切换
+    if (e.touches.length === 0 && zoom.s <= 1.01 && swipeStart) {
+      var dx = e.changedTouches[0].clientX - swipeStart.x;
+      var dy = e.changedTouches[0].clientY - swipeStart.y;
+      if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        justSwiped = true;
+        setTimeout(function () { justSwiped = false; }, 350);
+        step(dx < 0 ? 1 : -1);
+      }
+    }
+    swipeStart = null;
+    panLast = null;
   });
 
   // ==================== 数据加载 ====================
