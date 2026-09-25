@@ -362,5 +362,201 @@
       }
     ],
     "videos": []
+  },
+  {
+    "id": "20260813-neimeng-liuxingyu",
+    "title": "内蒙追英仙座流星雨",
+    "date": "2026-08-13",
+    "location": "内蒙古",
+    "weather": "晴",
+    "type": "Play",
+    "led": false,
+    "cover": "pics/neimeng/cover.webp",
+    "summary": "英仙座流星雨极大夜：银河横跨天际、流星划过湖面倒影，从星夜守到日出。",
+    "note": "英仙座流星雨极大夜，出发去内蒙追星。银河拱桥横跨天际，流星一颗接一颗划过，湖面倒影里星光与流星交叠。后半夜守到天亮，湖边的日出、晨曦和剪影收尾。A01 那张堆栈合成的流星雨全图是这次的最爱。\n心得待补充：真实感受等你写。",
+    "pinned": false,
+    "photos": [
+      {
+        "src": "pics/neimeng/A01.jpg",
+        "thumb": "pics/neimeng/A01.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A02.jpg",
+        "thumb": "pics/neimeng/A02.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A03.jpg",
+        "thumb": "pics/neimeng/A03.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A04.jpg",
+        "thumb": "pics/neimeng/A04.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A05.jpg",
+        "thumb": "pics/neimeng/A05.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A06.jpg",
+        "thumb": "pics/neimeng/A06.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A07.jpg",
+        "thumb": "pics/neimeng/A07.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A08.jpg",
+        "thumb": "pics/neimeng/A08.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A09.jpg",
+        "thumb": "pics/neimeng/A09.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A10.jpg",
+        "thumb": "pics/neimeng/A10.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A11.jpg",
+        "thumb": "pics/neimeng/A11.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A12.jpg",
+        "thumb": "pics/neimeng/A12.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A13.jpg",
+        "thumb": "pics/neimeng/A13.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A14.jpg",
+        "thumb": "pics/neimeng/A14.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A15.jpg",
+        "thumb": "pics/neimeng/A15.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A16.jpg",
+        "thumb": "pics/neimeng/A16.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A17.jpg",
+        "thumb": "pics/neimeng/A17.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A18.jpg",
+        "thumb": "pics/neimeng/A18.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/A19.jpg",
+        "thumb": "pics/neimeng/A19.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B01.jpg",
+        "thumb": "pics/neimeng/B01.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B02.jpg",
+        "thumb": "pics/neimeng/B02.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B03.jpg",
+        "thumb": "pics/neimeng/B03.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B04.jpg",
+        "thumb": "pics/neimeng/B04.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B05.jpg",
+        "thumb": "pics/neimeng/B05.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B06.jpg",
+        "thumb": "pics/neimeng/B06.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B07.jpg",
+        "thumb": "pics/neimeng/B07.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B08.jpg",
+        "thumb": "pics/neimeng/B08.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B09.jpg",
+        "thumb": "pics/neimeng/B09.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B10.jpg",
+        "thumb": "pics/neimeng/B10.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B11.jpg",
+        "thumb": "pics/neimeng/B11.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B12.jpg",
+        "thumb": "pics/neimeng/B12.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B13.jpg",
+        "thumb": "pics/neimeng/B13.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B14.jpg",
+        "thumb": "pics/neimeng/B14.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/B15.jpg",
+        "thumb": "pics/neimeng/B15.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C01.jpg",
+        "thumb": "pics/neimeng/C01.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C02.jpg",
+        "thumb": "pics/neimeng/C02.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C03.jpg",
+        "thumb": "pics/neimeng/C03.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C04.jpg",
+        "thumb": "pics/neimeng/C04.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C05.jpg",
+        "thumb": "pics/neimeng/C05.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C06.jpg",
+        "thumb": "pics/neimeng/C06.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C07.jpg",
+        "thumb": "pics/neimeng/C07.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C08.jpg",
+        "thumb": "pics/neimeng/C08.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C09.jpg",
+        "thumb": "pics/neimeng/C09.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C10.jpg",
+        "thumb": "pics/neimeng/C10.thumb.webp"
+      },
+      {
+        "src": "pics/neimeng/C11.jpg",
+        "thumb": "pics/neimeng/C11.thumb.webp"
+      }
+    ],
+    "videos": []
   }
 ]
