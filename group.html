@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的小组 | Tiger Captain</title>
+<meta name="description" content="老虎（Tiger Captain）的小组：烛逢报名小程序 + 微信群「老虎朋友们的快乐老家」。">
+<link rel="stylesheet" href="common.css">
+<style>
+  :root {
+    --bg: #0B1120; --panel: #141d33; --panel-2: #1a2540;
+    --line: #2a3a55; --accent: #c9a26b; --text: #e9e6e0;
+    --sub: #a5acbd; --dim: #6b7488;
+  }
+  html, body { overflow-x: hidden; }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 10% 18%, rgba(220,232,255,.5) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 30% 8%, rgba(240,244,255,.35) 50%, transparent 51%),
+      radial-gradient(1px 1px at 50% 30%, rgba(220,232,255,.4) 50%, transparent 51%),
+      radial-gradient(2px 2px at 72% 14%, rgba(186,208,255,.3) 50%, transparent 51%),
+      radial-gradient(1px 1px at 88% 40%, rgba(240,244,255,.45) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 18% 70%, rgba(220,232,255,.35) 50%, transparent 51%),
+      radial-gradient(1px 1px at 40% 88%, rgba(240,244,255,.4) 50%, transparent 51%),
+      radial-gradient(1px 1px at 62% 60%, rgba(220,232,255,.3) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 80% 82%, rgba(186,208,255,.35) 50%, transparent 51%),
+      radial-gradient(1px 1px at 94% 60%, rgba(240,244,255,.4) 50%, transparent 51%);
+  }
+  .section { position: relative; z-index: 1; padding-top: 100px; max-width: 860px; }
+
+  .back { display: inline-block; margin-bottom: 20px; color: var(--sub); font-size: 14px; text-decoration: none; }
+  .back:hover { color: var(--accent); }
+  .page-title {
+    font-family: Consolas, "Courier New", "PingFang SC", monospace;
+    font-size: 30px; letter-spacing: 3px; color: var(--text); margin-bottom: 8px;
+  }
+  .page-sub { color: var(--sub); font-size: 15px; margin-bottom: 32px; }
+
+  .block {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 26px 28px 28px; margin-bottom: 28px;
+  }
+  .block-title {
+    font-family: Consolas, "Courier New", "PingFang SC", monospace;
+    font-size: 20px; letter-spacing: 1px; color: var(--text); margin-bottom: 16px;
+  }
+  .qr-wrap { display: flex; gap: 20px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+  .qr-placeholder {
+    width: 160px; height: 160px; flex: 0 0 160px;
+    background: var(--panel-2); border: 1px dashed var(--line); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--dim); font-size: 13px; text-align: center;
+  }
+  .qr-wrap img { width: 160px; height: 160px; border-radius: 10px; display: block; }
+  .block-text { color: var(--sub); font-size: 15px; line-height: 1.85; }
+  .block-text p { margin-bottom: 12px; }
+
+  /* 群公告折叠 */
+  details.notice { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
+  details.notice summary {
+    cursor: pointer; color: var(--accent); font-size: 14px;
+    font-family: Consolas, "Courier New", "PingFang SC", monospace; letter-spacing: 1px;
+  }
+  details.notice h3 { color: var(--text); font-size: 15px; margin: 16px 0 6px; }
+  details.notice p, details.notice li { color: var(--sub); font-size: 14px; line-height: 1.75; }
+  details.notice ul { padding-left: 18px; margin: 6px 0 10px; list-style: disc; }
+
+  @media (max-width: 768px) {
+    .page-title { font-size: 24px; }
+    .block { padding: 20px 18px 22px; }
+    .qr-wrap { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<header class="navbar" id="navbar">
+  <a class="nav-logo" href="index.html">Tiger Captain</a>
+  <nav class="nav-links" id="navLinks">
+    <a class="nav-item" href="index.html">首页</a>
+    <div class="nav-item nav-dropdown" id="aboutDropdown">
+      关于我 <span class="nav-caret">▾</span>
+      <div class="dropdown-menu">
+        <a href="about.html#who">何方神圣</a>
+        <a href="about.html#leader">烛逢老虎领队</a>
+        <a href="about.html#hobby">兴趣爱好</a>
+        <a href="about.html#research">科研</a>
+        <a href="about.html#friends">有趣的人</a>
+      </div>
+    </div>
+    <a class="nav-item" href="tools.html">工具箱</a>
+    <a class="nav-icon" href="https://github.com/HuaihaoDong" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">首页</a>
+    <div class="m-acc" id="mAbout">关于我 <span class="m-caret">▾</span></div>
+    <div class="m-sub" id="mAboutSub">
+      <a href="about.html#who">何方神圣</a>
+      <a href="about.html#leader">烛逢老虎领队</a>
+      <a href="about.html#hobby">兴趣爱好</a>
+      <a href="about.html#research">科研</a>
+      <a href="about.html#friends">有趣的人</a>
+    </div>
+    <a href="tools.html">工具箱</a>
+    <a href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<main class="section">
+  <a class="back" href="about.html#leader">← 返回关于我</a>
+  <h1 class="page-title">我的小组</h1>
+  <p class="page-sub">一起玩，一起野，认识靠谱的朋友</p>
+
+  <!-- 第一部分：烛逢小程序 -->
+  <section class="block">
+    <h2 class="block-title">加入烛逢 · 报名享折扣</h2>
+    <div class="qr-wrap">
+      <div class="qr-placeholder">小程序二维码<br>待补充</div>
+      <div class="block-text">
+        <p>扫码加入烛逢小组，报名活动自动享受折扣优惠。</p>
+        <p>欢迎新朋友一起玩转山野，从单日徒步到多日穿越，跟着老虎出发～（文案待补充完善）</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第二部分：微信群 -->
+  <section class="block">
+    <h2 class="block-title">老虎朋友们的「快乐老家」</h2>
+    <div class="qr-wrap">
+      <div class="qr-placeholder">群二维码<br>待补充</div>
+      <div class="block-text">
+        <p>一群因为烛逢认识、觉得聊得来的人，平时一起约饭、约玩、聊天的小圈子。</p>
+        <p>一起发现好玩的活动、一起吃饭聊天、一起约活动游戏电影。这里不是资源交换群，也不是求职群，大家先做朋友。</p>
+      </div>
+    </div>
+
+    <details class="notice">
+      <summary>📋 查看完整群公告</summary>
+      <h3>一、关于约玩和交流</h3>
+      <p>烛逢活动、饭局、徒步、看展、运动、旅行等都可以在群里约。自己组织的活动尽量提前说明时间、地点、费用、难度与注意事项。</p>
+      <h3>二、广告、营销和商业行为</h3>
+      <p>禁止利用群成员进行商业营销，包括培训、中介、保险、微商、带货、付费咨询、拉群、批量推链接等。发现营销、骚扰或获客行为，直接移出群聊。</p>
+      <h3>三、涉及钱的事情请务必谨慎</h3>
+      <p>群内禁止集资、投资、借贷、代购、拼单垫资等资金风险行为。私下交易请自行核实身份、判断风险，谨防电诈。</p>
+      <h3>四、尊重彼此边界</h3>
+      <p>不要骚扰别人。别人明确表示「不愿意」，就到此为止。遇到越界行为直接私聊群主。</p>
+      <h3>五、保护群友隐私</h3>
+      <p>未经同意，不要把群内的聊天记录、照片、视频、联系方式、个人经历转发到群外。</p>
+      <h3>六、线下活动安全第一</h3>
+      <p>徒步、登山、自驾等活动本身有风险，请根据自己的身体状况、装备、天气、路线难度独立判断。成年人对自己负责。</p>
+      <h3>七、保持舒服的交流环境</h3>
+      <p>观点不同没问题，但零容忍人身攻击、恶意阴阳怪气、挂人辱骂、长期争吵。少一点争论，多一点开心。</p>
+      <h3>八、关于群的性质和责任边界</h3>
+      <p>本群是朋友自发建立的交流群，不是烛逢官方群，也不代表烛逢官方立场。请自行核实信息、独立判断。</p>
+    </details>
+  </section>
+</main>
+
+<script src="nav.js"></script>
+<script src="tiger.js"></script>
+</body>
+</html>
