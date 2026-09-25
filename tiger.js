@@ -85,6 +85,10 @@
     paused = document.hidden;
   });
 
+  // 照片灯箱打开/关闭时暂停/恢复（detail.html 灯箱 dispatch）
+  document.addEventListener('tiger-pause', function () { paused = true; });
+  document.addEventListener('tiger-resume', function () { paused = false; });
+
   function loop() {
     if (!paused) {
       if (running) {

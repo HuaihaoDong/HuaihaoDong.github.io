@@ -57,12 +57,18 @@
     font-size: 13px; letter-spacing: 2px; color: var(--accent);
     margin: 26px 0 12px;
   }
-  .detail-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .detail-photos img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; display: block; }
+  .detail-photos { columns: 3; column-gap: 10px; }
+  .detail-photos .ph-item { break-inside: avoid; margin-bottom: 10px; }
+  .detail-photos img {
+    width: 100%; height: auto; border-radius: 8px; display: block;
+    cursor: zoom-in; transition: opacity .15s;
+  }
+  .detail-photos img:hover { opacity: .88; }
   .detail-photos .ph {
-    aspect-ratio: 4/3; border-radius: 8px; background: var(--panel-2);
+    border-radius: 8px; background: var(--panel-2);
     border: 1px dashed var(--line); display: flex; align-items: center; justify-content: center;
     color: var(--dim); font-size: 12px;
+    padding: 28px 12px;
   }
   .detail-videos video {
     width: 100%; max-height: 420px; border-radius: 8px; background: #000;
@@ -73,10 +79,61 @@
     padding: 24px; text-align: center; color: var(--dim); font-size: 13px;
   }
 
+  /* 照片灯箱 */
+  .lb {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(5, 8, 16, 0.92);
+    opacity: 0; visibility: hidden;
+    transition: opacity .2s ease, visibility .2s ease;
+  }
+  .lb.open { opacity: 1; visibility: visible; }
+  .lb-stage {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lb-img {
+    max-width: calc(100vw - 48px); max-height: calc(100vh - 96px);
+    object-fit: contain; border-radius: 4px;
+    user-select: none; -webkit-user-select: none; -webkit-user-drag: none;
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .lb-img.swap { opacity: 0; transform: scale(0.985); }
+  .lb-close, .lb-prev, .lb-next {
+    position: absolute; z-index: 2;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(11, 17, 32, 0.7);
+    border: 1px solid var(--line);
+    color: var(--text); font-size: 22px; line-height: 1;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+  }
+  .lb-close:hover, .lb-prev:hover, .lb-next:hover { color: var(--accent); border-color: var(--accent); }
+  .lb-close { top: 20px; right: 20px; }
+  .lb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 20px; top: 50%; transform: translateY(-50%); }
+  .lb-prev.hide, .lb-next.hide { visibility: hidden; }
+  .lb-counter {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    font-family: Consolas, "Courier New", "PingFang SC", monospace;
+    font-size: 13px; color: var(--sub);
+    background: rgba(11, 17, 32, 0.7); border: 1px solid var(--line);
+    border-radius: 999px; padding: 4px 14px;
+  }
+  .lb-loading, .lb-error {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    color: var(--dim); font-size: 14px; display: none;
+  }
+  .lb-loading.show, .lb-error.show { display: block; }
+  body.lb-open { overflow: hidden; }
+
   @media (max-width: 768px) {
-    .detail-photos { grid-template-columns: 1fr; }
+    .detail-photos { columns: 2; }
     .detail-body { padding: 20px 18px 24px; }
     .detail-title { font-size: 20px; }
+    .lb-close { top: 12px; right: 12px; }
+    .lb-prev { left: 8px; }
+    .lb-next { right: 8px; }
+    .lb-img { max-width: calc(100vw - 24px); }
   }
 </style>
 </head>
@@ -121,12 +178,43 @@
   <div id="detail"></div>
 </main>
 
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="照片预览" aria-hidden="true">
+  <div class="lb-stage" id="lbStage">
+    <img class="lb-img" id="lbImg" alt="">
+    <div class="lb-loading" id="lbLoading">加载中…</div>
+    <div class="lb-error" id="lbError">图片加载失败</div>
+    <button class="lb-close" id="lbClose" aria-label="关闭">×</button>
+    <button class="lb-prev" id="lbPrev" aria-label="上一张">‹</button>
+    <button class="lb-next" id="lbNext" aria-label="下一张">›</button>
+    <div class="lb-counter" id="lbCounter">1 / 1</div>
+  </div>
+</div>
+
 <script src="nav.js"></script>
 <script src="tiger.js"></script>
 <script>
 (function () {
   var box = document.getElementById('detail');
   var id = new URLSearchParams(location.search).get('id');
+
+  // —— 灯箱元素 ——
+  var lb = document.getElementById('lightbox');
+  var lbStage = document.getElementById('lbStage');
+  var lbImg = document.getElementById('lbImg');
+  var lbLoading = document.getElementById('lbLoading');
+  var lbError = document.getElementById('lbError');
+  var lbClose = document.getElementById('lbClose');
+  var lbPrev = document.getElementById('lbPrev');
+  var lbNext = document.getElementById('lbNext');
+  var lbCounter = document.getElementById('lbCounter');
+
+  // —— 灯箱状态 ——
+  var photoEls = [];
+  var seq = [];
+  var idx = 0;
+  var open = false;
+  var swipeStart = null;
+  var justSwiped = false;
 
   function fmtDate(d) { return d.replace(/-/g, '.'); }
 
@@ -140,8 +228,12 @@
       ? '<img src="' + act.cover + '" alt="' + act.title + '">'
       : '<div class="cover-ph">封面待补充</div>';
 
-    var photos = act.photos && act.photos.length
-      ? act.photos.map(function (p) { return '<img src="' + p + '" alt="" loading="lazy">'; }).join('')
+    var photoSrcs = (act.photos || []).filter(function (p) { return typeof p === 'string'; });
+
+    var photos = photoSrcs.length
+      ? photoSrcs.map(function (p, i) {
+          return '<div class="ph-item"><img src="' + p + '" alt="' + act.title + ' 照片 ' + (i + 1) + '" loading="lazy"></div>';
+        }).join('')
       : '<div class="detail-empty">照片待补充</div>';
 
     var videos = act.videos && act.videos.length
@@ -162,12 +254,166 @@
       + '<span class="tag">🌤 ' + act.weather + '</span>'
       + '</div>'
       + '<div class="detail-note">' + noteHTML(act.note || '') + '</div>'
-      + '<div class="detail-sub">照片</div>'
+      + '<div class="detail-sub">照片' + (photoSrcs.length ? ' · ' + photoSrcs.length + ' 张' : '') + '</div>'
       + '<div class="detail-photos">' + photos + '</div>'
       + '<div class="detail-sub">视频</div>'
       + '<div class="detail-videos">' + videos + '</div>'
       + '</div></article>';
+
+    initPhotos();
   }
+
+  // ==================== 灯箱 ====================
+
+  function initPhotos() {
+    photoEls = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
+    var wall = box.querySelector('.detail-photos');
+    if (!wall) return;
+
+    // 图片加载失败（error 不冒泡，需 capture）：网格内替换为占位
+    wall.addEventListener('error', function (e) {
+      var t = e.target;
+      if (t.tagName === 'IMG' && t.parentNode && t.parentNode.className === 'ph-item') {
+        t.parentNode.innerHTML = '<div class="ph">图片加载失败</div>';
+        photoEls = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
+      }
+    }, true);
+
+    // 点击缩略图打开灯箱
+    wall.addEventListener('click', function (e) {
+      if (e.target.tagName === 'IMG') {
+        openLightbox(e.target);
+      }
+    });
+  }
+
+  // 灯箱顺序 = 瀑布流视觉顺序：按屏幕坐标 (top, left) 排序
+  function buildSeq() {
+    var arr = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
+    var anyRect = false;
+    for (var i = 0; i < arr.length; i++) {
+      var r0 = arr[i].getBoundingClientRect();
+      if (r0.top || r0.left) { anyRect = true; break; }
+    }
+    if (anyRect) {
+      arr.sort(function (a, b) {
+        var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+        if (Math.abs(ra.top - rb.top) <= 24) return ra.left - rb.left;
+        return ra.top - rb.top;
+      });
+    }
+    seq = arr;
+  }
+
+  function openLightbox(el) {
+    buildSeq();
+    if (!seq.length) return;
+    idx = seq.indexOf(el);
+    if (idx < 0) idx = 0;
+    open = true;
+    document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px';
+    document.body.classList.add('lb-open');
+    lb.setAttribute('aria-hidden', 'false');
+    lb.classList.add('open');
+    showImage();
+    lbClose.focus();
+    document.dispatchEvent(new CustomEvent('tiger-pause'));
+  }
+
+  function showImage() {
+    var el = seq[idx];
+    lbImg.src = el.getAttribute('src');
+    lbImg.alt = el.alt || '';
+    lbImg.classList.add('swap');
+    lbError.classList.remove('show');
+    lbLoading.classList.add('show');
+    lbCounter.textContent = (idx + 1) + ' / ' + seq.length;
+    lbPrev.classList.toggle('hide', idx === 0);
+    lbNext.classList.toggle('hide', idx === seq.length - 1);
+    preload();
+  }
+
+  function preload() {
+    var nextEl = seq[idx + 1];
+    var prevEl = seq[idx - 1];
+    if (nextEl) { var n = new Image(); n.src = nextEl.getAttribute('src'); }
+    if (prevEl) { var p = new Image(); p.src = prevEl.getAttribute('src'); }
+  }
+
+  function step(dir) {
+    var target = idx + dir;
+    if (target < 0 || target >= seq.length) return;
+    idx = target;
+    showImage();
+  }
+
+  function closeLightbox() {
+    open = false;
+    document.body.classList.remove('lb-open');
+    document.body.style.paddingRight = '';
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    lbImg.src = '';
+    lbLoading.classList.remove('show');
+    lbError.classList.remove('show');
+    document.dispatchEvent(new CustomEvent('tiger-resume'));
+  }
+
+  lbImg.addEventListener('load', function () {
+    if (!open) return;
+    lbImg.classList.remove('swap');
+    lbLoading.classList.remove('show');
+  });
+  lbImg.addEventListener('error', function () {
+    if (!open) return;
+    lbLoading.classList.remove('show');
+    lbError.classList.add('show');
+    lbImg.classList.remove('swap');
+  });
+
+  // 键盘：ESC 关闭、←/→ 切换（忽略修饰组合）
+  document.addEventListener('keydown', function (e) {
+    if (!open) return;
+    if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', function () { step(-1); });
+  lbNext.addEventListener('click', function () { step(1); });
+
+  // 点击照片旁边空白（stage 本体）退出；点图片本身无操作
+  lbStage.addEventListener('click', function (e) {
+    if (justSwiped) return;
+    if (e.target === lbStage) closeLightbox();
+  });
+
+  // 移动端横滑切换
+  lbStage.addEventListener('touchstart', function (e) {
+    if (!open || e.touches.length !== 1) return;
+    swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, { passive: true });
+
+  lbStage.addEventListener('touchmove', function (e) {
+    if (!open || !swipeStart) return;
+    e.preventDefault();
+  }, { passive: false });
+
+  lbStage.addEventListener('touchend', function (e) {
+    if (!open || !swipeStart) return;
+    var dx = e.changedTouches[0].clientX - swipeStart.x;
+    var dy = e.changedTouches[0].clientY - swipeStart.y;
+    swipeStart = null;
+    if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      justSwiped = true;
+      setTimeout(function () { justSwiped = false; }, 350);
+      step(dx < 0 ? 1 : -1);
+    }
+  });
+
+  // ==================== 数据加载 ====================
 
   fetch('activities.json')
     .then(function (r) { return r.json(); })
