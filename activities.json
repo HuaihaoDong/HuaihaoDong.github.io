@@ -9,7 +9,7 @@
     "led": true,
     "cover": "photos/shuiquan/cover.webp",
     "summary": "先走长城，后程进入水泉沟，沿溪流一路出谷。",
-    "note": "先走长城，后程进入水泉沟，沿溪流一路出谷。伙伴们互相帮扶，玩得尽兴。",
+    "note": "先走长城，后程进入水泉沟，一路沿溪流出谷。伙伴们互相帮扶，玩得尽兴。",
     "pinned": false,
     "photos": [
       {
@@ -101,10 +101,6 @@
         "thumb": "photos/shuiquan/B18.thumb.webp"
       },
       {
-        "src": "photos/shuiquan/B19.jpg",
-        "thumb": "photos/shuiquan/B19.thumb.webp"
-      },
-      {
         "src": "photos/shuiquan/B20.jpg",
         "thumb": "photos/shuiquan/B20.thumb.webp"
       },
@@ -143,10 +139,6 @@
       {
         "src": "photos/shuiquan/C04.jpg",
         "thumb": "photos/shuiquan/C04.thumb.webp"
-      },
-      {
-        "src": "photos/shuiquan/C05.jpg",
-        "thumb": "photos/shuiquan/C05.thumb.webp"
       },
       {
         "src": "photos/shuiquan/C06.jpg",
@@ -373,7 +365,7 @@
     "led": false,
     "cover": "pics/neimeng/cover.webp",
     "summary": "英仙座流星雨极大夜：银河横跨天际、流星划过湖面倒影，从星夜守到日出。",
-    "note": "英仙座流星雨极大夜，出发去内蒙追星。银河拱桥横跨天际，流星一颗接一颗划过，湖面倒影里星光与流星交叠。后半夜守到天亮，湖边的日出、晨曦和剪影收尾。A01 那张堆栈合成的流星雨全图是这次的最爱。",
+    "note": "英仙座流星雨极大夜，去内蒙追星。银河横跨天际，流星一颗颗划过，湖面倒影里星光与流星交叠。守到天亮，湖边的日出和晨曦收尾。",
     "pinned": false,
     "photos": [
       {

@@ -57,8 +57,13 @@
     font-size: 13px; letter-spacing: 2px; color: var(--accent);
     margin: 26px 0 12px;
   }
-  .detail-photos { columns: 3; column-gap: 10px; }
-  .detail-photos .ph-item { break-inside: avoid; margin-bottom: 10px; }
+  /* 瀑布流：JS 按照片顺序从左到右放入最矮列（绝对定位），横向阅读顺序 = A01→A02→A03 */
+  .detail-photos { position: relative; }
+  .detail-photos .ph-item {
+    position: absolute; top: 0; left: 0;
+    width: calc((100% - 20px) / 3);
+    min-height: 120px;
+  }
   .detail-photos img {
     width: 100%; height: auto; border-radius: 8px; display: block;
     cursor: zoom-in; transition: opacity .15s;
@@ -135,7 +140,7 @@
   body.lb-open { overflow: hidden; }
 
   @media (max-width: 768px) {
-    .detail-photos { columns: 2; }
+    .detail-photos .ph-item { width: calc((100% - 10px) / 2); }
     .detail-body { padding: 20px 18px 24px; }
     .detail-title { font-size: 20px; }
     .lb-close { top: 12px; right: 12px; }
@@ -340,6 +345,34 @@
     initPhotos();
   }
 
+  // ==================== 瀑布流布局 ====================
+
+  // 按照片顺序（A01→A02→A03…）从左到右放入当前最矮的列，
+  // 保证网格横向阅读顺序与灯箱滑动顺序一致，且不裁切原图比例
+  function layoutMasonry() {
+    var wall = box.querySelector('.detail-photos');
+    if (!wall) return;
+    var cols = window.innerWidth <= 768 ? 2 : 3;
+    var gap = 10;
+    var colW = (wall.clientWidth - gap * (cols - 1)) / cols;
+    if (colW <= 0) return;
+    var hs = [];
+    for (var i = 0; i < cols; i++) hs.push(0);
+    var items = wall.querySelectorAll('.ph-item');
+    for (var j = 0; j < items.length; j++) {
+      var item = items[j];
+      var c = 0;
+      for (var k = 1; k < cols; k++) { if (hs[k] < hs[c]) c = k; }
+      item.style.width = colW + 'px';
+      item.style.left = c * (colW + gap) + 'px';
+      item.style.top = hs[c] + 'px';
+      hs[c] += item.offsetHeight + gap;
+    }
+    wall.style.height = (Math.max.apply(null, hs) - gap) + 'px';
+  }
+
+  window.addEventListener('resize', layoutMasonry);
+
   // ==================== 灯箱 ====================
 
   function initPhotos() {
@@ -347,12 +380,19 @@
     var wall = box.querySelector('.detail-photos');
     if (!wall) return;
 
+    // 每张图加载完成后重排一次（懒加载渐进稳定）
+    for (var i = 0; i < photoEls.length; i++) {
+      photoEls[i].addEventListener('load', layoutMasonry);
+    }
+    layoutMasonry();
+
     // 图片加载失败（error 不冒泡，需 capture）：网格内替换为占位
     wall.addEventListener('error', function (e) {
       var t = e.target;
       if (t.tagName === 'IMG' && t.parentNode && t.parentNode.className === 'ph-item') {
         t.parentNode.innerHTML = '<div class="ph">图片加载失败</div>';
         photoEls = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
+        layoutMasonry();
       }
     }, true);
 
@@ -364,22 +404,9 @@
     });
   }
 
-  // 灯箱顺序 = 瀑布流视觉顺序：按屏幕坐标 (top, left) 排序
+  // 灯箱顺序 = 照片数组顺序（A01→A02→A03…），与网格横向排布一致
   function buildSeq() {
-    var arr = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
-    var anyRect = false;
-    for (var i = 0; i < arr.length; i++) {
-      var r0 = arr[i].getBoundingClientRect();
-      if (r0.top || r0.left) { anyRect = true; break; }
-    }
-    if (anyRect) {
-      arr.sort(function (a, b) {
-        var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
-        if (Math.abs(ra.top - rb.top) <= 24) return ra.left - rb.left;
-        return ra.top - rb.top;
-      });
-    }
-    seq = arr;
+    seq = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
   }
 
   function openLightbox(el) {
