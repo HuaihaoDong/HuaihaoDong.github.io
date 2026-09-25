@@ -1,0 +1,28 @@
+[
+  {
+    "id": "demo-pinned",
+    "title": "示例活动 · 置顶（待替换）",
+    "date": "2024-06-01",
+    "location": "位置待补充",
+    "weather": "天气待补充",
+    "cover": "",
+    "summary": "这是一条置顶活动的示例，用来演示「📌 置顶」标记和置顶排序的效果，后续换成最有意思的活动。",
+    "note": "完整心得待补充：这里写活动过程、路线、队员、难忘瞬间……",
+    "pinned": true,
+    "photos": [],
+    "videos": []
+  },
+  {
+    "id": "demo-normal",
+    "title": "示例活动 · 普通（待替换）",
+    "date": "2024-09-12",
+    "location": "位置待补充",
+    "weather": "天气待补充",
+    "cover": "",
+    "summary": "这是一条普通活动的示例，按时间倒序排列，最新的靠上。",
+    "note": "完整心得待补充。",
+    "pinned": false,
+    "photos": [],
+    "videos": []
+  }
+]
