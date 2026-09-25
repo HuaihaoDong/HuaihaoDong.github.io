@@ -74,6 +74,10 @@
     width: 100%; max-height: 420px; border-radius: 8px; background: #000;
     border: 1px solid var(--line); margin-bottom: 12px;
   }
+  .detail-videos iframe {
+    width: 100%; aspect-ratio: 16/9; border: 1px solid var(--line);
+    border-radius: 8px; background: #000; margin-bottom: 12px;
+  }
   .detail-empty {
     border-radius: 8px; background: var(--panel-2); border: 1px dashed var(--line);
     padding: 24px; text-align: center; color: var(--dim); font-size: 13px;
@@ -223,25 +227,44 @@
       .map(function (s) { return '<p>' + s + '</p>'; }).join('');
   }
 
+  // 照片条目兼容两种写法：字符串（旧格式，缩略图=原图）或 {src, thumb}
+  function photoInfo(p) {
+    if (typeof p === 'string' && p) return { src: p, thumb: p };
+    if (p && typeof p.src === 'string' && p.src) {
+      return { src: p.src, thumb: (p.thumb && typeof p.thumb === 'string') ? p.thumb : p.src };
+    }
+    return null;
+  }
+
   function render(act) {
     var cover = act.cover
       ? '<img src="' + act.cover + '" alt="' + act.title + '">'
       : '<div class="cover-ph">封面待补充</div>';
 
-    var photoSrcs = (act.photos || []).filter(function (p) { return typeof p === 'string'; });
+    var photoList = (act.photos || []).map(photoInfo).filter(function (x) { return x; });
 
-    var photos = photoSrcs.length
-      ? photoSrcs.map(function (p, i) {
-          return '<div class="ph-item"><img src="' + p + '" alt="' + act.title + ' 照片 ' + (i + 1) + '" loading="lazy"></div>';
+    var photos = photoList.length
+      ? photoList.map(function (p, i) {
+          return '<div class="ph-item"><img src="' + p.thumb + '" data-full="' + p.src + '" alt="' + act.title + ' 照片 ' + (i + 1) + '" loading="lazy"></div>';
         }).join('')
       : '<div class="detail-empty">照片待补充</div>';
 
-    var videos = act.videos && act.videos.length
-      ? act.videos.map(function (v) {
-          return '<video controls preload="metadata" ' + (v.poster ? 'poster="' + v.poster + '"' : '') + '>'
-            + '<source src="' + v.src + '" type="video/mp4">'
-            + '你的浏览器不支持视频播放</video>';
-        }).join('')
+    // 视频条目两种写法：B 站嵌入 {"type":"bilibili","bvid":"BV..."} 或仓库直链 {"src":"..."}
+    function videoHTML(v) {
+      if (v && v.type === 'bilibili' && v.bvid) {
+        return '<iframe src="//player.bilibili.com/player.html?bvid=' + v.bvid
+          + '&page=1&high_quality=1&danmaku=0" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>';
+      }
+      if (v && v.src) {
+        return '<video controls preload="metadata" ' + (v.poster ? 'poster="' + v.poster + '"' : '') + '>'
+          + '<source src="' + v.src + '" type="video/mp4">'
+          + '你的浏览器不支持视频播放</video>';
+      }
+      return '';
+    }
+
+    var videos = act.videos && act.videos.length && act.videos.some(function (v) { return videoHTML(v); })
+      ? act.videos.map(videoHTML).join('')
       : '<div class="detail-empty">视频待补充</div>';
 
     box.innerHTML = '<article class="detail">'
@@ -254,7 +277,7 @@
       + '<span class="tag">🌤 ' + act.weather + '</span>'
       + '</div>'
       + '<div class="detail-note">' + noteHTML(act.note || '') + '</div>'
-      + '<div class="detail-sub">照片' + (photoSrcs.length ? ' · ' + photoSrcs.length + ' 张' : '') + '</div>'
+      + '<div class="detail-sub">照片' + (photoList.length ? ' · ' + photoList.length + ' 张' : '') + '</div>'
       + '<div class="detail-photos">' + photos + '</div>'
       + '<div class="detail-sub">视频</div>'
       + '<div class="detail-videos">' + videos + '</div>'
@@ -322,7 +345,7 @@
 
   function showImage() {
     var el = seq[idx];
-    lbImg.src = el.getAttribute('src');
+    lbImg.src = el.getAttribute('data-full') || el.getAttribute('src');
     lbImg.alt = el.alt || '';
     lbImg.classList.add('swap');
     lbError.classList.remove('show');
@@ -336,8 +359,8 @@
   function preload() {
     var nextEl = seq[idx + 1];
     var prevEl = seq[idx - 1];
-    if (nextEl) { var n = new Image(); n.src = nextEl.getAttribute('src'); }
-    if (prevEl) { var p = new Image(); p.src = prevEl.getAttribute('src'); }
+    if (nextEl) { var n = new Image(); n.src = nextEl.getAttribute('data-full') || nextEl.getAttribute('src'); }
+    if (prevEl) { var p = new Image(); p.src = prevEl.getAttribute('data-full') || prevEl.getAttribute('src'); }
   }
 
   function step(dir) {

@@ -96,16 +96,21 @@
   .filter-btn:hover { color: var(--text); border-color: var(--accent); }
   .filter-btn.active { color: var(--accent); border-color: rgba(201, 162, 107, 0.5); background: var(--accent-soft); }
 
-  /* 封面右上类型徽章（与左上 pin 对称） */
+  /* 封面右上类型徽章（与左上 pin 对称）。类型名保持英文原样，
+     颜色从调色板按类型出现顺序自动分配（type-c0 ~ type-c7，超出循环） */
   .type-badge {
     position: absolute; top: 12px; right: 12px;
     background: rgba(11, 17, 32, 0.82);
     border-radius: 999px; padding: 3px 12px; font-size: 12px;
   }
-  .type-hike { color: #7ec48e; border: 1px solid rgba(126, 196, 142, 0.5); }
-  .type-play { color: #7fb0ea; border: 1px solid rgba(127, 176, 234, 0.5); }
-  .type-trip { color: #aa94e0; border: 1px solid rgba(170, 148, 224, 0.5); }
-  .type-camp { color: #e6a060; border: 1px solid rgba(230, 160, 96, 0.5); }
+  .type-c0 { color: #7ec48e; border: 1px solid rgba(126, 196, 142, 0.5); }
+  .type-c1 { color: #7fb0ea; border: 1px solid rgba(127, 176, 234, 0.5); }
+  .type-c2 { color: #aa94e0; border: 1px solid rgba(170, 148, 224, 0.5); }
+  .type-c3 { color: #e6a060; border: 1px solid rgba(230, 160, 96, 0.5); }
+  .type-c4 { color: #de7878; border: 1px solid rgba(222, 120, 120, 0.5); }
+  .type-c5 { color: #6fd0c4; border: 1px solid rgba(111, 208, 196, 0.5); }
+  .type-c6 { color: #d88fc0; border: 1px solid rgba(216, 143, 192, 0.5); }
+  .type-c7 { color: #d8c06a; border: 1px solid rgba(216, 192, 106, 0.5); }
 
   /* 标题旁「领」徽章 */
   .led-badge {
@@ -182,14 +187,7 @@
     <p class="page-sub">老虎 · 每一次出发，都能遇到最好的伙伴与更好的自己</p>
   </header>
 
-  <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" data-type="all">全部</button>
-    <button class="filter-btn" data-type="Hike">徒步</button>
-    <button class="filter-btn" data-type="Play">玩耍</button>
-    <button class="filter-btn" data-type="Trip">旅行</button>
-    <button class="filter-btn" data-type="Camp">露营</button>
-    <button class="filter-btn" id="ledBtn">领队</button>
-  </div>
+  <div class="filter-bar" id="filterBar"><!-- 筛选按钮由 JS 根据数据里的类型动态生成 --></div>
 
   <div id="eventList"></div>
 
@@ -203,21 +201,38 @@
   var list = document.getElementById('eventList');
   var filterBar = document.getElementById('filterBar');
 
-  var TYPE_MAP = {
-    Hike: { label: '徒步', cls: 'type-hike' },
-    Play: { label: '玩耍', cls: 'type-play' },
-    Trip: { label: '旅行', cls: 'type-trip' },
-    Camp: { label: '露营', cls: 'type-camp' }
-  };
+  // 类型不翻译、不加中文名：徽章与筛选按钮都显示数据里的英文原值。
+  // 颜色按类型第一次出现的顺序从调色板分配（type-c0 ~ type-c7，超出循环）。
+  var typeMap = {};   // type -> 'type-cN'
 
   var filter = { type: 'all', led: false };
   var allActs = [];
 
+  function buildTypeMap(acts) {
+    typeMap = {};
+    var n = 0;
+    acts.forEach(function (a) {
+      if (a.type && !typeMap[a.type]) {
+        typeMap[a.type] = 'type-c' + (n % 8);
+        n++;
+      }
+    });
+  }
+
+  function renderFilterBar() {
+    var html = '<button class="filter-btn' + (filter.type === 'all' ? ' active' : '') + '" data-type="all">全部</button>';
+    Object.keys(typeMap).forEach(function (t) {
+      html += '<button class="filter-btn' + (filter.type === t ? ' active' : '') + '" data-type="' + t + '">' + t + '</button>';
+    });
+    html += '<button class="filter-btn' + (filter.led ? ' active' : '') + '" id="ledBtn">领队</button>';
+    filterBar.innerHTML = html;
+  }
+
   function fmtDate(d) { return d.replace(/-/g, '.'); }
 
   function typeBadgeHTML(a) {
-    var t = TYPE_MAP[a.type];
-    return t ? '<span class="type-badge ' + t.cls + '">' + t.label + '</span>' : '';
+    var cls = typeMap[a.type];
+    return cls ? '<span class="type-badge ' + cls + '">' + a.type + '</span>' : '';
   }
 
   function ledBadgeHTML(a) {
@@ -253,12 +268,7 @@
   }
 
   function syncFilterUI() {
-    var btns = filterBar.querySelectorAll('.filter-btn');
-    for (var i = 0; i < btns.length; i++) {
-      var b = btns[i];
-      if (b.id === 'ledBtn') { b.classList.toggle('active', filter.led); }
-      else { b.classList.toggle('active', b.getAttribute('data-type') === filter.type); }
-    }
+    renderFilterBar();
   }
 
   function renderList() {
@@ -278,6 +288,8 @@
     .then(function (r) { return r.json(); })
     .then(function (acts) {
       allActs = acts;
+      buildTypeMap(acts);
+      renderFilterBar();
       renderList();
     })
     .catch(function () {

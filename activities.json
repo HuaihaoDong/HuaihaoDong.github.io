@@ -1,31 +1,366 @@
 [
   {
-    "id": "demo-pinned",
-    "title": "示例活动 · 置顶（待替换）",
-    "date": "2024-06-01",
-    "location": "位置待补充",
+    "id": "20260912-shuiquan",
+    "title": "水泉沟徒步",
+    "date": "2026-09-12",
+    "location": "北京·延庆水泉沟",
     "weather": "天气待补充",
-    "type": "Camp",
+    "type": "Hike",
     "led": true,
-    "cover": "",
-    "summary": "这是一条置顶活动的示例，用来演示「📌 置顶」标记和置顶排序的效果，后续换成最有意思的活动。",
-    "note": "完整心得待补充：这里写活动过程、路线、队员、难忘瞬间……",
-    "pinned": true,
-    "photos": [],
-    "videos": []
-  },
-  {
-    "id": "demo-normal",
-    "title": "示例活动 · 普通（待替换）",
-    "date": "2024-09-12",
-    "location": "位置待补充",
-    "weather": "天气待补充",
-    "type": "Play",
-    "cover": "",
-    "summary": "这是一条普通活动的示例，按时间倒序排列，最新的靠上。",
-    "note": "完整心得待补充。",
+    "cover": "photos/shuiquan/cover.webp",
+    "summary": "峡谷溯溪徒步：涉水过滩、清潭瀑布，出谷就是敌楼箭窗里的长城。",
+    "note": "延庆水泉沟，一路沿峡谷溪流行进：涉水、攀爬、队友互相搭把手。水潭、瀑布、岩壁巨石，出峡谷不远就是长城敌楼——E01 那张「敌楼箭窗框长城」是这次最喜欢的照片。\n心得待补充：真实感受等你写。",
     "pinned": false,
-    "photos": [],
+    "photos": [
+      {
+        "src": "photos/shuiquan/A01.jpg",
+        "thumb": "photos/shuiquan/A01.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/A02.jpg",
+        "thumb": "photos/shuiquan/A02.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/A03.jpg",
+        "thumb": "photos/shuiquan/A03.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/A04.jpg",
+        "thumb": "photos/shuiquan/A04.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B01.jpg",
+        "thumb": "photos/shuiquan/B01.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B02.jpg",
+        "thumb": "photos/shuiquan/B02.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B03.jpg",
+        "thumb": "photos/shuiquan/B03.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B04.jpg",
+        "thumb": "photos/shuiquan/B04.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B05.jpg",
+        "thumb": "photos/shuiquan/B05.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B06.jpg",
+        "thumb": "photos/shuiquan/B06.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B07.jpg",
+        "thumb": "photos/shuiquan/B07.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B08.jpg",
+        "thumb": "photos/shuiquan/B08.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B09.jpg",
+        "thumb": "photos/shuiquan/B09.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B10.jpg",
+        "thumb": "photos/shuiquan/B10.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B11.jpg",
+        "thumb": "photos/shuiquan/B11.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B12.jpg",
+        "thumb": "photos/shuiquan/B12.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B13.jpg",
+        "thumb": "photos/shuiquan/B13.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B14.jpg",
+        "thumb": "photos/shuiquan/B14.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B15.jpg",
+        "thumb": "photos/shuiquan/B15.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B16.jpg",
+        "thumb": "photos/shuiquan/B16.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B17.jpg",
+        "thumb": "photos/shuiquan/B17.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B18.jpg",
+        "thumb": "photos/shuiquan/B18.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B19.jpg",
+        "thumb": "photos/shuiquan/B19.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B20.jpg",
+        "thumb": "photos/shuiquan/B20.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B21.jpg",
+        "thumb": "photos/shuiquan/B21.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B22.jpg",
+        "thumb": "photos/shuiquan/B22.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B23.jpg",
+        "thumb": "photos/shuiquan/B23.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B24.jpg",
+        "thumb": "photos/shuiquan/B24.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/B25.jpg",
+        "thumb": "photos/shuiquan/B25.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C01.jpg",
+        "thumb": "photos/shuiquan/C01.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C02.jpg",
+        "thumb": "photos/shuiquan/C02.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C03.jpg",
+        "thumb": "photos/shuiquan/C03.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C04.jpg",
+        "thumb": "photos/shuiquan/C04.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C05.jpg",
+        "thumb": "photos/shuiquan/C05.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C06.jpg",
+        "thumb": "photos/shuiquan/C06.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C07.jpg",
+        "thumb": "photos/shuiquan/C07.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C08.jpg",
+        "thumb": "photos/shuiquan/C08.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C09.jpg",
+        "thumb": "photos/shuiquan/C09.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/C10.jpg",
+        "thumb": "photos/shuiquan/C10.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/D01.jpg",
+        "thumb": "photos/shuiquan/D01.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/D02.jpg",
+        "thumb": "photos/shuiquan/D02.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/D03.jpg",
+        "thumb": "photos/shuiquan/D03.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/D04.jpg",
+        "thumb": "photos/shuiquan/D04.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/D05.jpg",
+        "thumb": "photos/shuiquan/D05.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/D06.jpg",
+        "thumb": "photos/shuiquan/D06.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E01.jpg",
+        "thumb": "photos/shuiquan/E01.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E02.jpg",
+        "thumb": "photos/shuiquan/E02.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E03.jpg",
+        "thumb": "photos/shuiquan/E03.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E04.jpg",
+        "thumb": "photos/shuiquan/E04.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E05.jpg",
+        "thumb": "photos/shuiquan/E05.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E06.jpg",
+        "thumb": "photos/shuiquan/E06.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E07.jpg",
+        "thumb": "photos/shuiquan/E07.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E08.jpg",
+        "thumb": "photos/shuiquan/E08.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E09.jpg",
+        "thumb": "photos/shuiquan/E09.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E10.jpg",
+        "thumb": "photos/shuiquan/E10.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E11.jpg",
+        "thumb": "photos/shuiquan/E11.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E12.jpg",
+        "thumb": "photos/shuiquan/E12.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E13.jpg",
+        "thumb": "photos/shuiquan/E13.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E14.jpg",
+        "thumb": "photos/shuiquan/E14.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E15.jpg",
+        "thumb": "photos/shuiquan/E15.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E16.jpg",
+        "thumb": "photos/shuiquan/E16.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E17.jpg",
+        "thumb": "photos/shuiquan/E17.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E18.jpg",
+        "thumb": "photos/shuiquan/E18.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E19.jpg",
+        "thumb": "photos/shuiquan/E19.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E20.jpg",
+        "thumb": "photos/shuiquan/E20.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E21.jpg",
+        "thumb": "photos/shuiquan/E21.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E22.jpg",
+        "thumb": "photos/shuiquan/E22.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E23.jpg",
+        "thumb": "photos/shuiquan/E23.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E24.jpg",
+        "thumb": "photos/shuiquan/E24.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E25.jpg",
+        "thumb": "photos/shuiquan/E25.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E26.jpg",
+        "thumb": "photos/shuiquan/E26.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E27.jpg",
+        "thumb": "photos/shuiquan/E27.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E28.jpg",
+        "thumb": "photos/shuiquan/E28.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E29.jpg",
+        "thumb": "photos/shuiquan/E29.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/E30.jpg",
+        "thumb": "photos/shuiquan/E30.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F01.jpg",
+        "thumb": "photos/shuiquan/F01.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F02.jpg",
+        "thumb": "photos/shuiquan/F02.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F03.jpg",
+        "thumb": "photos/shuiquan/F03.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F04.jpg",
+        "thumb": "photos/shuiquan/F04.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F05.jpg",
+        "thumb": "photos/shuiquan/F05.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F06.jpg",
+        "thumb": "photos/shuiquan/F06.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F07.jpg",
+        "thumb": "photos/shuiquan/F07.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F08.jpg",
+        "thumb": "photos/shuiquan/F08.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/F09.jpg",
+        "thumb": "photos/shuiquan/F09.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/G01.png",
+        "thumb": "photos/shuiquan/G01.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/G02.jpg",
+        "thumb": "photos/shuiquan/G02.thumb.webp"
+      },
+      {
+        "src": "photos/shuiquan/G03.jpg",
+        "thumb": "photos/shuiquan/G03.thumb.webp"
+      }
+    ],
     "videos": []
   }
 ]
