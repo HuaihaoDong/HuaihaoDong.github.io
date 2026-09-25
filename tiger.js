@@ -24,10 +24,10 @@
 
   // 动作定义：图片 / 帧数 / 循环时长（秒）
   var ACTIONS = {
-    idle:  { img: 'tiger-idle.png',  frames: 4, dur: 1.2 },
-    run:   { img: 'tiger-run.png',   frames: 6, dur: 0.5 },
-    sit:   { img: 'tiger-sit.png',   frames: 2, dur: 1.6 },
-    sleep: { img: 'tiger-sleep.png', frames: 2, dur: 2.2 },
+    idle:  { img: 'tiger-idle.png',  frames: 4, dur: 1.6 },
+    run:   { img: 'tiger-run8.png',  frames: 8, dur: 0.667 },   // 12 帧/秒
+    sit:   { img: 'tiger-sit.png',   frames: 2, dur: 0.8 },
+    sleep: { img: 'tiger-sleep.png', frames: 2, dur: 1.0 },
     play:  { img: 'tiger-play.png',  frames: 2, dur: 0.4 }
   };
 
