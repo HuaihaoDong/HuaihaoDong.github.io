@@ -94,16 +94,16 @@
           var speed = Math.min(dist * 0.09, 14);   // 远处快、近了减速
           x += dx / dist * speed;
           y += dy / dist * speed;
-          if (dx > 2) facing = 1;
-          else if (dx < -2) facing = -1;
+          if (dx > 2) facing = -1;       // 帧面朝左：向右移动需翻转
+          else if (dx < -2) facing = 1;  // 向左移动不翻转
         } else {
           running = false;
           setState('idle');
           idleLoop();
         }
       }
-      tiger.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-        + (facing < 0 ? ' scaleX(-1)' : '');
+      tiger.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      sprite.style.transform = facing < 0 ? 'scaleX(-1)' : '';
     }
     requestAnimationFrame(loop);
   }
