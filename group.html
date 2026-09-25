@@ -52,8 +52,11 @@
     display: flex; align-items: center; justify-content: center;
     color: var(--dim); font-size: 13px; text-align: center;
   }
-  .qr-wrap img { width: 160px; height: 160px; border-radius: 10px; display: block; }
+  .qr-wrap img { border-radius: 10px; display: block; }
+  .qr-wrap img.qr-mini { width: 200px; height: auto; }
+  .qr-wrap img.qr-square { width: 160px; height: 160px; object-fit: cover; }
   .block-text { color: var(--sub); font-size: 15px; line-height: 1.85; }
+  .block-text strong { color: var(--accent); font-weight: 600; }
   .block-text p { margin-bottom: 12px; }
 
   /* 群公告折叠 */
@@ -116,12 +119,12 @@
 
   <!-- 第一部分：烛逢小程序 -->
   <section class="block">
-    <h2 class="block-title">加入烛逢 · 报名享折扣</h2>
+    <h2 class="block-title">加入我的小组 · 报名享折扣</h2>
     <div class="qr-wrap">
-      <div class="qr-placeholder">小程序二维码<br>待补充</div>
+      <img class="qr-mini" src="group-qr.jpg" alt="小组二维码">
       <div class="block-text">
-        <p>扫码加入烛逢小组，报名活动自动享受折扣优惠。</p>
-        <p>欢迎新朋友一起玩转山野，从单日徒步到多日穿越，跟着老虎出发～（文案待补充完善）</p>
+        <p>扫码一键加入领队小组，报名任意活动直接享受 <strong>98–95 折</strong>，不用集赞、不用凑单，报名按折扣价直接算。</p>
+        <p>我们小组目前折扣最高（96 折，很快就到 95 折）。徒步、滑雪、Play、国内外长线全部自动折扣，价格越高省得越多，长线尤其划算。</p>
       </div>
     </div>
   </section>
