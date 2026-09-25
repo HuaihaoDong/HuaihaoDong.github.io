@@ -25,7 +25,7 @@
   // 动作定义：图片 / 帧数 / 循环时长（秒）
   var ACTIONS = {
     idle:  { img: 'tiger-idle.png',  frames: 4, dur: 1.6 },
-    run:   { img: 'tiger-run8.png',  frames: 8, dur: 0.667 },   // 12 帧/秒
+    run:   { img: 'tiger-run8.png',  frames: 8, dur: 1.0 },   // 8 帧/秒，慢一点
     sit:   { img: 'tiger-sit.png',   frames: 2, dur: 0.8 },
     sleep: { img: 'tiger-sleep.png', frames: 2, dur: 1.0 },
     play:  { img: 'tiger-play.png',  frames: 2, dur: 0.4 }
@@ -91,7 +91,7 @@
         var dx = tx - x, dy = ty - y;
         var dist = Math.sqrt(dx * dx + dy * dy);
         if (dist > 3) {
-          var speed = Math.min(dist * 0.09, 14);   // 远处快、近了减速
+          var speed = Math.min(dist * 0.05, 9);   // 远处快、近了减速（整体放慢）
           x += dx / dist * speed;
           y += dy / dist * speed;
           if (dx > 2) facing = -1;       // 帧面朝左：向右移动需翻转
