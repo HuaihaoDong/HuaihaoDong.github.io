@@ -6,6 +6,7 @@
 <title>活动详情 | Tiger Captain</title>
 <meta name="description" content="烛逢户外领队 Tiger Captain 的活动记录：路线、天气、心得与影像。">
 <link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="album.css">
 <style>
   :root {
     --bg: #0B1120; --panel: #141d33; --panel-2: #1a2540;
@@ -48,7 +49,19 @@
     font-family: Consolas, "Courier New", "PingFang SC", monospace;
     font-size: 24px; letter-spacing: 1px; color: var(--text); margin-bottom: 14px;
   }
-  .detail-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  /* 比分（足球比赛） */
+  .match-score {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    font-family: Consolas, "Courier New", "PingFang SC", monospace;
+    margin: 6px 0 16px;
+  }
+  .match-score .ms-num {
+    font-size: 46px; color: var(--text); letter-spacing: 2px;
+    background: var(--panel-2); border: 1px solid var(--line);
+    border-radius: 10px; padding: 8px 26px; line-height: 1.2;
+  }
+  .match-score .ms-colon { font-size: 34px; color: var(--accent); }
+  .detail-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; justify-content: center; }
   .detail-note { color: var(--sub); line-height: 1.9; font-size: 15px; }
   .detail-note p { margin-bottom: 14px; }
 
@@ -57,7 +70,7 @@
     font-size: 13px; letter-spacing: 2px; color: var(--accent);
     margin: 26px 0 12px;
   }
-  /* 瀑布流：JS 按照片顺序从左到右放入最矮列（绝对定位），横向阅读顺序 = A01→A02→A03 */
+  /* 瀑布流：JS 按照片顺序从左到右放入最矮列（绝对定位），横向阅读顺序 = 编号顺序 */
   .detail-photos { position: relative; }
   .detail-photos .ph-item {
     position: absolute; top: 0; left: 0;
@@ -88,65 +101,11 @@
     padding: 24px; text-align: center; color: var(--dim); font-size: 13px;
   }
 
-  /* 照片灯箱 */
-  .lb {
-    position: fixed; inset: 0; z-index: 300;
-    background: rgba(5, 8, 16, 0.92);
-    opacity: 0; visibility: hidden;
-    transition: opacity .2s ease, visibility .2s ease;
-  }
-  .lb.open { opacity: 1; visibility: visible; }
-  .lb-stage {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    touch-action: none;
-  }
-  /* 缩放容器：zoom 变换放在包层，img 自身的 .swap 过渡互不干扰 */
-  .lb-zoom { line-height: 0; transform-origin: center center; will-change: transform; }
-  .lb-img {
-    max-width: calc(100vw - 48px); max-height: calc(100vh - 96px);
-    object-fit: contain; border-radius: 4px;
-    user-select: none; -webkit-user-select: none; -webkit-user-drag: none;
-    touch-action: none;
-    transition: opacity .18s ease, transform .18s ease;
-  }
-  .lb-img.swap { opacity: 0; transform: scale(0.985); }
-  .lb-close, .lb-prev, .lb-next {
-    position: absolute; z-index: 2;
-    width: 44px; height: 44px; border-radius: 50%;
-    background: rgba(11, 17, 32, 0.7);
-    border: 1px solid var(--line);
-    color: var(--text); font-size: 22px; line-height: 1;
-    cursor: pointer;
-    transition: color .15s, border-color .15s;
-  }
-  .lb-close:hover, .lb-prev:hover, .lb-next:hover { color: var(--accent); border-color: var(--accent); }
-  .lb-close { top: 20px; right: 20px; }
-  .lb-prev { left: 20px; top: 50%; transform: translateY(-50%); }
-  .lb-next { right: 20px; top: 50%; transform: translateY(-50%); }
-  .lb-prev.hide, .lb-next.hide { visibility: hidden; }
-  .lb-counter {
-    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
-    font-family: Consolas, "Courier New", "PingFang SC", monospace;
-    font-size: 13px; color: var(--sub);
-    background: rgba(11, 17, 32, 0.7); border: 1px solid var(--line);
-    border-radius: 999px; padding: 4px 14px;
-  }
-  .lb-loading, .lb-error {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    color: var(--dim); font-size: 14px; display: none;
-  }
-  .lb-loading.show, .lb-error.show { display: block; }
-  body.lb-open { overflow: hidden; }
-
   @media (max-width: 768px) {
     .detail-photos .ph-item { width: calc((100% - 10px) / 2); }
     .detail-body { padding: 20px 18px 24px; }
     .detail-title { font-size: 20px; }
-    .lb-close { top: 12px; right: 12px; }
-    .lb-prev { left: 8px; }
-    .lb-next { right: 8px; }
-    .lb-img { max-width: calc(100vw - 24px); }
+    .match-score .ms-num { font-size: 34px; padding: 6px 18px; }
   }
 </style>
 </head>
@@ -187,97 +146,28 @@
 </header>
 
 <main class="section">
-  <a class="back" href="story.html">← 返回故事列表</a>
+  <a class="back" href="story.html" id="backLink">← 返回故事列表</a>
   <div id="detail"></div>
 </main>
 
-<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="照片预览" aria-hidden="true">
-  <div class="lb-stage" id="lbStage">
-    <div class="lb-zoom" id="lbZoom">
-      <img class="lb-img" id="lbImg" alt="">
-    </div>
-    <div class="lb-loading" id="lbLoading">加载中…</div>
-    <div class="lb-error" id="lbError">图片加载失败</div>
-    <button class="lb-close" id="lbClose" aria-label="关闭">×</button>
-    <button class="lb-prev" id="lbPrev" aria-label="上一张">‹</button>
-    <button class="lb-next" id="lbNext" aria-label="下一张">›</button>
-    <div class="lb-counter" id="lbCounter">1 / 1</div>
-  </div>
-</div>
-
 <script src="nav.js"></script>
 <script src="tiger.js"></script>
+<script src="album.js"></script>
 <script>
 (function () {
   var box = document.getElementById('detail');
-  var id = new URLSearchParams(location.search).get('id');
-
-  // —— 灯箱元素 ——
-  var lb = document.getElementById('lightbox');
-  var lbStage = document.getElementById('lbStage');
-  var lbZoom = document.getElementById('lbZoom');
-  var lbImg = document.getElementById('lbImg');
-  var lbLoading = document.getElementById('lbLoading');
-  var lbError = document.getElementById('lbError');
-  var lbClose = document.getElementById('lbClose');
-  var lbPrev = document.getElementById('lbPrev');
-  var lbNext = document.getElementById('lbNext');
-  var lbCounter = document.getElementById('lbCounter');
-
-  // —— 灯箱状态 ——
-  var photoEls = [];
-  var seq = [];
-  var idx = 0;
-  var open = false;
-  var swipeStart = null;
-  var justSwiped = false;
-
-  // —— 缩放状态（transform 作用于 lbZoom 包层）——
-  var zoom = { s: 1, tx: 0, ty: 0 };
-  var pinch = null;   // 双指捏合起始信息
-  var panLast = null; // 单指平移上一帧
-
-  function applyZoom() {
-    if (zoom.s <= 1.01) {
-      zoom.s = 1; zoom.tx = 0; zoom.ty = 0;
-      lbZoom.style.transform = '';
-    } else {
-      lbZoom.style.transform = 'translate(' + zoom.tx + 'px,' + zoom.ty + 'px) scale(' + zoom.s + ')';
-    }
-  }
-
-  function resetZoom() { zoom.s = 1; zoom.tx = 0; zoom.ty = 0; applyZoom(); }
-
-  // 图片完全拖出视野的限制（留 120px 边）
-  function clampPan() {
-    var r = lbZoom.getBoundingClientRect();
-    var vw = window.innerWidth, vh = window.innerHeight;
-    var margin = 120;
-    if (r.left < margin - r.width) zoom.tx += (margin - r.width) - r.left;
-    else if (r.left > vw - margin) zoom.tx -= r.left - (vw - margin);
-    if (r.top < margin - r.height) zoom.ty += (margin - r.height) - r.top;
-    else if (r.top > vh - margin) zoom.ty -= r.top - (vh - margin);
-  }
-
-  // 以屏幕上某点 (cx, cy) 为锚点缩放到 ns
-  function zoomAt(cx, cy, ns) {
-    ns = Math.min(Math.max(ns, 1), 5);
-    var r = lbZoom.getBoundingClientRect();
-    if (!r.width) return;
-    var px = (cx - r.left) / r.width;
-    var py = (cy - r.top) / r.height;
-    zoom.tx += (px - 0.5) * r.width * (zoom.s - ns) / zoom.s;
-    zoom.ty += (py - 0.5) * r.height * (zoom.s - ns) / zoom.s;
-    zoom.s = ns;
-    clampPan();
-    applyZoom();
-  }
-
-  function touchDist(e) {
-    var dx = e.touches[0].clientX - e.touches[1].clientX;
-    var dy = e.touches[0].clientY - e.touches[1].clientY;
-    return Math.sqrt(dx * dx + dy * dy);
-  }
+  var params = new URLSearchParams(location.search);
+  var id = params.get('id');
+  // 数据源与返回目标可由 URL 参数指定，默认烛逢故事
+  var dataFile = params.get('data') || 'activities.json';
+  var backHref = params.get('back') || 'story.html';
+  var backLabels = {
+    'trek.html': '返回重装徒步',
+    'football.html': '返回足球'
+  };
+  var back = document.getElementById('backLink');
+  back.href = backHref;
+  back.textContent = '← ' + (backLabels[backHref] || '返回故事列表');
 
   function fmtDate(d) { return d.replace(/-/g, '.'); }
 
@@ -295,297 +185,71 @@
     return null;
   }
 
+  // 视频条目两种写法：B 站嵌入 {"type":"bilibili","bvid":"BV..."} 或仓库直链 {"src":"..."}
+  function videoHTML(v) {
+    if (v && v.type === 'bilibili' && v.bvid) {
+      return '<iframe src="//player.bilibili.com/player.html?bvid=' + v.bvid
+        + '&page=1&high_quality=1&danmaku=0" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>';
+    }
+    if (v && v.src) {
+      return '<video controls preload="metadata" ' + (v.poster ? 'poster="' + v.poster + '"' : '') + '>'
+        + '<source src="' + v.src + '" type="video/mp4">'
+        + '你的浏览器不支持视频播放</video>';
+    }
+    return '';
+  }
+
   function render(act) {
     var cover = act.cover
       ? '<img src="' + act.cover + '" alt="' + act.title + '">'
       : '<div class="cover-ph">封面待补充</div>';
 
     var photoList = (act.photos || []).map(photoInfo).filter(function (x) { return x; });
-
     var photos = photoList.length
       ? photoList.map(function (p, i) {
           return '<div class="ph-item"><img src="' + p.thumb + '" data-full="' + p.src + '" alt="' + act.title + ' 照片 ' + (i + 1) + '" loading="lazy"></div>';
         }).join('')
       : '<div class="detail-empty">照片待补充</div>';
 
-    // 视频条目两种写法：B 站嵌入 {"type":"bilibili","bvid":"BV..."} 或仓库直链 {"src":"..."}
-    function videoHTML(v) {
-      if (v && v.type === 'bilibili' && v.bvid) {
-        return '<iframe src="//player.bilibili.com/player.html?bvid=' + v.bvid
-          + '&page=1&high_quality=1&danmaku=0" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>';
-      }
-      if (v && v.src) {
-        return '<video controls preload="metadata" ' + (v.poster ? 'poster="' + v.poster + '"' : '') + '>'
-          + '<source src="' + v.src + '" type="video/mp4">'
-          + '你的浏览器不支持视频播放</video>';
-      }
-      return '';
-    }
-
     var videos = act.videos && act.videos.length && act.videos.some(function (v) { return videoHTML(v); })
       ? act.videos.map(videoHTML).join('')
       : '<div class="detail-empty">视频待补充</div>';
+
+    // meta 标签：仅渲染有值的字段（比赛详情没有天气）
+    var meta = '';
+    if (act.date) meta += '<span class="tag">📅 ' + fmtDate(act.date) + '</span>';
+    if (act.opponent) meta += '<span class="tag">⚔ ' + act.opponent + '</span>';
+    if (act.location) meta += '<span class="tag">📍 ' + act.location + '</span>';
+    if (act.weather) meta += '<span class="tag">🌤 ' + act.weather + '</span>';
+
+    // 比分（足球比赛）："3:1" → 大比分展示
+    var score = '';
+    if (act.score) {
+      var parts = act.score.split(':');
+      score = '<div class="match-score">'
+        + '<span class="ms-num">' + (parts[0] || '') + '</span>'
+        + '<span class="ms-colon">:</span>'
+        + '<span class="ms-num">' + (parts[1] || '') + '</span>'
+        + '</div>';
+    }
 
     box.innerHTML = '<article class="detail">'
       + '<div class="detail-cover">' + cover + '</div>'
       + '<div class="detail-body">'
       + '<h1 class="detail-title">' + act.title + '</h1>'
-      + '<div class="detail-meta">'
-      + '<span class="tag">📅 ' + fmtDate(act.date) + '</span>'
-      + '<span class="tag">📍 ' + act.location + '</span>'
-      + '<span class="tag">🌤 ' + act.weather + '</span>'
-      + '</div>'
-      + '<div class="detail-note">' + noteHTML(act.note || '') + '</div>'
+      + score
+      + '<div class="detail-meta">' + meta + '</div>'
+      + (act.note ? '<div class="detail-note">' + noteHTML(act.note) + '</div>' : '')
       + '<div class="detail-sub">照片' + (photoList.length ? ' · ' + photoList.length + ' 张' : '') + '</div>'
       + '<div class="detail-photos">' + photos + '</div>'
       + '<div class="detail-sub">视频</div>'
       + '<div class="detail-videos">' + videos + '</div>'
       + '</div></article>';
 
-    initPhotos();
+    Album.init(box.querySelector('.detail-photos'), { masonry: true });
   }
 
-  // ==================== 瀑布流布局 ====================
-
-  // 按照片顺序（A01→A02→A03…）从左到右放入当前最矮的列，
-  // 保证网格横向阅读顺序与灯箱滑动顺序一致，且不裁切原图比例
-  function layoutMasonry() {
-    var wall = box.querySelector('.detail-photos');
-    if (!wall) return;
-    var cols = window.innerWidth <= 768 ? 2 : 3;
-    var gap = 10;
-    var colW = (wall.clientWidth - gap * (cols - 1)) / cols;
-    if (colW <= 0) return;
-    var hs = [];
-    for (var i = 0; i < cols; i++) hs.push(0);
-    var items = wall.querySelectorAll('.ph-item');
-    for (var j = 0; j < items.length; j++) {
-      var item = items[j];
-      var c = 0;
-      for (var k = 1; k < cols; k++) { if (hs[k] < hs[c]) c = k; }
-      item.style.width = colW + 'px';
-      item.style.left = c * (colW + gap) + 'px';
-      item.style.top = hs[c] + 'px';
-      hs[c] += item.offsetHeight + gap;
-    }
-    wall.style.height = (Math.max.apply(null, hs) - gap) + 'px';
-  }
-
-  window.addEventListener('resize', layoutMasonry);
-
-  // ==================== 灯箱 ====================
-
-  function initPhotos() {
-    photoEls = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
-    var wall = box.querySelector('.detail-photos');
-    if (!wall) return;
-
-    // 每张图加载完成后重排一次（懒加载渐进稳定）
-    for (var i = 0; i < photoEls.length; i++) {
-      photoEls[i].addEventListener('load', layoutMasonry);
-    }
-    layoutMasonry();
-
-    // 图片加载失败（error 不冒泡，需 capture）：网格内替换为占位
-    wall.addEventListener('error', function (e) {
-      var t = e.target;
-      if (t.tagName === 'IMG' && t.parentNode && t.parentNode.className === 'ph-item') {
-        t.parentNode.innerHTML = '<div class="ph">图片加载失败</div>';
-        photoEls = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
-        layoutMasonry();
-      }
-    }, true);
-
-    // 点击缩略图打开灯箱
-    wall.addEventListener('click', function (e) {
-      if (e.target.tagName === 'IMG') {
-        openLightbox(e.target);
-      }
-    });
-  }
-
-  // 灯箱顺序 = 照片数组顺序（A01→A02→A03…），与网格横向排布一致
-  function buildSeq() {
-    seq = Array.prototype.slice.call(box.querySelectorAll('.detail-photos img'));
-  }
-
-  function openLightbox(el) {
-    buildSeq();
-    if (!seq.length) return;
-    idx = seq.indexOf(el);
-    if (idx < 0) idx = 0;
-    open = true;
-    document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px';
-    document.body.classList.add('lb-open');
-    lb.setAttribute('aria-hidden', 'false');
-    lb.classList.add('open');
-    showImage();
-    lbClose.focus();
-    document.dispatchEvent(new CustomEvent('tiger-pause'));
-  }
-
-  function showImage() {
-    var el = seq[idx];
-    lbImg.src = el.getAttribute('data-full') || el.getAttribute('src');
-    lbImg.alt = el.alt || '';
-    lbImg.classList.add('swap');
-    lbError.classList.remove('show');
-    lbLoading.classList.add('show');
-    lbCounter.textContent = (idx + 1) + ' / ' + seq.length;
-    lbPrev.classList.toggle('hide', idx === 0);
-    lbNext.classList.toggle('hide', idx === seq.length - 1);
-    resetZoom();
-    preload();
-  }
-
-  function preload() {
-    var nextEl = seq[idx + 1];
-    var prevEl = seq[idx - 1];
-    if (nextEl) { var n = new Image(); n.src = nextEl.getAttribute('data-full') || nextEl.getAttribute('src'); }
-    if (prevEl) { var p = new Image(); p.src = prevEl.getAttribute('data-full') || prevEl.getAttribute('src'); }
-  }
-
-  function step(dir) {
-    var target = idx + dir;
-    if (target < 0 || target >= seq.length) return;
-    idx = target;
-    showImage();
-  }
-
-  function closeLightbox() {
-    open = false;
-    document.body.classList.remove('lb-open');
-    document.body.style.paddingRight = '';
-    lb.classList.remove('open');
-    lb.setAttribute('aria-hidden', 'true');
-    lbImg.src = '';
-    lbLoading.classList.remove('show');
-    lbError.classList.remove('show');
-    document.dispatchEvent(new CustomEvent('tiger-resume'));
-  }
-
-  lbImg.addEventListener('load', function () {
-    if (!open) return;
-    lbImg.classList.remove('swap');
-    lbLoading.classList.remove('show');
-  });
-  lbImg.addEventListener('error', function () {
-    if (!open) return;
-    lbLoading.classList.remove('show');
-    lbError.classList.add('show');
-    lbImg.classList.remove('swap');
-  });
-
-  // 键盘：ESC 关闭、←/→ 切换（忽略修饰组合）
-  document.addEventListener('keydown', function (e) {
-    if (!open) return;
-    if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey) return;
-    if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
-    else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
-    else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
-  });
-
-  lbClose.addEventListener('click', closeLightbox);
-  lbPrev.addEventListener('click', function () { step(-1); });
-  lbNext.addEventListener('click', function () { step(1); });
-
-  // 点击照片旁边空白（stage 本体）退出；点图片本身无操作
-  lbStage.addEventListener('click', function (e) {
-    if (justSwiped) return;
-    if (e.target === lbStage) closeLightbox();
-  });
-
-  // ==================== 缩放与手势 ====================
-
-  // 桌面：滚轮缩放（以鼠标位置为锚点）、双击图片 1x ↔ 2x
-  lbStage.addEventListener('wheel', function (e) {
-    if (!open) return;
-    e.preventDefault();
-    var factor = e.deltaY < 0 ? 1.25 : 0.8;
-    zoomAt(e.clientX, e.clientY, zoom.s * factor);
-  }, { passive: false });
-
-  lbImg.addEventListener('dblclick', function (e) {
-    if (!open) return;
-    e.preventDefault();
-    if (zoom.s > 1.01) { resetZoom(); }
-    else { zoomAt(e.clientX, e.clientY, 2); }
-  });
-
-  // 移动端：双指捏合缩放 / 放大后单指拖动平移 / 1 倍时横滑切换
-  lbStage.addEventListener('touchstart', function (e) {
-    if (!open) return;
-    if (e.touches.length === 2) {
-      pinch = {
-        dist: touchDist(e),
-        s: zoom.s,
-        r: lbZoom.getBoundingClientRect(),
-        cx: (e.touches[0].clientX + e.touches[1].clientX) / 2,
-        cy: (e.touches[0].clientY + e.touches[1].clientY) / 2
-      };
-      swipeStart = null;
-      panLast = null;
-    } else if (e.touches.length === 1) {
-      swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      panLast = { x: e.touches[0].clientX, y: e.touches[0].clientY, tx: zoom.tx, ty: zoom.ty };
-    }
-  }, { passive: true });
-
-  lbStage.addEventListener('touchmove', function (e) {
-    if (!open) return;
-    e.preventDefault();
-    // 双指捏合：以中点锚定缩放（中点移动时同时平移）
-    if (pinch && e.touches.length === 2) {
-      var ns = Math.min(Math.max(pinch.s * (touchDist(e) / pinch.dist), 1), 5);
-      var mx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-      var my = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-      var r0 = pinch.r;
-      if (r0.width) {
-        var u = (pinch.cx - r0.left) / r0.width;
-        var v = (pinch.cy - r0.top) / r0.height;
-        var w0 = r0.width / pinch.s;
-        var h0 = r0.height / pinch.s;
-        zoom.s = ns;
-        zoom.tx = mx - window.innerWidth / 2 + w0 * ns * (0.5 - u);
-        zoom.ty = my - window.innerHeight / 2 + h0 * ns * (0.5 - v);
-        clampPan();
-        applyZoom();
-      }
-    } else if (panLast && e.touches.length === 1 && zoom.s > 1.01) {
-      var t = e.touches[0];
-      zoom.tx = panLast.tx + (t.clientX - panLast.x);
-      zoom.ty = panLast.ty + (t.clientY - panLast.y);
-      clampPan();
-      applyZoom();
-    }
-  }, { passive: false });
-
-  lbStage.addEventListener('touchend', function (e) {
-    if (!open) return;
-    if (pinch) pinch = null;
-    // 双指变单指：重新起算平移起点，不做滑动切换
-    if (e.touches.length === 1) {
-      panLast = { x: e.touches[0].clientX, y: e.touches[0].clientY, tx: zoom.tx, ty: zoom.ty };
-      swipeStart = null;
-      return;
-    }
-    // 全部抬起：仅 1 倍缩放时判定横滑切换
-    if (e.touches.length === 0 && zoom.s <= 1.01 && swipeStart) {
-      var dx = e.changedTouches[0].clientX - swipeStart.x;
-      var dy = e.changedTouches[0].clientY - swipeStart.y;
-      if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-        justSwiped = true;
-        setTimeout(function () { justSwiped = false; }, 350);
-        step(dx < 0 ? 1 : -1);
-      }
-    }
-    swipeStart = null;
-    panLast = null;
-  });
-
-  // ==================== 数据加载 ====================
-
-  fetch('activities.json')
+  fetch(dataFile)
     .then(function (r) { return r.json(); })
     .then(function (acts) {
       var act = acts.find(function (a) { return a.id === id; });
