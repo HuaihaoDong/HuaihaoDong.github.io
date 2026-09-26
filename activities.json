@@ -356,6 +356,66 @@
     "videos": []
   },
   {
+    "id": "20260822-huangcaoliang",
+    "title": "黄草梁徒步清山",
+    "date": "2026-08-22",
+    "location": "北京·门头沟黄草梁",
+    "weather": "天气待补充",
+    "type": "Hike",
+    "led": true,
+    "cover": "pics/huangcaoliang/cover.webp",
+    "summary": "徒步上黄草梁，一路清山：三面横幅点题，还山以自然。",
+    "note": "从山脚一路清山上黄草梁。山顶拉开三面横幅——烛逢、还山自然、重要的是出发。雾气弥漫的高大树林、树冠围成的心形天窗，边走边捡，还山以自然。",
+    "pinned": false,
+    "photos": [
+      {
+        "src": "pics/huangcaoliang/A01.jpg",
+        "thumb": "pics/huangcaoliang/A01.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/A02.jpg",
+        "thumb": "pics/huangcaoliang/A02.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/A03.jpg",
+        "thumb": "pics/huangcaoliang/A03.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/B01.jpg",
+        "thumb": "pics/huangcaoliang/B01.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/B02.jpg",
+        "thumb": "pics/huangcaoliang/B02.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/B03.jpg",
+        "thumb": "pics/huangcaoliang/B03.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/D01.jpg",
+        "thumb": "pics/huangcaoliang/D01.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/D02.jpg",
+        "thumb": "pics/huangcaoliang/D02.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/D03.jpg",
+        "thumb": "pics/huangcaoliang/D03.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/D04.jpg",
+        "thumb": "pics/huangcaoliang/D04.thumb.webp"
+      },
+      {
+        "src": "pics/huangcaoliang/D05.jpg",
+        "thumb": "pics/huangcaoliang/D05.thumb.webp"
+      }
+    ],
+    "videos": []
+  },
+  {
     "id": "20260813-neimeng-liuxingyu",
     "title": "内蒙追英仙座流星雨",
     "date": "2026-08-13",
