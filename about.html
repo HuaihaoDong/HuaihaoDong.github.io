@@ -146,6 +146,44 @@ body::before{
   margin:18px 0;
 }
 .body-text strong{color:var(--text);font-weight:600;}
+.intro-box{display:flex;flex-direction:column;gap:14px;margin-top:6px;}
+.intro-box .body-text{margin:0;}
+/* 正文里的可点击注记（点击弹卡片） */
+.intro-link{
+  color:var(--accent);
+  cursor:pointer;
+  border-bottom:1px dashed rgba(201,162,107,.6);
+  transition:color .15s,border-color .15s;
+}
+.intro-link:hover{color:#e0c08a;border-bottom-color:#e0c08a;}
+/* 弹出卡片浮层：点卡片侧面（背板）退出 */
+.intro-pop{
+  position:fixed;inset:0;z-index:300;
+  background:rgba(5,8,16,.62);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;
+  transition:opacity .2s ease,visibility .2s ease;
+}
+.intro-pop.open{opacity:1;visibility:visible;}
+.intro-card{
+  max-width:440px;width:calc(100vw - 56px);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:26px 28px;
+  box-shadow:0 18px 56px rgba(0,0,0,.55);
+}
+.intro-card h4{
+  font-family:var(--mono);
+  color:var(--accent);
+  font-size:15px;letter-spacing:2px;
+  margin-bottom:12px;
+}
+.intro-card p{
+  color:var(--sub);
+  font-size:15px;line-height:1.9;
+  margin:0;
+}
 
 /* ===== #who 何方神圣 ===== */
 .who-head{
@@ -431,7 +469,10 @@ body::before{
             <span class="tag">运动爱好者</span>
           </div>
         </div>
-        <p class="body-text">这里得好好写一下，先空着叭</p>
+        <div class="intro-box">
+          <p class="body-text"><strong>正经介绍：</strong>内蒙古生人，家乡为风电之都、草原云谷乌兰察布；中共党员；有过一些<a class="intro-link" data-intro="work">学生工作经历</a>；一些<a class="intro-link" data-intro="honors">小的荣誉</a>；本科毕业生代表发言；省部级优秀毕设；大学生省运会 4×100 米接力第五名；户外爱好者，包括神农架、川西格聂等共重装徒步 6 次、轻装徒步 50 余次，考取过两次急救证，接受过正规户外知识培训。</p>
+          <p class="body-text"><strong>正式介绍（省流）：</strong>爱玩，爱瞎鼓捣，喜欢交朋友，喜欢看世界！希望自己能成长为真诚、温暖、热情、善良、豁达、通透、勇敢、能担责任的高级大人。</p>
+        </div>
       </section>
 
       <section id="leader" class="block">
@@ -548,6 +589,44 @@ body.lb-open { overflow: hidden; }
 <div class="avatar-lb" id="avatarLb" aria-hidden="true">
   <img id="avatarLbImg" alt="董怀昊">
 </div>
+<div class="intro-pop" id="introPop" aria-hidden="true">
+  <div class="intro-card" id="introCard"></div>
+</div>
+<script>
+/* 正文注记弹卡片：点「学生工作经历」「小的荣誉」弹出详情，点卡片侧面退出 */
+(function(){
+  var DATA = {
+    work: { title: '学生工作经历', text: '超十年班长经历，曾任主席团成员、足球队队长、田径队负责人、校级学生创新科创团队负责人。' },
+    honors: { title: '小的荣誉', text: '曾获省部级先进个人荣誉两次、省部级先进班集体一次（班长），市、区级先进个人各一次，优秀共产党员，其他荣誉若干。' }
+  };
+  var pop = document.getElementById('introPop');
+  var card = document.getElementById('introCard');
+  if(!pop || !card) return;
+
+  function open(key){
+    var d = DATA[key];
+    if(!d) return;
+    card.innerHTML = '<h4>' + d.title + '</h4><p>' + d.text + '</p>';
+    pop.classList.add('open');
+    pop.setAttribute('aria-hidden', 'false');
+    document.dispatchEvent(new CustomEvent('tiger-pause'));
+  }
+  function close(){
+    pop.classList.remove('open');
+    pop.setAttribute('aria-hidden', 'true');
+    document.dispatchEvent(new CustomEvent('tiger-resume'));
+  }
+
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('.intro-link');
+    if(link){ open(link.getAttribute('data-intro')); return; }
+    if(pop.classList.contains('open') && e.target === pop){ close(); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(pop.classList.contains('open') && e.key === 'Escape'){ close(); }
+  });
+})();
+</script>
 <script>
 /* 头像双击查看大图（大图首次打开才加载） */
 (function(){
