@@ -1,5 +1,29 @@
 {
   "topPhotos": [],
-  "partner": { "name": "最好的搭档", "photos": [] },
+  "partner": {
+    "name": "最好的搭档",
+    "photos": [
+      {
+        "src": "pics/football/partner/1.jpg",
+        "thumb": "pics/football/partner/1.thumb.webp"
+      },
+      {
+        "src": "pics/football/partner/2.jpg",
+        "thumb": "pics/football/partner/2.thumb.webp"
+      },
+      {
+        "src": "pics/football/partner/3.jpg",
+        "thumb": "pics/football/partner/3.thumb.webp"
+      },
+      {
+        "src": "pics/football/partner/4.jpg",
+        "thumb": "pics/football/partner/4.thumb.webp"
+      },
+      {
+        "src": "pics/football/partner/5.jpg",
+        "thumb": "pics/football/partner/5.thumb.webp"
+      }
+    ]
+  },
   "teammates": []
 }
