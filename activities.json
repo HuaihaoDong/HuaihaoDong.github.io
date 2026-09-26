@@ -612,6 +612,58 @@
     "videos": []
   },
   {
+    "id": "20260808-cuiniaogu",
+    "title": "翠鸟谷溯溪",
+    "date": "2026-08-08",
+    "location": "北京·延庆翠鸟谷",
+    "weather": "天气待补充",
+    "type": "Hike",
+    "led": false,
+    "cover": "pics/cuiniaogu/cover.webp",
+    "summary": "溯溪翠鸟谷：过石滩、走清溪，双横幅溪边合影。",
+    "note": "从溪谷口一路溯溪而上：过石滩、蹚清溪，溪里还有鸭群。山隙漏下的阳光打在人身上，最后在溪边拉开双横幅合影。烛逢飘带在前景里飘着，是这次最喜欢的画面。",
+    "pinned": false,
+    "photos": [
+      {
+        "src": "pics/cuiniaogu/A01.jpg",
+        "thumb": "pics/cuiniaogu/A01.thumb.webp"
+      },
+      {
+        "src": "pics/cuiniaogu/B01.jpg",
+        "thumb": "pics/cuiniaogu/B01.thumb.webp"
+      },
+      {
+        "src": "pics/cuiniaogu/B02.jpg",
+        "thumb": "pics/cuiniaogu/B02.thumb.webp"
+      },
+      {
+        "src": "pics/cuiniaogu/B03.jpg",
+        "thumb": "pics/cuiniaogu/B03.thumb.webp"
+      },
+      {
+        "src": "pics/cuiniaogu/B04.jpg",
+        "thumb": "pics/cuiniaogu/B04.thumb.webp"
+      },
+      {
+        "src": "pics/cuiniaogu/C01.jpg",
+        "thumb": "pics/cuiniaogu/C01.thumb.webp"
+      },
+      {
+        "src": "pics/cuiniaogu/C02.jpg",
+        "thumb": "pics/cuiniaogu/C02.thumb.webp"
+      },
+      {
+        "src": "pics/cuiniaogu/C03.jpg",
+        "thumb": "pics/cuiniaogu/C03.thumb.webp"
+      },
+      {
+        "src": "pics/cuiniaogu/D01.jpg",
+        "thumb": "pics/cuiniaogu/D01.thumb.webp"
+      }
+    ],
+    "videos": []
+  },
+  {
     "id": "20260627-zhufeng-6th",
     "title": "烛逢六周年",
     "date": "2026-06-27",
