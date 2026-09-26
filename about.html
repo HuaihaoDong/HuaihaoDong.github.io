@@ -516,6 +516,65 @@ body::before{
   </div>
 </main>
 
+<style>
+/* 头像双击放大浮层 */
+.avatar-lb {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(5, 8, 16, 0.92);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity .2s ease, visibility .2s ease;
+}
+.avatar-lb.open { opacity: 1; visibility: visible; }
+.avatar-lb img {
+  width: min(72vmin, 720px); height: min(72vmin, 720px);
+  border-radius: 50%; object-fit: cover;
+  border: 1px solid var(--line);
+  user-select: none; -webkit-user-select: none;
+}
+.who-head .avatar-ph { cursor: zoom-in; }
+body.lb-open { overflow: hidden; }
+</style>
+<div class="avatar-lb" id="avatarLb" aria-hidden="true">
+  <img id="avatarLbImg" alt="董怀昊">
+</div>
+<script>
+/* 头像双击查看大图（大图首次打开才加载） */
+(function(){
+  var avatar = document.querySelector('.who-head .avatar-ph');
+  var lb = document.getElementById('avatarLb');
+  var img = document.getElementById('avatarLbImg');
+  if(!avatar || !lb || !img) return;
+
+  var loaded = false;
+  function open(){
+    if(!loaded){
+      loaded = true;
+      img.src = 'photos/avatar-large.webp';
+    }
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-open');
+    document.dispatchEvent(new CustomEvent('tiger-pause'));
+  }
+  function close(){
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-open');
+    document.dispatchEvent(new CustomEvent('tiger-resume'));
+  }
+
+  avatar.addEventListener('dblclick', function(e){
+    e.preventDefault();
+    open();
+  });
+  // 点击浮层任意位置关闭
+  lb.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){
+    if(lb.classList.contains('open') && e.key === 'Escape'){ close(); }
+  });
+})();
+</script>
 <script>
 /* 目录 scroll-spy：滚动到哪节高亮哪节 */
 (function(){
