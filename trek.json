@@ -1,1 +1,727 @@
-[]
+[
+  {
+    "id": "202607-genie",
+    "title": "川西格聂神山重装",
+    "date": "2026-07",
+    "location": "四川 · 格聂神山",
+    "summary": "川西重装：格聂环线，雪山、错普湖、草甸花海，夜里灯火通明的营地。",
+    "note": "从重庆出发，一路重装进川西格聂。错普湖的碧水、岩壁和风暴云，金色的湖面映着雪山；夜幕下灯火通明的营地是全队最爱的画面。路上还遇到了表情包级的土拨鼠，出山后顺路逛了重庆的夜景。",
+    "pinned": false,
+    "cover": "pics3/genie/cover.webp",
+    "photos": [
+      {
+        "src": "pics3/genie/A01.jpg",
+        "thumb": "pics3/genie/A01.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/A02.jpg",
+        "thumb": "pics3/genie/A02.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/A03.jpg",
+        "thumb": "pics3/genie/A03.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/A04.jpg",
+        "thumb": "pics3/genie/A04.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/A05.jpg",
+        "thumb": "pics3/genie/A05.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/A06.jpg",
+        "thumb": "pics3/genie/A06.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/A07.jpg",
+        "thumb": "pics3/genie/A07.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/A08.jpg",
+        "thumb": "pics3/genie/A08.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B01.jpg",
+        "thumb": "pics3/genie/B01.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B02.jpg",
+        "thumb": "pics3/genie/B02.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B03.jpg",
+        "thumb": "pics3/genie/B03.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B04.jpg",
+        "thumb": "pics3/genie/B04.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B05.jpg",
+        "thumb": "pics3/genie/B05.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B06.jpg",
+        "thumb": "pics3/genie/B06.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B07.jpg",
+        "thumb": "pics3/genie/B07.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B08.jpg",
+        "thumb": "pics3/genie/B08.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B09.jpg",
+        "thumb": "pics3/genie/B09.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B10.jpg",
+        "thumb": "pics3/genie/B10.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B11.jpg",
+        "thumb": "pics3/genie/B11.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B12.jpg",
+        "thumb": "pics3/genie/B12.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B13.jpg",
+        "thumb": "pics3/genie/B13.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B14.jpg",
+        "thumb": "pics3/genie/B14.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B15.jpg",
+        "thumb": "pics3/genie/B15.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B16.jpg",
+        "thumb": "pics3/genie/B16.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B17.jpg",
+        "thumb": "pics3/genie/B17.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B18.jpg",
+        "thumb": "pics3/genie/B18.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B19.jpg",
+        "thumb": "pics3/genie/B19.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B20.jpg",
+        "thumb": "pics3/genie/B20.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B21.jpg",
+        "thumb": "pics3/genie/B21.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B22.jpg",
+        "thumb": "pics3/genie/B22.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B23.jpg",
+        "thumb": "pics3/genie/B23.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B24.jpg",
+        "thumb": "pics3/genie/B24.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B25.jpg",
+        "thumb": "pics3/genie/B25.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B26.jpg",
+        "thumb": "pics3/genie/B26.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B27.jpg",
+        "thumb": "pics3/genie/B27.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B28.jpg",
+        "thumb": "pics3/genie/B28.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B29.jpg",
+        "thumb": "pics3/genie/B29.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B30.jpg",
+        "thumb": "pics3/genie/B30.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B31.jpg",
+        "thumb": "pics3/genie/B31.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B32.jpg",
+        "thumb": "pics3/genie/B32.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B33.jpg",
+        "thumb": "pics3/genie/B33.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B34.jpg",
+        "thumb": "pics3/genie/B34.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/B35.jpg",
+        "thumb": "pics3/genie/B35.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/C01.jpg",
+        "thumb": "pics3/genie/C01.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/C02.jpg",
+        "thumb": "pics3/genie/C02.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/C03.jpg",
+        "thumb": "pics3/genie/C03.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/C04.jpg",
+        "thumb": "pics3/genie/C04.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/C05.jpg",
+        "thumb": "pics3/genie/C05.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/C06.jpg",
+        "thumb": "pics3/genie/C06.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/C07.jpg",
+        "thumb": "pics3/genie/C07.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/C08.jpg",
+        "thumb": "pics3/genie/C08.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D01.jpg",
+        "thumb": "pics3/genie/D01.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D02.jpg",
+        "thumb": "pics3/genie/D02.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D03.jpg",
+        "thumb": "pics3/genie/D03.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D04.jpg",
+        "thumb": "pics3/genie/D04.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D05.jpg",
+        "thumb": "pics3/genie/D05.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D06.jpg",
+        "thumb": "pics3/genie/D06.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D07.jpg",
+        "thumb": "pics3/genie/D07.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D08.jpg",
+        "thumb": "pics3/genie/D08.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D09.jpg",
+        "thumb": "pics3/genie/D09.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D10.jpg",
+        "thumb": "pics3/genie/D10.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D11.jpg",
+        "thumb": "pics3/genie/D11.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D12.jpg",
+        "thumb": "pics3/genie/D12.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D13.jpg",
+        "thumb": "pics3/genie/D13.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D14.jpg",
+        "thumb": "pics3/genie/D14.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D15.jpg",
+        "thumb": "pics3/genie/D15.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D16.jpg",
+        "thumb": "pics3/genie/D16.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D17.jpg",
+        "thumb": "pics3/genie/D17.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/D18.jpg",
+        "thumb": "pics3/genie/D18.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E01.jpg",
+        "thumb": "pics3/genie/E01.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E02.jpg",
+        "thumb": "pics3/genie/E02.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E03.jpg",
+        "thumb": "pics3/genie/E03.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E04.jpg",
+        "thumb": "pics3/genie/E04.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E05.jpg",
+        "thumb": "pics3/genie/E05.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E06.jpg",
+        "thumb": "pics3/genie/E06.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E08.jpg",
+        "thumb": "pics3/genie/E08.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E09.jpg",
+        "thumb": "pics3/genie/E09.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E10.jpg",
+        "thumb": "pics3/genie/E10.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E11.jpg",
+        "thumb": "pics3/genie/E11.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E12.jpg",
+        "thumb": "pics3/genie/E12.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E13.jpg",
+        "thumb": "pics3/genie/E13.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E14.jpg",
+        "thumb": "pics3/genie/E14.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E15.jpg",
+        "thumb": "pics3/genie/E15.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E16.jpg",
+        "thumb": "pics3/genie/E16.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E17.jpg",
+        "thumb": "pics3/genie/E17.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E18.jpg",
+        "thumb": "pics3/genie/E18.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E19.jpg",
+        "thumb": "pics3/genie/E19.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E20.jpg",
+        "thumb": "pics3/genie/E20.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E21.jpg",
+        "thumb": "pics3/genie/E21.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E22.jpg",
+        "thumb": "pics3/genie/E22.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E23.jpg",
+        "thumb": "pics3/genie/E23.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E24.jpg",
+        "thumb": "pics3/genie/E24.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E25.jpg",
+        "thumb": "pics3/genie/E25.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E26.jpg",
+        "thumb": "pics3/genie/E26.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E27.jpg",
+        "thumb": "pics3/genie/E27.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E28.jpg",
+        "thumb": "pics3/genie/E28.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E29.jpg",
+        "thumb": "pics3/genie/E29.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E30.jpg",
+        "thumb": "pics3/genie/E30.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E31.jpg",
+        "thumb": "pics3/genie/E31.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E32.jpg",
+        "thumb": "pics3/genie/E32.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E33.jpg",
+        "thumb": "pics3/genie/E33.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E34.jpg",
+        "thumb": "pics3/genie/E34.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E35.jpg",
+        "thumb": "pics3/genie/E35.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E36.jpg",
+        "thumb": "pics3/genie/E36.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E37.jpg",
+        "thumb": "pics3/genie/E37.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E38.jpg",
+        "thumb": "pics3/genie/E38.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E39.jpg",
+        "thumb": "pics3/genie/E39.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E40.jpg",
+        "thumb": "pics3/genie/E40.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E41.jpg",
+        "thumb": "pics3/genie/E41.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E42.jpg",
+        "thumb": "pics3/genie/E42.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E43.jpg",
+        "thumb": "pics3/genie/E43.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E44.jpg",
+        "thumb": "pics3/genie/E44.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E45.jpg",
+        "thumb": "pics3/genie/E45.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E46.jpg",
+        "thumb": "pics3/genie/E46.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E47.jpg",
+        "thumb": "pics3/genie/E47.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E48.jpg",
+        "thumb": "pics3/genie/E48.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E49.jpg",
+        "thumb": "pics3/genie/E49.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E50.jpg",
+        "thumb": "pics3/genie/E50.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E51.jpg",
+        "thumb": "pics3/genie/E51.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E52.jpg",
+        "thumb": "pics3/genie/E52.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E53.jpg",
+        "thumb": "pics3/genie/E53.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E54.jpg",
+        "thumb": "pics3/genie/E54.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E55.jpg",
+        "thumb": "pics3/genie/E55.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E56.jpg",
+        "thumb": "pics3/genie/E56.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E57.jpg",
+        "thumb": "pics3/genie/E57.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E58.jpg",
+        "thumb": "pics3/genie/E58.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E59.jpg",
+        "thumb": "pics3/genie/E59.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E60.jpg",
+        "thumb": "pics3/genie/E60.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E61.jpg",
+        "thumb": "pics3/genie/E61.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E62.jpg",
+        "thumb": "pics3/genie/E62.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E63.jpg",
+        "thumb": "pics3/genie/E63.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E64.jpg",
+        "thumb": "pics3/genie/E64.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E65.jpg",
+        "thumb": "pics3/genie/E65.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E66.jpg",
+        "thumb": "pics3/genie/E66.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E67.jpg",
+        "thumb": "pics3/genie/E67.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E68.jpg",
+        "thumb": "pics3/genie/E68.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E69.jpg",
+        "thumb": "pics3/genie/E69.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E70.jpg",
+        "thumb": "pics3/genie/E70.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E71.jpg",
+        "thumb": "pics3/genie/E71.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E72.jpg",
+        "thumb": "pics3/genie/E72.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E73.jpg",
+        "thumb": "pics3/genie/E73.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E74.jpg",
+        "thumb": "pics3/genie/E74.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E75.jpg",
+        "thumb": "pics3/genie/E75.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E76.jpg",
+        "thumb": "pics3/genie/E76.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E77.jpg",
+        "thumb": "pics3/genie/E77.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E78.jpg",
+        "thumb": "pics3/genie/E78.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E79.jpg",
+        "thumb": "pics3/genie/E79.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E80.jpg",
+        "thumb": "pics3/genie/E80.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/E81.jpg",
+        "thumb": "pics3/genie/E81.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F01.jpg",
+        "thumb": "pics3/genie/F01.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F02.jpg",
+        "thumb": "pics3/genie/F02.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F03.jpg",
+        "thumb": "pics3/genie/F03.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F04.jpg",
+        "thumb": "pics3/genie/F04.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F05.jpg",
+        "thumb": "pics3/genie/F05.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F06.jpg",
+        "thumb": "pics3/genie/F06.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F07.jpg",
+        "thumb": "pics3/genie/F07.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F08.jpg",
+        "thumb": "pics3/genie/F08.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F09.jpg",
+        "thumb": "pics3/genie/F09.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F10.jpg",
+        "thumb": "pics3/genie/F10.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F11.jpg",
+        "thumb": "pics3/genie/F11.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F12.jpg",
+        "thumb": "pics3/genie/F12.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F13.jpg",
+        "thumb": "pics3/genie/F13.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F14.jpg",
+        "thumb": "pics3/genie/F14.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F15.jpg",
+        "thumb": "pics3/genie/F15.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F16.jpg",
+        "thumb": "pics3/genie/F16.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F17.jpg",
+        "thumb": "pics3/genie/F17.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F18.jpg",
+        "thumb": "pics3/genie/F18.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F19.jpg",
+        "thumb": "pics3/genie/F19.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F20.jpg",
+        "thumb": "pics3/genie/F20.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/F21.jpg",
+        "thumb": "pics3/genie/F21.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/G01.jpg",
+        "thumb": "pics3/genie/G01.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/G02.jpg",
+        "thumb": "pics3/genie/G02.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/G03.jpg",
+        "thumb": "pics3/genie/G03.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/G04.jpg",
+        "thumb": "pics3/genie/G04.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/G05.jpg",
+        "thumb": "pics3/genie/G05.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/G06.jpg",
+        "thumb": "pics3/genie/G06.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/G07.jpg",
+        "thumb": "pics3/genie/G07.thumb.webp"
+      },
+      {
+        "src": "pics3/genie/G08.jpg",
+        "thumb": "pics3/genie/G08.thumb.webp"
+      }
+    ],
+    "videos": []
+  }
+]
