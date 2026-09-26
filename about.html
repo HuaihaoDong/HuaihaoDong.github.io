@@ -240,6 +240,18 @@ body::before{
   font-size:14px;
   letter-spacing:0.12em;
 }
+/* 名称 + 小字注记（如「接力 / 大运会第五」），紧凑两行不挤压宽度 */
+.record-name-box{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.record-sub{
+  font-family:var(--mono);
+  color:var(--dim);
+  font-size:12px;
+  letter-spacing:0.08em;
+}
 /* 可点击进入子页面的成绩牌（仅 hover 提示，不加箭头） */
 .record-link .record-name{transition:color .15s;}
 .record-link:hover .record-name{color:var(--accent);}
@@ -450,7 +462,7 @@ body::before{
         <h2 class="section-title">兴趣爱好</h2>
         <div class="records">
           <div class="card record"><div class="record-num">11.45<span class="record-unit">s</span></div><div class="record-name">百米</div></div>
-          <div class="card record"><div class="record-num">45.92<span class="record-unit">s</span></div><div class="record-name">接力（大运会第五）</div></div>
+          <div class="card record"><div class="record-num">45.92<span class="record-unit">s</span></div><div class="record-name-box"><div class="record-name">接力</div><div class="record-sub">大运会第五</div></div></div>
           <a class="card record record-link" href="football.html"><div class="record-num">—</div><div class="record-name">足球</div></a>
           <a class="card record record-link" href="trek.html"><div class="record-num">—</div><div class="record-name">重装徒步</div></a>
           <a class="card record record-link" href="fitness.html"><div class="record-num">—</div><div class="record-name">健身（成果[狗头]）</div></a>
