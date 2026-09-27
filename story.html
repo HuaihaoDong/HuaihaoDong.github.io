@@ -38,6 +38,37 @@
   }
   .page-sub { margin-top: 12px; color: var(--sub); font-size: 15px; }
 
+  /* 给朋友们的一封信（折叠，单击展开） */
+  .letter-box { margin-top: 18px; }
+  .letter-toggle {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: Consolas, "Courier New", "PingFang SC", monospace;
+    font-size: 15px; letter-spacing: 1px;
+    color: var(--accent);
+    background: transparent;
+    border: 1px dashed rgba(201, 162, 107, 0.5);
+    border-radius: 999px; padding: 6px 18px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .letter-toggle:hover { background: var(--accent-soft); }
+  .letter-caret { font-size: 11px; transition: transform .2s; }
+  .letter-box.open .letter-caret { transform: rotate(180deg); }
+  .letter-body {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .3s ease;
+  }
+  .letter-box.open .letter-body { grid-template-rows: 1fr; }
+  .letter-inner { overflow: hidden; }
+  .letter-card {
+    margin-top: 14px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 22px 26px;
+    color: var(--sub); font-size: 15px; line-height: 2;
+  }
+  .letter-card p { margin-bottom: 14px; }
+  .letter-card p:last-child { margin-bottom: 0; }
+
   /* 活动卡片 */
   .event-card {
     display: block;
@@ -187,6 +218,13 @@
     <p class="page-sub">老虎 · 每一次出发，都能遇到最好的伙伴与更好的自己</p>
   </header>
 
+  <div class="letter-box" id="letterBox">
+    <button class="letter-toggle" id="letterToggle" aria-expanded="false">
+      给朋友们的一封信^_^ <span class="letter-caret">▾</span>
+    </button>
+    <div class="letter-body"><div class="letter-inner" id="letterInner"></div></div>
+  </div>
+
   <div class="filter-bar" id="filterBar"><!-- 筛选按钮由 JS 根据数据里的类型动态生成 --></div>
 
   <div id="eventList"></div>
@@ -315,6 +353,34 @@
       renderList();
     }
   });
+})();
+</script>
+<script>
+/* 给朋友们的一封信：折叠展开 + 从 letter.json 加载内容 */
+(function () {
+  var box = document.getElementById('letterBox');
+  var toggle = document.getElementById('letterToggle');
+  var inner = document.getElementById('letterInner');
+  if (!box || !toggle || !inner) return;
+
+  toggle.addEventListener('click', function () {
+    box.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', box.classList.contains('open'));
+  });
+
+  fetch('letter.json')
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var ps = (d.paragraphs || []).filter(function (s) { return s.trim(); });
+      inner.innerHTML = '<div class="letter-card">'
+        + (ps.length
+            ? ps.map(function (s) { return '<p>' + s + '</p>'; }).join('')
+            : '<p>（信的内容待补充——老虎还在写）</p>')
+        + '</div>';
+    })
+    .catch(function () {
+      inner.innerHTML = '<div class="letter-card"><p>（信的内容待补充——老虎还在写）</p></div>';
+    });
 })();
 </script>
 </body>
