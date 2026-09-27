@@ -6,6 +6,7 @@
 <title>我的小组 | Tiger Captain</title>
 <meta name="description" content="老虎（Tiger Captain）的小组：烛逢报名小程序 + 微信群「老虎朋友们的快乐老家」。">
 <link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="album.css">
 <style>
   :root {
     --bg: #0B1120; --panel: #141d33; --panel-2: #1a2540;
@@ -52,18 +53,19 @@
     display: flex; align-items: center; justify-content: center;
     color: var(--dim); font-size: 13px; text-align: center;
   }
-  .qr-wrap img { border-radius: 10px; display: block; }
+  .qr-wrap img { border-radius: 10px; display: block; cursor: zoom-in; }
   .qr-wrap img.qr-mini { width: 200px; height: auto; }
   .qr-wrap img.qr-square { width: 160px; height: 160px; object-fit: cover; }
   .block-text { color: var(--sub); font-size: 15px; line-height: 1.85; }
   .block-text strong { color: var(--accent); font-weight: 600; }
   .block-text p { margin-bottom: 12px; }
+  /* 段首内联小标题（金色，与正文同行） */
   .block-text .p-title {
+    display: inline;
     font-family: Consolas, "Courier New", "PingFang SC", monospace;
     color: var(--accent); font-size: 13px; letter-spacing: 2px;
-    margin: 16px 0 4px;
+    margin-right: 10px;
   }
-  .block-text .p-title:first-of-type { margin-top: 0; }
 
   /* 群公告折叠 */
   details.notice { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
@@ -132,8 +134,8 @@
   <!-- 第一部分：烛逢小程序 -->
   <section class="block">
     <h2 class="block-title">加入老虎小组：重要的是认识新朋友，顺便享最高折扣</h2>
-    <div class="qr-wrap">
-      <img class="qr-mini" src="group-poster.webp" alt="老虎小组海报">
+    <div class="qr-wrap" id="posterWrap">
+      <div class="ph-item"><img class="qr-mini" src="group-poster.webp" data-full="group-poster-full.webp" alt="老虎小组海报"></div>
       <div class="block-text">
         <p>扫码加入老虎的小组，报名烛逢所有活动（Hike、Play、Sky、Trip、Echo 等等）直接 96 折，不用集赞、不用凑单。目前距离 95 折的目标已经完成 2/3，感谢烛逢提供的平台，也感谢每一个加入的朋友。</p>
         <p>这个互利机制真的挺棒的，我突发奇想认真做一段时间，挑战一下最快 500 人小组，在此基础上进行了一些完善：大家一起把小组做起来，收益最后也回到大家身上——我会把超过一半的组长激励都转化成福利带给大家。以后收益更多了，就花在旅途上：背西瓜上山、带零食、活动后聚餐、群里拼手气红包。现在组里已经 300 多位朋友了，争取年前冲上 95 折；等满 500 人的那天，发个超大红包一起拼手气（逢年过节拼个手气是常态哦，大家开心最重要哈哈）。说实话，刚开始建组就抱着试一试的心态，看着花总定的 500 这档的数字心里觉得怎么可能啊，可是和大家一起，竟然真的一步步走近了，回想起来挺不可思议的，给自己也给大家点赞！</p>
@@ -144,15 +146,12 @@
   <!-- 第二部分：微信群 -->
   <section class="block">
     <h2 class="block-title">老虎朋友们的「快乐老家」</h2>
-    <div class="qr-wrap">
-      <img class="qr-square" src="group-qr.webp" alt="快乐老家群二维码">
+    <div class="qr-wrap" id="qrWrap">
+      <div class="ph-item"><img class="qr-square" src="group-qr.webp" data-full="group-qr-full.webp" alt="快乐老家群二维码"></div>
       <div class="block-text">
-        <p class="p-title">缘起</p>
-        <p>之前带队，很多伙伴提出过想让我拉一个群，因为每次活动大家总能碰到合得来的朋友，可活动结束人也就散了，挺可惜的。我也纠结过要不要弄，毕竟要花费时间精力；后面也是在旅途中想通了，人这一辈子难得遇到聊得来玩的尽兴的朋友，更何况在我们最青春、最肆意的年纪，于是就有了这个「快乐老家」。感谢烛逢把大家连接起来！</p>
-        <p class="p-title">日常</p>
-        <p>[快乐老家]里面聚集了一群聊得来且有趣的人：大家一起约饭、约玩、约活动、约烛逢，一起发现好玩的事。这里不是资源交换群，也不是人脉群，只是一个让大家压力大时能找到放松方式、开心时有人分享、难过时有人倾听的地方。「快乐老家」会不定期刷新点子王和各种福利哦，欢迎“臭味相投”的朋友加入，不感兴趣就不用理会啦。</p>
-        <p class="p-title">理念</p>
-        <p>关于「老虎朋友们的快乐老家」，我的理念是：有些朋友喜欢热闹，有些喜欢安静，我们不是想拉所有人进来，而是想连接到真正喜欢这种氛围的人。喜欢就一起玩，哪天不喜欢了随时退出；除了老虎的小组，大家也可以加入其他心仪领队的小组哦，在这里帮所有领队宣传一下！烛逢最不缺的就是优秀开朗帅气/美丽的领队哈哈！</p>
+        <p><span class="p-title">缘起</span>之前带队，很多伙伴提出过想让我拉一个群，因为每次活动大家总能碰到合得来的朋友，可活动结束人也就散了，挺可惜的。我也纠结过要不要弄，毕竟要花费时间精力；后面也是在旅途中想通了，人这一辈子难得遇到聊得来玩的尽兴的朋友，更何况在我们最青春、最肆意的年纪，于是就有了这个「快乐老家」。感谢烛逢把大家连接起来！</p>
+        <p><span class="p-title">日常</span>[快乐老家]里面聚集了一群聊得来且有趣的人：大家一起约饭、约玩、约活动、约烛逢，一起发现好玩的事。这里不是资源交换群，也不是人脉群，只是一个让大家压力大时能找到放松方式、开心时有人分享、难过时有人倾听的地方。「快乐老家」会不定期刷新点子王和各种福利哦，欢迎“臭味相投”的朋友加入，不感兴趣就不用理会啦。</p>
+        <p><span class="p-title">理念</span>关于「老虎朋友们的快乐老家」，我的理念是：有些朋友喜欢热闹，有些喜欢安静，我们不是想拉所有人进来，而是想连接到真正喜欢这种氛围的人。喜欢就一起玩，哪天不喜欢了随时退出；除了老虎的小组，大家也可以加入其他心仪领队的小组哦，在这里帮所有领队宣传一下！烛逢最不缺的就是优秀开朗帅气/美丽的领队哈哈！</p>
       </div>
     </div>
 
@@ -233,5 +232,15 @@
 
 <script src="nav.js"></script>
 <script src="tiger.js"></script>
+<script src="album.js"></script>
+<script>
+/* 海报与群二维码：单击放大（右键/长按保存仍是浏览器原生行为） */
+(function () {
+  var poster = document.getElementById('posterWrap');
+  var qr = document.getElementById('qrWrap');
+  if (poster) Album.init(poster, { masonry: false });
+  if (qr) Album.init(qr, { masonry: false });
+})();
+</script>
 </body>
 </html>
