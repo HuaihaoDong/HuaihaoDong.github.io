@@ -1,11 +1,59 @@
 [
   {
     "id": "202609-picnic",
-    "title": "野餐",
-    "date": "2026-09",
-    "summary": "群里伙伴自己约的野餐：找个舒服的地方，吃吃喝喝，聊天晒太阳。",
+    "title": "朝阳公园野餐",
+    "date": "2026-09-19",
+    "location": "北京 · 朝阳公园",
+    "summary": "小组伙伴的秋日野餐：草地围坐、零食饮料，从白天玩到晚上蓝港。",
+    "note": "白天的朝阳公园，一块野餐垫、一堆零食，伙伴们在草地上围坐吃喝玩闹，六杯提拉米苏碰在一起。晚上溜达到蓝色港湾，麦当劳前的合影七个人整整齐齐，欧式建筑和喷泉的夜色很通透。",
     "pinned": false,
-    "photos": [],
+    "cover": "pics/picnic/cover.webp",
+    "photos": [
+      {
+        "src": "pics/picnic/A01.jpg",
+        "thumb": "pics/picnic/A01.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/A02.jpg",
+        "thumb": "pics/picnic/A02.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/A03.jpg",
+        "thumb": "pics/picnic/A03.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/B01.jpg",
+        "thumb": "pics/picnic/B01.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/B02.jpg",
+        "thumb": "pics/picnic/B02.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/B03.jpg",
+        "thumb": "pics/picnic/B03.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/B04.jpg",
+        "thumb": "pics/picnic/B04.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/C01.jpg",
+        "thumb": "pics/picnic/C01.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/C02.jpg",
+        "thumb": "pics/picnic/C02.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/C03.jpg",
+        "thumb": "pics/picnic/C03.thumb.webp"
+      },
+      {
+        "src": "pics/picnic/D01.jpg",
+        "thumb": "pics/picnic/D01.thumb.webp"
+      }
+    ],
     "videos": []
   }
 ]
