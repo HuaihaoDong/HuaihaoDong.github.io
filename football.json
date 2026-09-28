@@ -1,5 +1,26 @@
 {
-  "topPhotos": [],
+  "topPhotos": [
+    {
+      "src": "pics/football/top/1.jpg",
+      "thumb": "pics/football/top/1.thumb.webp"
+    },
+    {
+      "src": "pics/football/top/2.jpg",
+      "thumb": "pics/football/top/2.thumb.webp"
+    },
+    {
+      "src": "pics/football/top/3.jpg",
+      "thumb": "pics/football/top/3.thumb.webp"
+    },
+    {
+      "src": "photos/football-4.webp",
+      "thumb": "pics/football/top/4.thumb.webp"
+    },
+    {
+      "src": "pics/football/top/5.jpg",
+      "thumb": "pics/football/top/5.thumb.webp"
+    }
+  ],
   "partner": {
     "name": "最好的搭档",
     "photos": [
@@ -25,5 +46,85 @@
       }
     ]
   },
-  "teammates": []
+  "teammates": [
+    {
+      "name": "北航交通（2025-）",
+      "photos": [
+        {
+          "src": "pics/football/team1/1.jpg",
+          "thumb": "pics/football/team1/1.thumb.webp"
+        },
+        {
+          "src": "pics/football/team1/2.jpg",
+          "thumb": "pics/football/team1/2.thumb.webp"
+        },
+        {
+          "src": "pics/football/team1/3.jpg",
+          "thumb": "pics/football/team1/3.thumb.webp"
+        },
+        {
+          "src": "pics/football/team1/4.jpg",
+          "thumb": "pics/football/team1/4.thumb.webp"
+        },
+        {
+          "src": "pics/football/team1/5.jpg",
+          "thumb": "pics/football/team1/5.thumb.webp"
+        },
+        {
+          "src": "pics/football/team1/6.jpg",
+          "thumb": "pics/football/team1/6.thumb.webp"
+        },
+        {
+          "src": "pics/football/team1/7.jpg",
+          "thumb": "pics/football/team1/7.thumb.webp"
+        }
+      ]
+    },
+    {
+      "name": "先进制造工程学院（2021-2025）",
+      "photos": [
+        {
+          "src": "pics/football/team2/1.jpg",
+          "thumb": "pics/football/team2/1.thumb.webp"
+        },
+        {
+          "src": "pics/football/team2/2.jpg",
+          "thumb": "pics/football/team2/2.thumb.webp"
+        },
+        {
+          "src": "pics/football/team2/3.jpg",
+          "thumb": "pics/football/team2/3.thumb.webp"
+        },
+        {
+          "src": "pics/football/team2/4.jpg",
+          "thumb": "pics/football/team2/4.thumb.webp"
+        },
+        {
+          "src": "pics/football/team2/5.jpg",
+          "thumb": "pics/football/team2/5.thumb.webp"
+        }
+      ]
+    },
+    {
+      "name": "格罗里足球俱乐部（2018-2021）",
+      "photos": [
+        {
+          "src": "pics/football/team3/1.jpg",
+          "thumb": "pics/football/team3/1.thumb.webp"
+        },
+        {
+          "src": "pics/football/team3/2.jpg",
+          "thumb": "pics/football/team3/2.thumb.webp"
+        },
+        {
+          "src": "pics/football/team3/3.jpg",
+          "thumb": "pics/football/team3/3.thumb.webp"
+        },
+        {
+          "src": "pics/football/team3/4.jpg",
+          "thumb": "pics/football/team3/4.thumb.webp"
+        }
+      ]
+    }
+  ]
 }
