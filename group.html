@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="common.css">
 <link rel="stylesheet" href="tiger.css?v=20261021v4">
 <link rel="stylesheet" href="album.css">
+<link rel="stylesheet" href="leaders.css?v=20261021">
 <style>
   :root {
     --bg: #0B1120; --panel: #141d33; --panel-2: #1a2540;
@@ -198,9 +199,35 @@
     </div>
   </section>
 
+  <!-- 其他领队：紧凑预览，完整海报和介绍在弹窗中阅读 -->
+  <section class="block fellow-leaders" aria-labelledby="leadersTitle">
+    <div class="leaders-heading">
+      <h2 class="block-title" id="leadersTitle">也认识一下其他领队</h2>
+      <a href="#friends-home" class="leaders-skip">去快乐老家 ↓</a>
+    </div>
+    <div class="leaders-grid">
+      <button class="leader-card" type="button" data-leader="daydreamer" aria-haspopup="dialog">
+        <img src="assets/leaders/daydreamer.jpg" width="1008" height="1512" alt="白日梦想家领队的小组海报" loading="lazy">
+        <span class="leader-card-copy"><span class="leader-name">白日梦想家领队</span><span class="leader-excerpt">不必等到夜晚，清醒的时候，也可以做梦。</span><span class="leader-more">认识领队 · 查看海报 <span aria-hidden="true">↗</span></span></span>
+      </button>
+      <button class="leader-card" type="button" data-leader="xiaoyang" aria-haspopup="dialog">
+        <img src="assets/leaders/xiaoyang.jpg" width="975" height="1463" alt="小羊领队的星烛同行小组海报" loading="lazy">
+        <span class="leader-card-copy"><span class="leader-name">小羊领队</span><span class="leader-excerpt">小组 · 星烛同行</span><span class="leader-more">查看小组海报 <span aria-hidden="true">↗</span></span></span>
+      </button>
+    </div>
+  </section>
+
+  <dialog class="leader-dialog" id="leaderDialog" aria-labelledby="leaderDialogTitle">
+    <div class="leader-dialog-bar"><h2 id="leaderDialogTitle"></h2><button type="button" class="leader-close" aria-label="关闭领队介绍" autofocus>×</button></div>
+    <div class="leader-dialog-content">
+      <div class="leader-poster"><img id="leaderPoster" alt=""><p>长按或右键保存海报，识别小程序码加入小组</p></div>
+      <div class="leader-intro" id="leaderIntro"></div>
+    </div>
+  </dialog>
+
   <!-- 第二部分：微信群 -->
   <section class="block">
-    <h2 class="block-title">老虎朋友们的「快乐老家」</h2>
+    <h2 class="block-title" id="friends-home">老虎朋友们的「快乐老家」</h2>
     <div class="qr-wrap" id="qrWrap">
       <div class="ph-item"><img class="qr-square" src="group-qr.webp" data-full="group-qr-full.webp" alt="快乐老家群二维码"></div>
       <div class="block-text">
@@ -295,6 +322,7 @@
 <script src="nav.js"></script>
 <script src="tiger.js?v=20261021v4"></script>
 <script src="album.js"></script>
+<script src="leaders.js?v=20261021"></script>
 <script>
 /* 海报与群二维码：单击放大（右键/长按保存仍是浏览器原生行为） */
 (function () {
