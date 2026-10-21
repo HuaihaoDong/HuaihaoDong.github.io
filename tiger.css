@@ -50,7 +50,6 @@
   border: 1px solid #2a3a55; background: #141d33; color: #c9a26b; font-size: 20px; cursor: pointer;
 }
 #tiger.is-paused .tiger-body, #tiger.is-paused .tiger-zz { animation-play-state: paused; }
-#tiger.is-reading:not(:focus-within):not(:hover) { opacity: .22; pointer-events: none; }
 .tiger-help { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 @media (max-width: 600px) { #tiger { --pet-size: 78px; } }
 @media (prefers-reduced-motion: reduce) {

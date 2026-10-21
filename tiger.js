@@ -94,7 +94,7 @@
   var bubbleUntil = 0, userSleep = false, afterAction = null, dismissed = false;
   var pausedAt = null, pausedTotal = 0, modalDepth = 0;
   var raf = null, timer = null, activeLayer = 0, currentAsset = '', currentFacing = 1, currentFrame = -1;
-  var longTimer = null, longHandled = false, lastTap = -10000, greeting = 0, scrollTimer = null;
+  var longTimer = null, longHandled = false, lastTap = -10000, greeting = 0;
   function now() { return (pausedAt === null ? performance.now() : pausedAt) - pausedTotal; }
   function paused() { return pausedAt !== null || dismissed; }
   function limits() { return { speed: size === 78 ? 155 : 205, acceleration: 420, brake: 650 }; }
@@ -335,10 +335,6 @@
   document.addEventListener('tiger-resume',function(){modalDepth=Math.max(0,modalDepth-1);syncPause();});
   reduced.addEventListener('change',function(){p.vx=p.vy=0;stateTo('idle');lastActivity=now();nextYawn=lastActivity+18000;refresh();});
   window.addEventListener('resize',function(){size=innerWidth<=600?78:96;bounds();currentAsset='';refresh();});
-  window.addEventListener('scroll',function(){
-    if(!menu.hidden)return;root.classList.add('is-reading');clearTimeout(scrollTimer);
-    scrollTimer=setTimeout(function(){root.classList.remove('is-reading');},250);
-  },{passive:true});
   // Respect a visitor who is reading: no autonomous wandering, sounds or page-scroll changes.
   bounds();stateTo('idle');
   ['idle','sit','sleep','run','actions','groom'].forEach(load);
