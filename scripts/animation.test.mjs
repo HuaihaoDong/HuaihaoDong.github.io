@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -50,23 +51,7 @@ test('首页后台停止、恢复不重复调度、减少动态效果停止循�
   assert.equal(env.frames.size, 2);
 });
 
-test('老虎静止与点击控件不调度，隐藏及灯箱暂停保持独立', () => {
-  const env = environment();
-  vm.runInContext(fs.readFileSync(new URL('../tiger.js', import.meta.url), 'utf8'), env.context);
-  assert.equal(env.frames.size, 0);
-  env.document.emit('click', { target: { closest: () => true } });
-  assert.equal(env.frames.size, 0);
-  const blank = { target: { closest: () => false }, clientX: 80, clientY: 200 };
-  env.document.emit('click', blank);
-  assert.equal(env.frames.size, 1);
-  env.document.hidden = true; env.document.emit('visibilitychange');
-  assert.equal(env.frames.size, 0);
-  env.document.hidden = false; env.document.emit('visibilitychange');
-  assert.equal(env.frames.size, 1);
-  env.document.emit('tiger-pause'); env.document.emit('visibilitychange');
-  assert.equal(env.frames.size, 0);
-  env.document.emit('tiger-resume');
-  assert.equal(env.frames.size, 1);
-  env.motion.matches = true; env.motion.emit('change'); env.document.emit('click', blank);
-  assert.equal(env.frames.size, 0);
+test('新版老虎的运动与互动测试单独运行', () => {
+  const result = spawnSync(process.execPath, ['--test', 'tests/tiger.test.cjs'], { cwd: new URL('..', import.meta.url), encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stdout + result.stderr);
 });
