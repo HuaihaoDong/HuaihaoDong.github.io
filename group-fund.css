@@ -1,0 +1,64 @@
+:root { --fund-panel:#141d33; --fund-line:#2a3a55; --fund-gold:#c9a26b; --fund-text:#e9e6e0; --fund-sub:#a5acbd; }
+.fund-page { max-width:900px; margin:0 auto; padding:104px 28px 40px; color:var(--fund-text); overflow-wrap:anywhere; }
+.fund-back { display:inline-block; color:var(--fund-sub); font-size:13px; text-decoration:none; margin-bottom:36px; }
+.fund-back:hover { color:var(--fund-gold); }
+.fund-heading { padding-bottom:30px; }
+.fund-eyebrow { color:var(--fund-gold); font-size:12px; letter-spacing:3px; margin:0 0 14px; }
+.fund-heading h1 { font-size:clamp(25px,4vw,36px); line-height:1.5; font-weight:600; letter-spacing:1px; margin:0 0 16px; }
+.fund-lead { font-size:14px; line-height:1.95; color:var(--fund-sub); margin:0; }
+.fund-summary { display:grid; grid-template-columns:1.2fr 1fr 1fr; border-top:1px solid var(--fund-gold); border-bottom:1px solid var(--fund-line); padding:26px 0; margin-bottom:42px; gap:22px; }
+.fund-summary > div { display:flex; flex-direction:column; align-items:flex-start; gap:10px; min-width:0; }
+.fund-summary > div + div { border-left:1px solid var(--fund-line); padding-left:24px; }
+.fund-label { font-size:12px; color:var(--fund-sub); }
+.fund-total { font-size:30px; line-height:1.3; font-weight:500; color:var(--fund-gold); }
+.fund-date,.fund-method { font-size:19px; line-height:1.9; font-weight:500; }
+.fund-caption { font-size:11px; line-height:1.7; color:var(--fund-sub); }
+.fund-section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:18px; }
+.fund-section-heading h2 { margin:0; font-size:19px; font-weight:500; }
+.fund-section-heading > span { font-size:11px; color:var(--fund-sub); letter-spacing:2px; }
+.fund-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.fund-card { display:flex; flex-direction:column; background:var(--fund-panel); border:1px solid var(--fund-line); border-radius:12px; padding:24px; min-width:0; }
+.fund-card-top { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+.fund-number { font-family:Consolas,monospace; font-size:13px; color:var(--fund-gold); }
+.fund-category { font-size:11px; letter-spacing:2px; color:var(--fund-sub); }
+.fund-card h3 { margin:0 0 10px; font-size:20px; font-weight:500; }
+.fund-card p { color:var(--fund-sub); font-size:13px; line-height:1.95; margin:0 0 24px; }
+.fund-card-bottom { margin-top:auto; display:flex; justify-content:space-between; align-items:baseline; gap:12px; border-top:1px solid var(--fund-line); padding-top:15px; }
+.fund-card-bottom span { font-size:11px; color:var(--fund-sub); }
+.fund-card-bottom strong { font-size:15px; color:var(--fund-gold); font-weight:400; }
+.fund-plan { display:flex; align-items:baseline; gap:24px; padding:24px; margin:28px 0; background:linear-gradient(110deg,#c9a26b12,transparent); border-left:2px solid var(--fund-gold); }
+.fund-plan-label { flex-shrink:0; color:var(--fund-gold); font-size:11px; letter-spacing:1px; }
+.fund-plan h2 { margin:0 0 10px; font-size:16px; font-weight:500; }
+.fund-plan p { margin:0; font-size:13px; color:var(--fund-sub); line-height:1.9; }
+.fund-notes { margin:36px 0; max-width:700px; }
+.fund-notes h2 { font-size:14px; font-weight:500; margin:0 0 12px; }
+.fund-notes p { margin:0 0 8px; color:var(--fund-sub); font-size:12px; line-height:1.9; }
+.fund-footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; border-top:1px solid var(--fund-line); padding-top:22px; color:var(--fund-sub); font-size:11px; }
+.fund-footer a { color:var(--fund-gold); text-decoration:none; }
+.fund-breakdown { margin-top:20px; padding:18px 22px; border:1px solid var(--fund-line); border-radius:10px; }
+.fund-breakdown summary { cursor:pointer; color:var(--fund-gold); font-size:13px; line-height:1.8; }
+.fund-breakdown summary > span { display:inline-block; margin-left:14px; color:var(--fund-sub); font-size:12px; }
+.fund-breakdown summary:focus-visible { outline:2px solid var(--fund-gold); outline-offset:5px; }
+.fund-table-wrap { overflow-x:auto; }
+.fund-breakdown table { width:100%; border-collapse:collapse; margin-top:16px; font-size:13px; font-variant-numeric:tabular-nums; }
+.fund-breakdown caption { color:var(--fund-sub); font-size:11px; text-align:left; padding-bottom:12px; }
+.fund-breakdown th,.fund-breakdown td { padding:12px 6px; text-align:right; border-bottom:1px solid var(--fund-line); white-space:nowrap; }
+.fund-breakdown th:first-child,.fund-breakdown td:first-child { text-align:left; }
+.fund-breakdown thead { color:var(--fund-sub); font-size:12px; }
+.fund-breakdown th { font-weight:500; }
+.fund-breakdown tfoot { color:var(--fund-gold); }
+.fund-total,.fund-card-bottom strong { font-variant-numeric:tabular-nums; }
+.fund-page a:focus-visible { outline:2px solid var(--fund-gold); outline-offset:5px; }
+@media(max-width:600px) {
+ .fund-page { padding:92px 20px 30px; }
+ .fund-back { margin-bottom:28px; }
+ .fund-summary { grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 16px; margin-bottom:30px; }
+ .fund-summary > div:first-child { grid-column:1 / -1; }
+ .fund-summary > div + div { border-left:0; padding-left:0; }
+ .fund-summary > div:last-child { border-left:1px solid var(--fund-line); padding-left:16px; }
+ .fund-grid { grid-template-columns:minmax(0,1fr); gap:12px; }
+ .fund-card { padding:20px; }
+ .fund-card-top { margin-bottom:15px; }
+ .fund-plan { flex-direction:column; gap:12px; padding:20px; }
+ .fund-section-heading h2 { font-size:18px; }
+}
