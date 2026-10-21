@@ -224,7 +224,7 @@
 
     // meta 标签：仅渲染有值的字段（比赛详情没有天气）
     var meta = '';
-    if (act.date) meta += '<span class="tag">📅 ' + fmtDate(act.date) + '</span>';
+    if (act.date) meta += '<span class="tag">📅 ' + fmtDate(act.date) + (act.endDate ? ' — ' + fmtDate(act.endDate) : '') + '</span>';
     if (act.opponent) meta += '<span class="tag">⚔ ' + act.opponent + '</span>';
     if (act.location) meta += '<span class="tag">📍 ' + act.location + '</span>';
     if (act.weather) meta += '<span class="tag">🌤 ' + act.weather + '</span>';
@@ -256,7 +256,7 @@
     Album.init(box.querySelector('.detail-photos'), { masonry: true });
   }
 
-  fetch(dataFile + (dataFile === 'activities.json' ? '?v=20261021play' : ''))
+  fetch(dataFile + (dataFile === 'activities.json' ? '?v=20261022matianling' : ''))
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (acts) {
       var act = acts.find(function (a) { return a.id === id; });
