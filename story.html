@@ -323,7 +323,7 @@
     list.innerHTML = pinned.concat(normal).map(cardHTML).join('');
   }
 
-  fetch('activities.json?v=20261022matianling')
+  fetch('activities.json?v=20261022matianling-v2')
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (acts) {
       allActs = acts;
