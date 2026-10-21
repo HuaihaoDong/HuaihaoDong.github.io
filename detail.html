@@ -160,7 +160,7 @@
   var params = new URLSearchParams(location.search);
   var id = params.get('id');
   // 数据源与返回目标可由 URL 参数指定，默认烛逢故事
-  var dataFile = params.get('data') || 'activities.json?v=20261021play';
+  var dataFile = params.get('data') || 'activities.json?v=20261022matianling';
   var backHref = params.get('back') || 'story.html';
   var backLabels = {
     'trek.html': '返回重装徒步',
@@ -219,7 +219,7 @@
 
     // meta 标签：仅渲染有值的字段（比赛详情没有天气）
     var meta = '';
-    if (act.date) meta += '<span class="tag">📅 ' + fmtDate(act.date) + '</span>';
+    if (act.date) meta += '<span class="tag">📅 ' + fmtDate(act.date) + (act.endDate ? ' — ' + fmtDate(act.endDate) : '') + '</span>';
     if (act.opponent) meta += '<span class="tag">⚔ ' + act.opponent + '</span>';
     if (act.location) meta += '<span class="tag">📍 ' + act.location + '</span>';
     if (act.weather) meta += '<span class="tag">🌤 ' + act.weather + '</span>';

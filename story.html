@@ -293,9 +293,9 @@
       + '<div class="event-info">'
       + '<h2 class="event-title">' + a.title + ledBadgeHTML(a) + '</h2>'
       + '<div class="event-meta">'
-      + '<span class="tag">📅 ' + fmtDate(a.date) + '</span>'
+      + '<span class="tag">📅 ' + fmtDate(a.date) + (a.endDate ? ' — ' + fmtDate(a.endDate) : '') + '</span>'
       + '<span class="tag">📍 ' + a.location + '</span>'
-      + '<span class="tag">🌤 ' + a.weather + '</span>'
+      + (a.weather ? '<span class="tag">🌤 ' + a.weather + '</span>' : '')
       + '</div>'
       + '<p class="event-summary">' + a.summary + '</p>'
       + '</div></a>';
@@ -323,7 +323,7 @@
     list.innerHTML = pinned.concat(normal).map(cardHTML).join('');
   }
 
-  fetch('activities.json?v=20261021play')
+  fetch('activities.json?v=20261022matianling')
     .then(function (r) { return r.json(); })
     .then(function (acts) {
       allActs = acts;
