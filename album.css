@@ -51,6 +51,16 @@
 }
 .lb-loading.show, .lb-error.show { display: block; }
 body.lb-open { overflow: hidden; }
+.lb-counter { pointer-events: none; }
+.ph-item.img-failed img { visibility: hidden; height: 120px; }
+.ph-retry {
+  position: absolute; inset: 0; width: 100%; min-height: 100px; padding: 12px;
+  border: 1px dashed var(--line, #2a3a55); border-radius: 8px;
+  background: var(--panel-2, #1a2540); color: var(--muted, #a5acbd);
+  font: inherit; font-size: 12px; cursor: zoom-in;
+}
+.ph-item.img-failed { position: relative; }
+.detail-photos .ph-item.img-failed { position: absolute; }
 
 @media (max-width: 768px) {
   .lb-close { top: 12px; right: 12px; }
