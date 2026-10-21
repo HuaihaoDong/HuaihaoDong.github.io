@@ -62,6 +62,8 @@ body::before{
 .section,.mobile-menu{position:relative;z-index:1;}
 
 .about-page{padding-top:40px;padding-bottom:96px;}
+.about-content{min-width:0;width:100%;}
+.about-content > .block{min-width:0;max-width:100%;}
 
 /* 页首 */
 .page-head{margin-bottom:48px;}
@@ -139,6 +141,7 @@ body::before{
 
 /* 正文字体：system-ui 无衬线 */
 .body-text{
+  overflow-wrap:anywhere;
   font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
   color:var(--sub);
   line-height:1.85;
@@ -217,12 +220,15 @@ body::before{
 /* ===== #leader 照片条 ===== */
 .photo-strip{
   display:flex;
+  width:100%;
+  max-width:100%;
+  min-width:0;
   gap:16px;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
-  padding:4px 4px 12px;
-  margin:0 -4px;
+  padding:4px 0 12px;
+  margin:0;
 }
 .photo{
   flex:0 0 240px;
@@ -394,7 +400,7 @@ body::before{
 
 /* ===== 移动端 / 平板 ===== */
 @media (max-width:1024px){
-  .about-layout{grid-template-columns:1fr;gap:0;}
+  .about-layout{grid-template-columns:minmax(0,1fr);gap:0;}
   .toc{display:none;}
 }
 @media (max-width:768px){
