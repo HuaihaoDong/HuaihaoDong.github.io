@@ -1,0 +1,58 @@
+#tiger {
+  --pet-size: 96px;
+  position: fixed; left: 0; top: 0; width: var(--pet-size); height: var(--pet-size);
+  z-index: 90; padding: 0; border: 0; background: none; overflow: visible;
+  user-select: none; -webkit-user-select: none; will-change: transform;
+}
+.tiger-hit {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%;
+  border: 0; padding: 0; background: transparent; color: inherit;
+  cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.tiger-hit:focus-visible { outline: 2px solid #c9a26b; outline-offset: 4px; border-radius: 40%; }
+.tiger-shadow {
+  position: absolute; left: 21%; right: 21%; height: 6%; bottom: 2%;
+  border-radius: 50%; background: rgba(0,0,0,.22); filter: blur(3px); pointer-events: none;
+}
+.tiger-body { position: absolute; inset: 0; transform-origin: 50% 94%; pointer-events: none; }
+.tiger-frame {
+  position: absolute; inset: 0; display: block; background-repeat: no-repeat;
+  transform-origin: 50% 94%; opacity: 0; transition: opacity 150ms ease; pointer-events: none;
+}
+.tiger-frame.visible { opacity: 1; }
+#tiger[data-state="sleep"] .tiger-body { animation: tiger-breathe 3.2s ease-in-out infinite; }
+@keyframes tiger-breathe { 0%,100% { transform: scale(1,1); } 50% { transform: scale(1.018,.985); } }
+#tiger .tiger-bubble {
+  bottom: calc(100% + 6px); max-width: min(230px, calc(100vw - 32px));
+  padding: 6px 12px; line-height: 1.6; white-space: normal; width: max-content;
+  text-align: center; font-size: 12px; pointer-events: none;
+}
+#tiger .tiger-bubble.right-edge { left: auto; right: 0; transform: none; }
+#tiger .tiger-bubble.left-edge { left: 0; right: auto; transform: none; }
+#tiger .tiger-bubble.below { bottom: auto; top: calc(100% + 6px); }
+#tiger .tiger-zz { right: 0; bottom: 86%; }
+.tiger-menu {
+  position: absolute; bottom: calc(100% + 12px); right: 0; width: 150px;
+  padding: 6px; border: 1px solid #2a3a55; border-radius: 12px;
+  background: rgba(20,29,51,.98); box-shadow: 0 8px 24px rgba(0,0,0,.3);
+}
+.tiger-menu[hidden], #tiger[hidden], .tiger-recall[hidden] { display: none !important; }
+.tiger-menu.left-edge { left: 0; right: auto; }
+.tiger-menu.below { bottom: auto; top: calc(100% + 12px); }
+.tiger-menu button {
+  width: 100%; min-height: 42px; display: block; padding: 8px 10px; text-align: left;
+  border: 0; border-radius: 7px; background: transparent; color: #e9e6e0; font: inherit; font-size: 13px; cursor: pointer;
+}
+.tiger-menu button:hover, .tiger-menu button:focus-visible { background: #1a2540; color: #c9a26b; }
+.tiger-recall {
+  position: fixed; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom,0px));
+  z-index: 90; width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid #2a3a55; background: #141d33; color: #c9a26b; font-size: 20px; cursor: pointer;
+}
+#tiger.is-paused .tiger-body, #tiger.is-paused .tiger-zz { animation-play-state: paused; }
+#tiger.is-reading:not(:focus-within):not(:hover) { opacity: .22; pointer-events: none; }
+.tiger-help { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+@media (max-width: 600px) { #tiger { --pet-size: 78px; } }
+@media (prefers-reduced-motion: reduce) {
+  #tiger *, .tiger-recall { animation: none !important; transition: none !important; }
+}

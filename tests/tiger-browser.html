@@ -1,0 +1,31 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><base href="/"><meta name="viewport" content="width=device-width,initial-scale=1"><title>老虎互动回归检查</title><link rel="stylesheet" href="common.css"><link rel="stylesheet" href="tiger.css"><style>main{padding:20px}pre{white-space:pre-wrap;font-size:13px}#field{height:240px;border:1px dashed #526078}button#run{padding:12px;color:#e9e6e0;background:#25334c;border:1px solid #c9a26b;border-radius:8px}</style><main><h1>老虎互动回归</h1><button id="run">运行互动检查</button><pre id="result">尚未运行</pre><div id="field" aria-label="空白活动区"></div><p id="reading">正文阅读区域</p></main><script src="tiger.js"></script><script>
+const out=document.getElementById('result');let lines=[];
+function report(name,ok){lines.push((ok?'PASS ':'FAIL ')+name+(!ok?' [state='+document.getElementById('tiger').dataset.state+', hidden='+document.hidden+']':''));out.textContent=lines.join('\n');if(!ok)throw new Error(name)}
+window.addEventListener('error',e=>{out.textContent+='\nERROR '+e.message});
+const wait=ms=>new Promise(resolve=>{let last=performance.now(),active=0;function check(){let t=performance.now();if(!document.hidden)active+=Math.min(t-last,100);last=t;if(active>=ms)resolve();else setTimeout(check,50)}setTimeout(check,50)});
+document.getElementById('run').onclick=async function(){
+ this.disabled=true;lines=[];out.textContent='运行中…';
+ const root=document.getElementById('tiger'),hit=root.querySelector('.tiger-hit'),menu=root.querySelector('.tiger-menu');
+ const tap=()=>hit.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+ const context=()=>hit.dispatchEvent(new MouseEvent('contextmenu',{bubbles:true,cancelable:true}));
+ const move=(x,y)=>document.getElementById('field').dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:x,clientY:y}));
+ try{
+  tap();report('单击翻肚皮并显示嗷呜',root.dataset.state==='roll'&&root.querySelector('.tiger-bubble').textContent.includes('嗷呜'));
+  await wait(450);report('互动使用新图集',Array.from(root.querySelectorAll('.tiger-frame.visible')).some(el=>el.style.backgroundImage.includes('actions-v2')));
+  await wait(2300);report('翻肚皮完成回到待机',root.dataset.state==='idle');
+  tap();tap();report('连续双击触发小跳',root.dataset.state==='bounce');await wait(800);
+  context();report('右键打开互动菜单',!menu.hidden);
+  menu.querySelector('[data-action="sleep"]').click();report('菜单选择睡觉',root.dataset.state==='sleep');
+  await wait(2100);report('睡觉持续，不随机跳回待机',root.dataset.state==='sleep');
+  tap();report('睡醒先伸懒腰',root.dataset.state==='stretch');await wait(1900);
+  context();menu.querySelector('[data-action="hide"]').click();report('收起后留下召回按钮',root.hidden&&!document.querySelector('.tiger-recall').hidden);
+  document.querySelector('.tiger-recall').click();report('召回后菜单关闭，恢复招手',!root.hidden&&menu.hidden&&root.dataset.state==='wave');await wait(1300);
+  move(60,220);await wait(1200);move(innerWidth-45,250);await wait(60);report('反向先刹车或正面转身',['brake','turn'].includes(root.dataset.state));
+  await wait(400);document.dispatchEvent(new CustomEvent('tiger-pause'));let frozen=root.style.transform;await wait(350);report('相册暂停时位置冻结',root.style.transform===frozen&&root.style.visibility==='hidden');
+  document.dispatchEvent(new CustomEvent('tiger-resume'));await wait(2400);
+  const rect=root.getBoundingClientRect();report('移动结束仍在可见区域内',rect.left>=7&&rect.right<=innerWidth-7&&rect.top>=65&&rect.bottom<=innerHeight-10);
+  const state=root.dataset.state;document.getElementById('reading').click();report('点击正文不会开始乱跑',root.dataset.state===state);
+  out.textContent+='\n全部完成';
+ }catch(e){out.textContent+='\n检查终止：'+e.message}finally{this.disabled=false}
+};
+</script></html>
