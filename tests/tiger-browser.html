@@ -11,9 +11,12 @@ document.getElementById('run').onclick=async function(){
  const move=(x,y)=>document.getElementById('field').dispatchEvent(new MouseEvent('click',{bubbles:true,clientX:x,clientY:y}));
  try{
   tap();report('单击翻肚皮并显示嗷呜',root.dataset.state==='roll'&&root.querySelector('.tiger-bubble').textContent.includes('嗷呜'));
-  await wait(450);report('互动使用新图集',Array.from(root.querySelectorAll('.tiger-frame.visible')).some(el=>el.style.backgroundImage.includes('actions-v2')));
+  await wait(450);report('互动使用新图集',Array.from(root.querySelectorAll('.tiger-frame.visible')).some(el=>el.style.backgroundImage.includes('actions-v3')));
   await wait(2300);report('翻肚皮完成回到待机',root.dataset.state==='idle');
   tap();tap();report('连续双击触发小跳',root.dataset.state==='bounce');await wait(800);
+  tap();report('舔爪洗脸不显示动作文字',root.dataset.state==='groom'&&!root.querySelector('.tiger-bubble').classList.contains('show'));
+  await wait(5000);report('舔爪五秒后仍在继续并使用八帧新图集',root.dataset.state==='groom'&&root.querySelector('.tiger-frame.visible').style.backgroundImage.includes('groom-v3'));
+  await wait(1800);report('三轮洗脸结束后回到待机',root.dataset.state==='idle');
   context();report('右键打开互动菜单',!menu.hidden);
   menu.querySelector('[data-action="sleep"]').click();report('菜单选择睡觉',root.dataset.state==='sleep');
   await wait(2100);report('睡觉持续，不随机跳回待机',root.dataset.state==='sleep');

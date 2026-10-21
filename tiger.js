@@ -48,7 +48,7 @@
   root.innerHTML = '<button type="button" class="tiger-hit" aria-label="摸摸老虎" aria-describedby="tigerHelp">'
     + '<span class="tiger-shadow" aria-hidden="true"></span><span class="tiger-body" aria-hidden="true">'
     + '<span class="tiger-frame"></span><span class="tiger-frame"></span></span></button>'
-    + '<span class="tiger-bubble" role="status" aria-live="polite"></span><span class="tiger-zz" aria-hidden="true">zZ</span>'
+    + '<span class="tiger-bubble" role="status" aria-live="polite"></span><span class="tiger-zz" aria-hidden="true"></span>'
     + '<span id="tigerHelp" class="tiger-help">点击互动，双击跳一跳；右键或长按打开小菜单，方向键带它走，Escape 收起菜单。</span>'
     + '<div class="tiger-menu" role="group" aria-label="和老虎玩" hidden>'
     + '<button type="button" data-action="wave">挥爪打招呼</button><button type="button" data-action="stretch">伸个懒腰</button>'
@@ -61,14 +61,21 @@
   var layers = root.querySelectorAll('.tiger-frame'), bubble = root.querySelector('.tiger-bubble');
   var zz = root.querySelector('.tiger-zz'), menu = root.querySelector('.tiger-menu');
   var assets = {
-    idle: { src: 'tiger-idle.png', cols: 4, rows: 1 },
-    sit: { src: 'tiger-sit.png', cols: 2, rows: 1 },
-    sleep: { src: 'tiger-sleep.png', cols: 2, rows: 1 },
-    oldRun: { src: 'tiger-run8.png', cols: 8, rows: 1 },
-    oldPlay: { src: 'tiger-play.png', cols: 2, rows: 1 },
-    run: { src: 'assets/tiger/run-v2.webp', cols: 4, rows: 2, offset: 0.055 },
-    actions: { src: 'assets/tiger/actions-v2.webp', cols: 4, rows: 4, offset: 0.005 }
+    idle: { src: 'assets/tiger/idle-v3.webp', cols: 4, rows: 1 },
+    sit: { src: 'assets/tiger/sit-v3.webp', cols: 2, rows: 1 },
+    sleep: { src: 'assets/tiger/sleep-v3.webp', cols: 2, rows: 1 },
+    oldRun: { src: 'assets/tiger/run8-v3.webp', cols: 8, rows: 1 },
+    oldPlay: { src: 'assets/tiger/play-v3.webp', cols: 2, rows: 1 },
+    run: { src: 'assets/tiger/run-v3.webp', cols: 4, rows: 2, offset: 0.055 },
+    actions: { src: 'assets/tiger/actions-v3.webp', cols: 4, rows: 4, offset: 0.005 },
+    groom: { src: 'assets/tiger/groom-v3.webp', cols: 4, rows: 2 }
   };
+  // Three slow cycles: two licks, then a complete cheek-to-eye wipe.
+  var groomFrames = [], groomTimes = [];
+  for (var cycle = 0; cycle < 3; cycle++) {
+    groomFrames = groomFrames.concat([0,1,2,3,1,2,3,4,5,6,7]);
+    groomTimes = groomTimes.concat([160,160,220,160,160,220,160,220,300,220,220]);
+  }
   var clips = {
     idle: { asset: 'idle', frames: [0,1,0,2,0,3,0], times: [2300,110,1700,700,1600,700,1900] },
     sit: { asset: 'sit', frames: [0,1,0], times: [3400,750,1800] },
@@ -77,16 +84,16 @@
     wave: { asset: 'actions', frames: [0,1,2,1,2,3], times: [150,180,230,170,230,200], duration: 1160 },
     stretch: { asset: 'actions', frames: [4,5,6,7], times: [200,350,850,350], duration: 1750 },
     roll: { asset: 'actions', frames: [8,9,10,11,10,11,10,9,8], times: [120,240,480,300,300,300,350,240,180], duration: 2510 },
-    groom: { asset: 'actions', frames: [12,13,14,13,14,15], times: [160,230,300,200,300,240], duration: 1430 },
+    groom: { asset: 'groom', frames: groomFrames, times: groomTimes, duration: 6600 },
     bounce: { asset: 'idle', frames: [0,1,0], times: [180,120,350], duration: 650 }
   };
   var size = innerWidth <= 600 ? 78 : 96;
   var p = { x: innerWidth - size - 20, y: innerHeight - size - 24, vx: 0, vy: 0 };
   var target = { x: p.x, y: p.y }, facing = 1, wantedFacing = 1;
-  var state = 'idle', stateAt = 0, lastStep = 0, lastActivity = 0, nextIdle = 11000;
+  var state = 'idle', stateAt = 0, lastStep = 0, lastActivity = 0, nextIdle = 11000, nextYawn = 18000;
   var bubbleUntil = 0, userSleep = false, afterAction = null, dismissed = false;
   var pausedAt = null, pausedTotal = 0, modalDepth = 0;
-  var raf = null, timer = null, activeLayer = 0, currentAsset = '', currentFacing = 1;
+  var raf = null, timer = null, activeLayer = 0, currentAsset = '', currentFacing = 1, currentFrame = -1;
   var longTimer = null, longHandled = false, lastTap = -10000, greeting = 0, scrollTimer = null;
   function now() { return (pausedAt === null ? performance.now() : pausedAt) - pausedTotal; }
   function paused() { return pausedAt !== null || dismissed; }
@@ -99,6 +106,7 @@
     target.y = clamp(target.y, 66, Math.max(66, innerHeight - size - safeBottom));
   }
   function say(text, duration) {
+    if (text !== '嗷呜～') return;
     bubble.textContent = text; bubbleUntil = now() + (duration || 1800); bubble.classList.add('show');
   }
   function cancelTicks() {
@@ -138,18 +146,20 @@
     if (!asset.ready) {
       load(assetName);
       if (assetName === 'run') { assetName = 'oldRun'; frame %= 8; }
-      else if (assetName === 'actions') { assetName = state === 'roll' ? 'oldPlay' : 'idle'; frame %= state === 'roll' ? 2 : 4; }
+      else if (assetName === 'actions' || assetName === 'groom') { assetName = state === 'roll' ? 'oldPlay' : 'idle'; frame %= state === 'roll' ? 2 : 4; }
       asset = assets[assetName]; load(assetName);
       if (!asset.ready) return;
     }
-    if (assetName !== currentAsset || direction !== currentFacing) {
+    if (assetName !== currentAsset || direction !== currentFacing || (assetName === 'groom' && frame !== currentFrame)) {
       layers[activeLayer].classList.remove('visible');
       activeLayer = 1 - activeLayer; currentAsset = assetName; currentFacing = direction;
       layers[activeLayer].style.backgroundImage = 'url("' + asset.src + '")';
       layers[activeLayer].style.backgroundSize = (asset.cols * 100) + '% ' + (asset.rows * 100) + '%';
       layers[activeLayer].style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scaleX(' + direction + ')';
+      layers[activeLayer].style.transitionDuration = assetName === 'groom' ? '70ms' : '150ms';
       layers[activeLayer].classList.add('visible');
     }
+    currentFrame = frame;
     var col = frame % asset.cols, row = Math.floor(frame / asset.cols);
     layers[activeLayer].style.backgroundPosition = (asset.cols > 1 ? col / (asset.cols - 1) * 100 : 0) + '% ' + (asset.rows > 1 ? row / (asset.rows - 1) * 100 : 0) + '%';
   }
@@ -176,26 +186,27 @@
   }
   var stridePhase = 0;
   function startMove() {
-    if (reduced.matches) { stateTo('idle'); say('我在这里陪你～'); return; }
+    if (reduced.matches) { stateTo('idle'); return; }
     var dx = target.x - p.x;
     wantedFacing = Math.abs(dx) > 8 ? (dx > 0 ? -1 : 1) : facing;
     if (wantedFacing !== facing) stateTo('turn');
     else stateTo('move');
   }
   function moveTo(x, y) {
-    lastActivity = now(); userSleep = false; closeMenu(false);
+    lastActivity = now(); nextYawn = lastActivity + 18000; userSleep = false; closeMenu(false);
     target = { x: x - size/2, y: y - size*.78 }; bounds();
     var desired = Math.abs(target.x-p.x)>10 ? (target.x > p.x ? -1 : 1) : facing;
     wantedFacing = desired;
-    if (state === 'sleep') { say('睡醒啦，出发～',2000); stateTo('stretch',startMove); }
+    if (state === 'sleep') { stateTo('stretch',startMove); }
     else if (state === 'move' && desired !== facing) stateTo('brake');
     else if (state === 'move' || state === 'brake') { /* Keep momentum and phase on repeated destinations. */ }
     else startMove();
     refresh();
   }
   function interact(name, text) {
-    lastActivity = now(); userSleep = false;
-    if (name === 'sleep') { userSleep = true; stateTo('sleep'); say('呼噜…',1200); }
+    lastActivity = now(); nextYawn = lastActivity + 18000; userSleep = false;
+    bubble.classList.remove('show'); bubbleUntil = 0;
+    if (name === 'sleep') { userSleep = true; stateTo('sleep'); }
     else { stateTo(name); if (text) say(text); }
     closeMenu(false); refresh();
   }
@@ -225,12 +236,13 @@
     else if (!clips[state].duration) {
       var quiet = t-lastActivity;
       if (userSleep || quiet>=60000) { if(state!=='sleep') stateTo('sleep'); }
+      else if (!reduced.matches && t>=nextYawn) { stateTo('stretch'); nextYawn=t+22000; }
       else if (quiet>=26000) { if(state!=='sit') stateTo('sit'); }
       else if(state==='sit' && t>=nextIdle) {
         stateTo('idle'); nextIdle=t+11000;
       }
       else if(t>=nextIdle) {
-        var choices=['groom','stretch','wave'];
+        var choices=['groom','wave'];
         stateTo(choices[Math.floor(Math.random()*choices.length)]);
         nextIdle=t+10000+Math.random()*6000;
       }
@@ -248,7 +260,7 @@
       if(active)delay=Math.min(delay,Math.max(20,clip.duration-elapsed));
       if(bubbleUntil>t)delay=Math.min(delay,bubbleUntil-t);
       if(!active&&!userSleep){
-        [nextIdle,lastActivity+26000,lastActivity+60000].forEach(function(deadline){if(deadline>t)delay=Math.min(delay,deadline-t);});
+        [nextIdle,nextYawn,lastActivity+26000,lastActivity+60000].forEach(function(deadline){if(deadline>t)delay=Math.min(delay,deadline-t);});
       }
       schedule(Math.max(30,delay));
     }
@@ -264,10 +276,10 @@
     e.stopPropagation();
     if(longHandled){longHandled=false;return;}
     var t=now();
-    if(state==='sleep'){interact('stretch','睡醒啦～');lastTap=t;return;}
-    if(t-lastTap<320){interact('bounce','接住我的快乐～');lastTap=-10000;return;}
+    if(state==='sleep'){interact('stretch');lastTap=t;return;}
+    if(t-lastTap<320){interact('bounce');lastTap=-10000;return;}
     lastTap=t;
-    var actions=[['roll','嗷呜～'],['wave','嗨，见到你啦～'],['groom','洗把脸，精神一点～'],['roll','肚皮软乎乎～']];
+    var actions=[['roll','嗷呜～'],['wave'],['groom'],['roll','嗷呜～']];
     var action=actions[greeting++%actions.length];interact(action[0],action[1]);
   });
   hit.addEventListener('contextmenu',function(e){e.preventDefault();openMenu();});
@@ -288,8 +300,8 @@
     var button=e.target.closest('button[data-action]');if(!button)return;e.stopPropagation();
     var action=button.dataset.action;
     if(action==='hide'){closeMenu(false);dismissed=true;cancelTicks();root.hidden=true;recall.hidden=false;recall.focus();}
-    else if(action==='wave')interact('wave','嗷呜，向你挥爪～');
-    else if(action==='stretch')interact('stretch','伸个懒腰，再出发～');
+    else if(action==='wave')interact('wave');
+    else if(action==='stretch')interact('stretch');
     else interact('sleep');
     if(action!=='hide')hit.focus();
   });
@@ -300,7 +312,7 @@
       e.preventDefault();var reverse=e.shiftKey||e.key==='ArrowUp';buttons[(i+(reverse?-1:1)+buttons.length)%buttons.length].focus();
     }
   });
-  recall.addEventListener('click',function(){dismissed=false;root.hidden=false;recall.hidden=true;lastActivity=now();stateTo('wave');say('我回来啦～');hit.focus();refresh();});
+  recall.addEventListener('click',function(){dismissed=false;root.hidden=false;recall.hidden=true;lastActivity=now();nextYawn=lastActivity+18000;stateTo('wave');hit.focus();refresh();});
   document.addEventListener('click',function(e){
     if(root.contains(e.target)||recall.contains(e.target))return;
     if(!menu.hidden){closeMenu(false);refresh();return;}
@@ -321,7 +333,7 @@
   document.addEventListener('visibilitychange',syncPause);
   document.addEventListener('tiger-pause',function(){modalDepth++;closeMenu(false);syncPause();});
   document.addEventListener('tiger-resume',function(){modalDepth=Math.max(0,modalDepth-1);syncPause();});
-  reduced.addEventListener('change',function(){p.vx=p.vy=0;stateTo('idle');lastActivity=now();refresh();});
+  reduced.addEventListener('change',function(){p.vx=p.vy=0;stateTo('idle');lastActivity=now();nextYawn=lastActivity+18000;refresh();});
   window.addEventListener('resize',function(){size=innerWidth<=600?78:96;bounds();currentAsset='';refresh();});
   window.addEventListener('scroll',function(){
     if(!menu.hidden)return;root.classList.add('is-reading');clearTimeout(scrollTimer);
@@ -329,6 +341,6 @@
   },{passive:true});
   // Respect a visitor who is reading: no autonomous wandering, sounds or page-scroll changes.
   bounds();stateTo('idle');
-  ['idle','sit','sleep','run','actions'].forEach(load);
+  ['idle','sit','sleep','run','actions','groom'].forEach(load);
   syncPause();
 })();
