@@ -256,7 +256,7 @@
     Album.init(box.querySelector('.detail-photos'), { masonry: true });
   }
 
-  fetch(dataFile + (dataFile === 'activities.json' ? '?v=20261022matianling-v2' : ''))
+  fetch(dataFile + (dataFile === 'activities.json' ? '?v=20261022wulan-golden' : ''))
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (acts) {
       var act = acts.find(function (a) { return a.id === id; });
