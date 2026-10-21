@@ -2172,7 +2172,7 @@
     "weather": "",
     "type": "Trip",
     "led": true,
-    "cover": "pics/20261010-matianling/cover.webp",
+    "cover": "pics/20261010-matianling/cover-c09.webp",
     "summary": "山间秋色、多人跳跃合影，还有一路遇见的牛羊猫。两天一夜的麻田岭赏秋记录。",
     "note": "2026年10月10日至11日，麻田岭赏秋 Trip。\n从山间行走与互动抓拍，到秋色风光、集体合影、途中遇见的小动物，以及夜晚的相聚，按类别与照片编号整理这次出行。",
     "pinned": false,
@@ -3442,14 +3442,6 @@
         "thumb": "pics/20261010-matianling/B106.thumb.webp"
       },
       {
-        "src": "pics/20261010-matianling/C01.webp",
-        "thumb": "pics/20261010-matianling/C01.thumb.webp"
-      },
-      {
-        "src": "pics/20261010-matianling/C02.webp",
-        "thumb": "pics/20261010-matianling/C02.thumb.webp"
-      },
-      {
         "src": "pics/20261010-matianling/C03.webp",
         "thumb": "pics/20261010-matianling/C03.thumb.webp"
       },
@@ -3458,16 +3450,8 @@
         "thumb": "pics/20261010-matianling/C04.thumb.webp"
       },
       {
-        "src": "pics/20261010-matianling/C05.webp",
-        "thumb": "pics/20261010-matianling/C05.thumb.webp"
-      },
-      {
         "src": "pics/20261010-matianling/C06.webp",
         "thumb": "pics/20261010-matianling/C06.thumb.webp"
-      },
-      {
-        "src": "pics/20261010-matianling/C07.webp",
-        "thumb": "pics/20261010-matianling/C07.thumb.webp"
       },
       {
         "src": "pics/20261010-matianling/C08.webp",
@@ -3476,14 +3460,6 @@
       {
         "src": "pics/20261010-matianling/C09.webp",
         "thumb": "pics/20261010-matianling/C09.thumb.webp"
-      },
-      {
-        "src": "pics/20261010-matianling/C10.webp",
-        "thumb": "pics/20261010-matianling/C10.thumb.webp"
-      },
-      {
-        "src": "pics/20261010-matianling/C11.webp",
-        "thumb": "pics/20261010-matianling/C11.thumb.webp"
       },
       {
         "src": "pics/20261010-matianling/C12.webp",
@@ -3624,6 +3600,394 @@
       {
         "src": "pics/20261010-matianling/E11.webp",
         "thumb": "pics/20261010-matianling/E11.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F01.webp",
+        "thumb": "pics/20261010-matianling/F01.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F02.webp",
+        "thumb": "pics/20261010-matianling/F02.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F03.webp",
+        "thumb": "pics/20261010-matianling/F03.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F04.webp",
+        "thumb": "pics/20261010-matianling/F04.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F05.webp",
+        "thumb": "pics/20261010-matianling/F05.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F06.webp",
+        "thumb": "pics/20261010-matianling/F06.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F07.webp",
+        "thumb": "pics/20261010-matianling/F07.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F08.webp",
+        "thumb": "pics/20261010-matianling/F08.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F09.webp",
+        "thumb": "pics/20261010-matianling/F09.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F10.webp",
+        "thumb": "pics/20261010-matianling/F10.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F11.webp",
+        "thumb": "pics/20261010-matianling/F11.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F12.webp",
+        "thumb": "pics/20261010-matianling/F12.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F13.webp",
+        "thumb": "pics/20261010-matianling/F13.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F14.webp",
+        "thumb": "pics/20261010-matianling/F14.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F15.webp",
+        "thumb": "pics/20261010-matianling/F15.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F16.webp",
+        "thumb": "pics/20261010-matianling/F16.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F17.webp",
+        "thumb": "pics/20261010-matianling/F17.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F18.webp",
+        "thumb": "pics/20261010-matianling/F18.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F19.webp",
+        "thumb": "pics/20261010-matianling/F19.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F20.webp",
+        "thumb": "pics/20261010-matianling/F20.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F21.webp",
+        "thumb": "pics/20261010-matianling/F21.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F22.webp",
+        "thumb": "pics/20261010-matianling/F22.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F23.webp",
+        "thumb": "pics/20261010-matianling/F23.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F24.webp",
+        "thumb": "pics/20261010-matianling/F24.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F25.webp",
+        "thumb": "pics/20261010-matianling/F25.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F26.webp",
+        "thumb": "pics/20261010-matianling/F26.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F27.webp",
+        "thumb": "pics/20261010-matianling/F27.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F28.webp",
+        "thumb": "pics/20261010-matianling/F28.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F29.webp",
+        "thumb": "pics/20261010-matianling/F29.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F30.webp",
+        "thumb": "pics/20261010-matianling/F30.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F31.webp",
+        "thumb": "pics/20261010-matianling/F31.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F32.webp",
+        "thumb": "pics/20261010-matianling/F32.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F33.webp",
+        "thumb": "pics/20261010-matianling/F33.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F34.webp",
+        "thumb": "pics/20261010-matianling/F34.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F35.webp",
+        "thumb": "pics/20261010-matianling/F35.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F36.webp",
+        "thumb": "pics/20261010-matianling/F36.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F37.webp",
+        "thumb": "pics/20261010-matianling/F37.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F38.webp",
+        "thumb": "pics/20261010-matianling/F38.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F39.webp",
+        "thumb": "pics/20261010-matianling/F39.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F40.webp",
+        "thumb": "pics/20261010-matianling/F40.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F41.webp",
+        "thumb": "pics/20261010-matianling/F41.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F42.webp",
+        "thumb": "pics/20261010-matianling/F42.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F43.webp",
+        "thumb": "pics/20261010-matianling/F43.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F44.webp",
+        "thumb": "pics/20261010-matianling/F44.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F45.webp",
+        "thumb": "pics/20261010-matianling/F45.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F46.webp",
+        "thumb": "pics/20261010-matianling/F46.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F47.webp",
+        "thumb": "pics/20261010-matianling/F47.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F48.webp",
+        "thumb": "pics/20261010-matianling/F48.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F49.webp",
+        "thumb": "pics/20261010-matianling/F49.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F50.webp",
+        "thumb": "pics/20261010-matianling/F50.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F51.webp",
+        "thumb": "pics/20261010-matianling/F51.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F52.webp",
+        "thumb": "pics/20261010-matianling/F52.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F53.webp",
+        "thumb": "pics/20261010-matianling/F53.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F54.webp",
+        "thumb": "pics/20261010-matianling/F54.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F55.webp",
+        "thumb": "pics/20261010-matianling/F55.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F56.webp",
+        "thumb": "pics/20261010-matianling/F56.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F57.webp",
+        "thumb": "pics/20261010-matianling/F57.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F58.webp",
+        "thumb": "pics/20261010-matianling/F58.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F59.webp",
+        "thumb": "pics/20261010-matianling/F59.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F60.webp",
+        "thumb": "pics/20261010-matianling/F60.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F61.webp",
+        "thumb": "pics/20261010-matianling/F61.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F62.webp",
+        "thumb": "pics/20261010-matianling/F62.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F63.webp",
+        "thumb": "pics/20261010-matianling/F63.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F64.webp",
+        "thumb": "pics/20261010-matianling/F64.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F65.webp",
+        "thumb": "pics/20261010-matianling/F65.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F66.webp",
+        "thumb": "pics/20261010-matianling/F66.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F67.webp",
+        "thumb": "pics/20261010-matianling/F67.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F68.webp",
+        "thumb": "pics/20261010-matianling/F68.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F69.webp",
+        "thumb": "pics/20261010-matianling/F69.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F70.webp",
+        "thumb": "pics/20261010-matianling/F70.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F71.webp",
+        "thumb": "pics/20261010-matianling/F71.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F72.webp",
+        "thumb": "pics/20261010-matianling/F72.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F73.webp",
+        "thumb": "pics/20261010-matianling/F73.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F74.webp",
+        "thumb": "pics/20261010-matianling/F74.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F75.webp",
+        "thumb": "pics/20261010-matianling/F75.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F76.webp",
+        "thumb": "pics/20261010-matianling/F76.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F77.webp",
+        "thumb": "pics/20261010-matianling/F77.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F78.webp",
+        "thumb": "pics/20261010-matianling/F78.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F79.webp",
+        "thumb": "pics/20261010-matianling/F79.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F80.webp",
+        "thumb": "pics/20261010-matianling/F80.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F81.webp",
+        "thumb": "pics/20261010-matianling/F81.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F82.webp",
+        "thumb": "pics/20261010-matianling/F82.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F83.webp",
+        "thumb": "pics/20261010-matianling/F83.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F84.webp",
+        "thumb": "pics/20261010-matianling/F84.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F85.webp",
+        "thumb": "pics/20261010-matianling/F85.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F86.webp",
+        "thumb": "pics/20261010-matianling/F86.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F87.webp",
+        "thumb": "pics/20261010-matianling/F87.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F88.webp",
+        "thumb": "pics/20261010-matianling/F88.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F89.webp",
+        "thumb": "pics/20261010-matianling/F89.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F90.webp",
+        "thumb": "pics/20261010-matianling/F90.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F91.webp",
+        "thumb": "pics/20261010-matianling/F91.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F92.webp",
+        "thumb": "pics/20261010-matianling/F92.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F93.webp",
+        "thumb": "pics/20261010-matianling/F93.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F94.webp",
+        "thumb": "pics/20261010-matianling/F94.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F95.webp",
+        "thumb": "pics/20261010-matianling/F95.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F100.webp",
+        "thumb": "pics/20261010-matianling/F100.thumb.webp"
+      },
+      {
+        "src": "pics/20261010-matianling/F101.webp",
+        "thumb": "pics/20261010-matianling/F101.thumb.webp"
       }
     ],
     "videos": []
