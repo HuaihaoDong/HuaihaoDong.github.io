@@ -113,11 +113,11 @@
 <body>
 <header class="navbar" id="navbar">
   <a class="nav-logo" href="index.html">Tiger Captain</a>
-  <nav class="nav-links" id="navLinks">
+  <nav class="nav-links" id="navLinks" aria-label="主导航">
     <a class="nav-item" href="index.html">首页</a>
     <div class="nav-item nav-dropdown" id="aboutDropdown">
-      关于我 <span class="nav-caret">▾</span>
-      <div class="dropdown-menu">
+      <button class="nav-about-toggle" type="button" aria-expanded="false" aria-controls="aboutMenu">关于我 <span class="nav-caret" aria-hidden="true">▾</span></button>
+      <div class="dropdown-menu" id="aboutMenu">
         <a href="about.html#who">何方神圣</a>
         <a href="about.html#leader">烛逢老虎领队</a>
         <a href="about.html#hobby">兴趣爱好</a>
@@ -130,10 +130,10 @@
       <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
     </a>
   </nav>
-  <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">首页</a>
-    <div class="m-acc" id="mAbout">关于我 <span class="m-caret">▾</span></div>
+    <button class="m-acc" id="mAbout" type="button" aria-expanded="false" aria-controls="mAboutSub">关于我 <span class="m-caret" aria-hidden="true">▾</span></button>
     <div class="m-sub" id="mAboutSub">
       <a href="about.html#who">何方神圣</a>
       <a href="about.html#leader">烛逢老虎领队</a>
@@ -148,7 +148,7 @@
 
 <main class="section">
   <a class="back" href="story.html" id="backLink">← 返回故事列表</a>
-  <div id="detail"></div>
+  <div id="detail" aria-live="polite"><p class="detail-empty" role="status">正在加载活动记录…</p></div>
 </main>
 
 <script src="nav.js"></script>
@@ -160,8 +160,12 @@
   var params = new URLSearchParams(location.search);
   var id = params.get('id');
   // 数据源与返回目标可由 URL 参数指定，默认烛逢故事
-  var dataFile = params.get('data') || 'activities.json?v=20261024jinhaihu';
-  var backHref = params.get('back') || 'story.html';
+  var sources = { 'activities.json': 'story.html', 'trek.json': 'trek.html', 'football-matches.json': 'football.html', 'group-events.json': 'group.html' };
+  var requestedData = params.get('data') || 'activities.json';
+  var dataFile = Object.prototype.hasOwnProperty.call(sources, requestedData) ? requestedData : 'activities.json';
+  var allowedBack = Object.keys(sources).map(function (key) { return sources[key]; });
+  var requestedBack = params.get('back');
+  var backHref = allowedBack.indexOf(requestedBack) !== -1 ? requestedBack : sources[dataFile];
   var backLabels = {
     'trek.html': '返回重装徒步',
     'football.html': '返回足球',
@@ -202,6 +206,7 @@
   }
 
   function render(act) {
+    document.title = act.title + ' | Tiger Captain';
     var cover = act.cover
       ? '<img src="' + act.cover + '" alt="' + act.title + '">'
       : '<div class="cover-ph">封面待补充</div>';
@@ -209,7 +214,7 @@
     var photoList = (act.photos || []).map(photoInfo).filter(function (x) { return x; });
     var photos = photoList.length
       ? photoList.map(function (p, i) {
-          return '<div class="ph-item"><img src="' + p.thumb + '" data-full="' + p.src + '" alt="' + act.title + ' 照片 ' + (i + 1) + '" loading="lazy"></div>';
+          return '<div class="ph-item"><img src="' + p.thumb + '" data-full="' + p.src + '" alt="' + act.title + ' 照片 ' + (i + 1) + '" loading="lazy" decoding="async"></div>';
         }).join('')
       : '<div class="detail-empty">照片待补充</div>';
 
@@ -251,8 +256,8 @@
     Album.init(box.querySelector('.detail-photos'), { masonry: true });
   }
 
-  fetch(dataFile)
-    .then(function (r) { return r.json(); })
+  fetch(dataFile + (dataFile === 'activities.json' ? '?v=20261022wulan-golden' : ''))
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (acts) {
       var act = acts.find(function (a) { return a.id === id; });
       if (act) { render(act); }
