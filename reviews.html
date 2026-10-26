@@ -45,7 +45,7 @@
     background: #fff; border-radius: 12px; overflow: hidden;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
   }
-  .review-item img { width: 100%; display: block; }
+  .review-item img { width: 100%; height: auto; max-height: none; display: block; }
 
   .page-foot { text-align: center; color: var(--dim); font-size: 13px; padding: 24px 0 40px; }
 
@@ -105,11 +105,11 @@
 <script>
 (function () {
   var list = document.getElementById('reviewList');
-  fetch('reviews.json')
+  fetch('reviews.json?v=20261026v2')
     .then(function (r) { return r.json(); })
     .then(function (items) {
-      list.innerHTML = items.map(function (src) {
-        return '<div class="review-item"><img src="' + src + '" alt="评价" loading="lazy"></div>';
+      list.innerHTML = items.map(function (src, i) {
+        return '<div class="review-item" id="review-' + (i + 1) + '"><img src="' + src + '" alt="伙伴评价 ' + (i + 1) + '" loading="lazy"></div>';
       }).join('');
     })
     .catch(function () {
