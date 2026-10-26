@@ -58,12 +58,13 @@
   recall.type = 'button'; recall.className = 'tiger-recall'; recall.textContent = '🐯';
   recall.setAttribute('aria-label', '叫老虎回来'); recall.hidden = true; document.body.appendChild(recall);
   var hit = root.querySelector('.tiger-hit'), body = root.querySelector('.tiger-body');
+  var smoothGroom = window.CSS && CSS.supports('mix-blend-mode', 'plus-lighter');
   var layers = root.querySelectorAll('.tiger-frame'), bubble = root.querySelector('.tiger-bubble');
   var zz = root.querySelector('.tiger-zz'), menu = root.querySelector('.tiger-menu');
   var assets = {
     idle: { src: 'assets/tiger/idle-v3.webp', cols: 4, rows: 1 },
     sit: { src: 'assets/tiger/sit-v3.webp', cols: 2, rows: 1 },
-    sleep: { src: 'assets/tiger/sleep-v3.webp', cols: 2, rows: 1 },
+    sleep: { src: 'assets/tiger/sleep-v4.png', cols: 2, rows: 1 },
     oldRun: { src: 'assets/tiger/run8-v3.webp', cols: 8, rows: 1 },
     oldPlay: { src: 'assets/tiger/play-v3.webp', cols: 2, rows: 1 },
     run: { src: 'assets/tiger/run-v3.webp', cols: 4, rows: 2, offset: 0.055 },
@@ -73,8 +74,8 @@
   // Three slow cycles: two licks, then a complete cheek-to-eye wipe.
   var groomFrames = [], groomTimes = [];
   for (var cycle = 0; cycle < 3; cycle++) {
-    groomFrames = groomFrames.concat([0,1,2,3,1,2,3,4,5,6,7]);
-    groomTimes = groomTimes.concat([160,160,220,160,160,220,160,220,300,220,220]);
+    groomFrames = groomFrames.concat([0,1,2,3,2,1,2,3,4,5,4,6,7]);
+    groomTimes = groomTimes.concat([120,140,200,140,140,140,200,140,160,260,160,200,200]);
   }
   var clips = {
     idle: { asset: 'idle', frames: [0,1,0,2,0,3,0], times: [2300,110,1700,700,1600,700,1900] },
@@ -151,12 +152,19 @@
       if (!asset.ready) return;
     }
     if (assetName !== currentAsset || direction !== currentFacing || (assetName === 'groom' && frame !== currentFrame)) {
+      // Additive crossfades keep identical opaque pixels at full brightness.
+      // Source-over opacity blending otherwise dims the tiger at every grooming frame.
+      var grooming = assetName === 'groom';
+      body.classList.toggle('tiger-groom-blend', grooming && smoothGroom);
+      for (var layerIndex = 0; layerIndex < layers.length; layerIndex++) {
+        layers[layerIndex].style.transitionDuration = grooming ? (smoothGroom ? '100ms' : '0ms') : '150ms';
+        layers[layerIndex].style.transitionTimingFunction = grooming ? 'linear' : 'ease';
+      }
       layers[activeLayer].classList.remove('visible');
       activeLayer = 1 - activeLayer; currentAsset = assetName; currentFacing = direction;
       layers[activeLayer].style.backgroundImage = 'url("' + asset.src + '")';
       layers[activeLayer].style.backgroundSize = (asset.cols * 100) + '% ' + (asset.rows * 100) + '%';
       layers[activeLayer].style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scaleX(' + direction + ')';
-      layers[activeLayer].style.transitionDuration = assetName === 'groom' ? '70ms' : '150ms';
       layers[activeLayer].classList.add('visible');
     }
     currentFrame = frame;
