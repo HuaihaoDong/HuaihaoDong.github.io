@@ -160,7 +160,7 @@
   var params = new URLSearchParams(location.search);
   var id = params.get('id');
   // 数据源与返回目标可由 URL 参数指定，默认烛逢故事
-  var sources = { 'activities.json': 'story.html', 'trek.json': 'trek.html', 'football-matches.json': 'football.html', 'group-events.json': 'group.html' };
+  var sources = { 'activities.json': 'story.html', 'trek.json': 'trek.html', 'football-matches.json': 'football.html', 'group-events.json': 'group.html', 'hobbies.json': 'about.html#hobby' };
   var requestedData = params.get('data') || 'activities.json';
   var dataFile = Object.prototype.hasOwnProperty.call(sources, requestedData) ? requestedData : 'activities.json';
   var allowedBack = Object.keys(sources).map(function (key) { return sources[key]; });
