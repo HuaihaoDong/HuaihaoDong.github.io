@@ -456,7 +456,7 @@ font-weight:400;
           </div>
         </div>
         <div class="intro-box">
-          <p class="body-text"><strong>正经介绍：</strong>内蒙古生人，家乡为风电之都、草原云谷乌兰察布；中共党员；有过一些<a class="intro-link" data-intro="work">学生工作经历</a>；一些<a class="intro-link" data-intro="honors">小的荣誉</a>；本科毕业生代表发言；省部级优秀毕设；大学生省运会 4×100 米接力第五名；户外爱好者，包括神农架、川西格聂等共重装徒步 6 次、轻装徒步 50 余次，考取过两次急救证，接受过正规户外知识培训。</p>
+          <p class="body-text"><strong>正经介绍：</strong>内蒙古生人，家乡为风电之都、草原云谷乌兰察布；中共党员；有过一些<a class="intro-link" data-intro="work">学生工作经历</a>；一些<a class="intro-link" data-intro="honors">小的荣誉</a>；本科毕业生代表发言；省部级优秀毕设；<a class="intro-link" data-intro="sports">体育爱好者</a>：一百米国家二级运动员，第十七届首都高校田径运动会（秋高）4×100 米接力亚军 42″88；户外爱好者：包括神农架、川西格聂等共重装徒步 6 次、露营 4 次、轻装徒步 60 余次，考取过两次急救证，接受过正规户外知识培训。</p>
           <p class="body-text"><strong>正式介绍（省流）：</strong>爱玩，爱瞎鼓捣，喜欢交朋友，喜欢看世界！希望自己能成长为真诚、温暖、热情、善良、豁达、通透、勇敢、能担责任的高级大人。</p>
         </div>
       </section>
@@ -590,10 +590,11 @@ body.lb-open { overflow: hidden; }
   <div class="intro-card" id="introCard"></div>
 </div>
 <script>
-/* 正文注记弹卡片：点「学生工作经历」「小的荣誉」弹出详情，点卡片侧面退出 */
+/* 正文注记弹卡片：点「学生工作经历」「体育爱好者」「小的荣誉」弹出详情，点卡片侧面退出 */
 (function(){
   var DATA = {
-    work: { title: '学生工作经历', text: '超十年班长经历，曾任主席团成员、足球队队长、田径队负责人、校级学生创新科创团队负责人。' },
+    work: { title: '学生工作经历', text: '十一年班长经历，曾任学生会部长、主席团成员、足球队队长、田径队负责人、校级学生创新科创团队负责人。' },
+    sports: { title: '体育爱好者', text: '涉猎田径100米（pb11″42）、200米（pb23″83）、4×100米（42″88）、5000米（之前跑着玩 pb18′20）；足球；滑雪；攀岩；橄榄球；羽毛球；网球。' },
     honors: { title: '小的荣誉', text: '曾获省部级先进个人荣誉两次、省部级先进班集体一次（班长），市、区级先进个人各一次，优秀共产党员，其他荣誉若干。' }
   };
   var pop = document.getElementById('introPop');
