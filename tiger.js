@@ -38,7 +38,11 @@
     for (var i = 0; i < durations.length; i++) { if (cursor < durations[i]) return sequence[i]; cursor -= durations[i]; }
     return sequence[sequence.length - 1];
   }
-  var model = { advance: advance, brake: brake, frameAt: frameAt, clamp: clamp };
+  function runPose(phase) {
+    var cycle = ((phase % 8) + 8) % 8, frame = Math.floor(cycle);
+    return { frame: frame, next: (frame + 1) % 8, mix: cycle - frame };
+  }
+  var model = { runPose: runPose, advance: advance, brake: brake, frameAt: frameAt, clamp: clamp };
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
   if (typeof document === 'undefined' || document.getElementById('tiger')) return;
 
@@ -142,7 +146,37 @@
     image.onerror = function () { asset.failed = true; };
     image.src = asset.src;
   }
+  var runBlendActive = false;
+  function paintRun(phase, direction) {
+    var asset = assets.run, pose = runPose(phase);
+    if (!smoothGroom || !asset.ready) { paint('run', pose.frame, direction); return; }
+    body.classList.remove('tiger-groom-blend');
+    body.classList.add('tiger-run-blend');
+    runBlendActive = true;
+    for (var i = 0; i < layers.length; i++) {
+      var layer = layers[i], index = i ? pose.next : pose.frame;
+      if (currentAsset !== 'run' || currentFacing !== direction) {
+        layer.style.backgroundImage = 'url("' + asset.src + '")';
+        layer.style.backgroundSize = (asset.cols * 100) + '% ' + (asset.rows * 100) + '%';
+        layer.style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scaleX(' + direction + ')';
+      }
+      layer.style.transitionDuration = '0ms';
+      layer.style.backgroundPosition = (index % asset.cols / (asset.cols - 1) * 100) + '% ' + (Math.floor(index / asset.cols) / (asset.rows - 1) * 100) + '%';
+      layer.style.opacity = String(i ? pose.mix : 1 - pose.mix);
+      layer.classList.add('visible');
+    }
+    activeLayer = pose.mix >= .5 ? 1 : 0;
+    currentAsset = 'run'; currentFacing = direction; currentFrame = pose.frame;
+  }
   function paint(assetName, frame, direction) {
+    if (runBlendActive) {
+      // Restore one opaque layer before returning to ordinary action crossfades.
+      for (var i = 0; i < layers.length; i++) {
+        layers[i].style.opacity = '';
+        layers[i].classList.toggle('visible', i === activeLayer);
+      }
+      body.classList.remove('tiger-run-blend'); runBlendActive = false;
+    }
     var asset = assets[assetName];
     if (!asset.ready) {
       load(assetName);
@@ -175,7 +209,7 @@
     var elapsed = Math.max(0, t - stateAt);
     if (state === 'move' || state === 'brake') {
       // Distance-based phase keeps the paws tied to travel speed rather than a fixed timer.
-      paint('run', Math.floor(stridePhase) % 8, facing);
+      paintRun(stridePhase, facing);
     } else {
       var clip = clips[state] || clips.idle;
       paint(clip.asset, reduced.matches ? clip.frames[0] : frameAt(clip.frames,clip.times,elapsed), 1);
@@ -230,7 +264,6 @@
     if (state === 'move') {
       var before = { x:p.x,y:p.y };
       var options = limits();
-      if (Math.hypot(target.x-p.x,target.y-p.y)<120) options.speed = Math.min(options.speed,120);
       p = advance(p,target,dt,options); bounds();
       stridePhase += Math.hypot(p.x-before.x,p.y-before.y)/17;
       if (p.arrived) { stateTo('sit'); nextIdle = t+1300; }
@@ -239,7 +272,7 @@
       stridePhase += Math.hypot(p.x-oldX,p.y-oldY)/17;
       if (Math.hypot(p.vx,p.vy)<4) stateTo('turn');
     } else if (state === 'turn' && t-stateAt>=200) {
-      facing=wantedFacing; stridePhase=0; stateTo('move');
+      facing=wantedFacing; stateTo('move');
     } else if (clips[state] && clips[state].duration && t-stateAt>=clips[state].duration) finishAction();
     else if (!clips[state].duration) {
       var quiet = t-lastActivity;

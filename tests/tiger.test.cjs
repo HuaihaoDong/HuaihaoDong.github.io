@@ -46,3 +46,11 @@ test('定格与睡眠使用各帧的独立停留时间',()=>{
 test('屏幕边界限制不产生超界坐标',()=>{
  assert.equal(clamp(-99,8,300),8);assert.equal(clamp(900,8,300),300);
 });
+const {runPose}=require('../tiger.js');
+test('跑步相邻帧连续混合，循环接缝保持亮度权重',()=>{
+ for(const phase of [0,.125,.5,1.9,7.999,8,16.5]){
+  const pose=runPose(phase);assert.ok(pose.frame>=0&&pose.frame<8);assert.equal(pose.next,(pose.frame+1)%8);assert.ok(pose.mix>=0&&pose.mix<1);
+  assert.ok(Math.abs((1-pose.mix)+pose.mix-1)<1e-12);
+ }
+ assert.deepEqual(runPose(7.5),{frame:7,next:0,mix:.5});assert.deepEqual(runPose(8.5),runPose(.5));
+});

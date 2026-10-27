@@ -20,8 +20,8 @@
   transform-origin: 50% 94%; opacity: 0; transition: opacity 150ms ease; pointer-events: none;
 }
 .tiger-frame.visible { opacity: 1; }
-.tiger-body.tiger-groom-blend { isolation: isolate; }
-.tiger-groom-blend .tiger-frame { mix-blend-mode: plus-lighter; }
+.tiger-body.tiger-groom-blend, .tiger-body.tiger-run-blend { isolation: isolate; }
+.tiger-groom-blend .tiger-frame, .tiger-run-blend .tiger-frame { mix-blend-mode: plus-lighter; }
 #tiger[data-state="sleep"] .tiger-body { animation: tiger-breathe 3.2s ease-in-out infinite; }
 @keyframes tiger-breathe { 0%,100% { transform: scale(1,1); } 50% { transform: scale(1.018,.985); } }
 #tiger .tiger-bubble {
