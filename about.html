@@ -60,9 +60,9 @@ body::before{
 }
 
 /* 内容区高于星点 */
-.section,.mobile-menu{position:relative;z-index:1;}
+.section{position:relative;z-index:1;}
 
-.about-page{padding-top:40px;padding-bottom:96px;}
+.about-page{padding-top:112px;padding-bottom:96px;}
 .about-content{min-width:0;width:100%;}
 .about-content > .block{min-width:0;max-width:100%;}
 
@@ -392,7 +392,7 @@ font-weight:400;
   .toc{display:none;}
 }
 @media (max-width:768px){
-  .about-page{padding-top:24px;}
+  .about-page{padding-top:96px;}
   .block{margin-bottom:56px;}
   .photo{flex-basis:220px;}
   .section-title{font-size:18px;}
@@ -402,11 +402,11 @@ font-weight:400;
 <body>
 <header class="navbar" id="navbar">
     <a class="nav-logo" href="index.html">Tiger Captain</a>
-    <nav class="nav-links" id="navLinks">
+    <nav class="nav-links" id="navLinks" aria-label="主导航">
       <a class="nav-item" href="index.html">首页</a>
       <div class="nav-item nav-dropdown" id="aboutDropdown">
-        关于我 <span class="nav-caret">▾</span>
-        <div class="dropdown-menu">
+        <button class="nav-about-toggle" type="button" aria-expanded="false" aria-controls="aboutMenu">关于我 <span class="nav-caret" aria-hidden="true">▾</span></button>
+        <div class="dropdown-menu" id="aboutMenu">
           <a href="about.html#who">何方神圣</a>
           <a href="about.html#leader">烛逢老虎领队</a>
           <a href="about.html#hobby">兴趣爱好</a>
@@ -419,10 +419,10 @@ font-weight:400;
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
     </nav>
-    <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
     <div class="mobile-menu" id="mobileMenu">
       <a href="index.html">首页</a>
-      <div class="m-acc" id="mAbout">关于我 <span class="m-caret">▾</span></div>
+      <button class="m-acc" id="mAbout" type="button" aria-expanded="false" aria-controls="mAboutSub">关于我 <span class="m-caret" aria-hidden="true">▾</span></button>
       <div class="m-sub" id="mAboutSub">
         <a href="about.html#who">何方神圣</a>
         <a href="about.html#leader">烛逢老虎领队</a>
@@ -472,27 +472,27 @@ font-weight:400;
       <section id="leader" class="block">
         <h2 class="section-title">烛逢老虎领队</h2>
         <div class="photo-strip">
-          <figure class="photo"><a href="detail.html?id=20260813-neimeng-liuxingyu"><img class="photo-img" src="pics/neimeng/A01.thumb.webp" alt="内蒙追英仙座流星雨 流星雨全图" loading="lazy"></a><figcaption>内蒙 · 流星雨之夜</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260813-neimeng-liuxingyu"><img class="photo-img" src="pics/neimeng/B11.thumb.webp" alt="内蒙追英仙座流星雨 星空下的伙伴" loading="lazy"></a><figcaption>内蒙 · 星空下的我们</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20261018-name-tag-play"><img class="photo-img" src="pics/20261018-play/A02.thumb.webp" alt="周日一起去撕名牌 A02 城堡前合影" loading="lazy"></a><figcaption>撕名牌·百人大战</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20261004-wulan-golden"><img class="photo-img" src="pics3/20261004-wulan-golden/E21.thumb.webp" alt="国庆乌兰布统 E21 落日剪影" loading="lazy"></a><figcaption>乌兰布统 · 落日剪影</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20261004-wulan-golden"><img class="photo-img" src="pics3/20261004-wulan-golden/B01.thumb.webp" alt="国庆乌兰布统 B01 集体合影" loading="lazy"></a><figcaption>乌兰布统 · 国庆合影</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20261004-wulan-golden"><img class="photo-img" src="pics3/20261004-wulan-golden/F27.thumb.webp" alt="国庆乌兰布统 F27 篝火夜宴" loading="lazy"></a><figcaption>乌兰布统 · 篝火之夜</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20261010-matianling"><img class="photo-img" src="pics/20261010-matianling/A01.thumb.webp" alt="麻田岭赏秋 A01 跳跃合影" loading="lazy"></a><figcaption>麻田岭 · 秋日跳跃</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20261010-matianling"><img class="photo-img" style="object-fit:contain;" src="pics/20261010-matianling/F101.thumb.webp" alt="麻田岭赏秋 F101 洞前群像" loading="lazy"></a><figcaption>麻田岭 · 洞前群像</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260618-wulanbutong"><img class="photo-img" style="object-position:center bottom;" src="pics4/wulanbutong/A07.thumb.webp" alt="端午乌兰布统 草原小憩" loading="lazy"></a><figcaption>乌兰布统 · 草原小憩</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260618-wulanbutong"><img class="photo-img" src="pics4/wulanbutong/E65.thumb.webp" alt="端午乌兰布统 草原风光" loading="lazy"></a><figcaption>乌兰布统 · 草原风光</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260618-wulanbutong"><img class="photo-img" style="object-fit:contain;object-position:center bottom;" src="pics4/wulanbutong/D02.thumb.webp" alt="端午乌兰布统 猫咪cos雪豹" loading="lazy"></a><figcaption>乌兰布统 · 猫咪cos雪豹</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260912-shuiquan"><img class="photo-img" src="photos/shuiquan/B16.thumb.webp" alt="水泉沟徒步 涉水行进" loading="lazy"></a><figcaption>水泉沟 · 涉水而行</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260912-shuiquan"><img class="photo-img" src="photos/shuiquan/E20.thumb.webp" alt="水泉沟徒步 峡谷风光" loading="lazy"></a><figcaption>水泉沟 · 山水之间</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260830-jinhaihu"><img class="photo-img" src="pics3/20260830-jinhaihu/H02.thumb.webp" alt="金海湖徒步清山 H02 湖畔同行" loading="lazy"></a><figcaption>金海湖 · 湖畔同行</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260830-jinhaihu"><img class="photo-img" src="pics3/20260830-jinhaihu/D04.thumb.webp" alt="金海湖徒步清山 D04 山间伙伴" loading="lazy"></a><figcaption>金海湖 · 山间伙伴</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260627-zhufeng-6th"><img class="photo-img" src="pics2/camp/A01.thumb.webp" alt="烛逢六周年 全员合影" loading="lazy"></a><figcaption>烛逢六周年 · 全员合影</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260627-zhufeng-6th"><img class="photo-img" src="pics2/camp/A08.thumb.webp" alt="烛逢六周年 群像" loading="lazy"></a><figcaption>烛逢六周年 · 群像</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260822-huangcaoliang"><img class="photo-img" src="pics/huangcaoliang/A01.thumb.webp" alt="黄草梁徒步清山 三面横幅合影" loading="lazy"></a><figcaption>黄草梁 · 还山自然</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=20260822-huangcaoliang"><img class="photo-img" src="pics/huangcaoliang/A02.thumb.webp" alt="黄草梁徒步清山 林中合影" loading="lazy"></a><figcaption>黄草梁 · 林中合影</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=202609-picnic&data=group-events.json&back=group.html"><img class="photo-img" src="pics/picnic/A01.thumb.webp" alt="朝阳公园野餐 草地围坐" loading="lazy"></a><figcaption>小组活动 · 春游野餐</figcaption></figure>
-          <figure class="photo"><a href="detail.html?id=202609-picnic&data=group-events.json&back=group.html"><img class="photo-img" src="pics/picnic/A02.thumb.webp" alt="朝阳公园野餐 蓝港之夜合影" loading="lazy"></a><figcaption>小组活动 · 夜晚合影</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260813-neimeng-liuxingyu"><img class="photo-img" src="pics/neimeng/A01.thumb.webp" alt="内蒙追英仙座流星雨 流星雨全图" loading="lazy" decoding="async"></a><figcaption>内蒙 · 流星雨之夜</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260813-neimeng-liuxingyu"><img class="photo-img" src="pics/neimeng/B11.thumb.webp" alt="内蒙追英仙座流星雨 星空下的伙伴" loading="lazy" decoding="async"></a><figcaption>内蒙 · 星空下的我们</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20261018-name-tag-play"><img class="photo-img" src="pics/20261018-play/A02.thumb.webp" alt="周日一起去撕名牌 A02 城堡前合影" loading="lazy" decoding="async"></a><figcaption>撕名牌·百人大战</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20261004-wulan-golden"><img class="photo-img" src="pics3/20261004-wulan-golden/E21.thumb.webp" alt="国庆乌兰布统 E21 落日剪影" loading="lazy" decoding="async"></a><figcaption>乌兰布统 · 落日剪影</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20261004-wulan-golden"><img class="photo-img" src="pics3/20261004-wulan-golden/B01.thumb.webp" alt="国庆乌兰布统 B01 集体合影" loading="lazy" decoding="async"></a><figcaption>乌兰布统 · 国庆合影</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20261004-wulan-golden"><img class="photo-img" src="pics3/20261004-wulan-golden/F27.thumb.webp" alt="国庆乌兰布统 F27 篝火夜宴" loading="lazy" decoding="async"></a><figcaption>乌兰布统 · 篝火之夜</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20261010-matianling"><img class="photo-img" src="pics/20261010-matianling/A01.thumb.webp" alt="麻田岭赏秋 A01 跳跃合影" loading="lazy" decoding="async"></a><figcaption>麻田岭 · 秋日跳跃</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20261010-matianling"><img class="photo-img" style="object-fit:contain;" src="pics/20261010-matianling/F101.thumb.webp" alt="麻田岭赏秋 F101 洞前群像" loading="lazy" decoding="async"></a><figcaption>麻田岭 · 洞前群像</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260618-wulanbutong"><img class="photo-img" style="object-position:center bottom;" src="pics4/wulanbutong/A07.thumb.webp" alt="端午乌兰布统 草原小憩" loading="lazy" decoding="async"></a><figcaption>乌兰布统 · 草原小憩</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260618-wulanbutong"><img class="photo-img" src="pics4/wulanbutong/E65.thumb.webp" alt="端午乌兰布统 草原风光" loading="lazy" decoding="async"></a><figcaption>乌兰布统 · 草原风光</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260618-wulanbutong"><img class="photo-img" style="object-fit:contain;object-position:center bottom;" src="pics4/wulanbutong/D02.thumb.webp" alt="端午乌兰布统 猫咪cos雪豹" loading="lazy" decoding="async"></a><figcaption>乌兰布统 · 猫咪cos雪豹</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260912-shuiquan"><img class="photo-img" src="photos/shuiquan/B16.thumb.webp" alt="水泉沟徒步 涉水行进" loading="lazy" decoding="async"></a><figcaption>水泉沟 · 涉水而行</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260912-shuiquan"><img class="photo-img" src="photos/shuiquan/E20.thumb.webp" alt="水泉沟徒步 峡谷风光" loading="lazy" decoding="async"></a><figcaption>水泉沟 · 山水之间</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260830-jinhaihu"><img class="photo-img" src="pics3/20260830-jinhaihu/H02.thumb.webp" alt="金海湖徒步清山 H02 湖畔同行" loading="lazy" decoding="async"></a><figcaption>金海湖 · 湖畔同行</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260830-jinhaihu"><img class="photo-img" src="pics3/20260830-jinhaihu/D04.thumb.webp" alt="金海湖徒步清山 D04 山间伙伴" loading="lazy" decoding="async"></a><figcaption>金海湖 · 山间伙伴</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260627-zhufeng-6th"><img class="photo-img" src="pics2/camp/A01.thumb.webp" alt="烛逢六周年 全员合影" loading="lazy" decoding="async"></a><figcaption>烛逢六周年 · 全员合影</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260627-zhufeng-6th"><img class="photo-img" src="pics2/camp/A08.thumb.webp" alt="烛逢六周年 群像" loading="lazy" decoding="async"></a><figcaption>烛逢六周年 · 群像</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260822-huangcaoliang"><img class="photo-img" src="pics/huangcaoliang/A01.thumb.webp" alt="黄草梁徒步清山 三面横幅合影" loading="lazy" decoding="async"></a><figcaption>黄草梁 · 还山自然</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=20260822-huangcaoliang"><img class="photo-img" src="pics/huangcaoliang/A02.thumb.webp" alt="黄草梁徒步清山 林中合影" loading="lazy" decoding="async"></a><figcaption>黄草梁 · 林中合影</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=202609-picnic&data=group-events.json&back=group.html"><img class="photo-img" src="pics/picnic/A01.thumb.webp" alt="朝阳公园野餐 草地围坐" loading="lazy" decoding="async"></a><figcaption>小组活动 · 春游野餐</figcaption></figure>
+          <figure class="photo"><a href="detail.html?id=202609-picnic&data=group-events.json&back=group.html"><img class="photo-img" src="pics/picnic/A02.thumb.webp" alt="朝阳公园野餐 蓝港之夜合影" loading="lazy" decoding="async"></a><figcaption>小组活动 · 夜晚合影</figcaption></figure>
         </div>
         <div style="margin-top:24px;margin-bottom:24px;display:flex;gap:12px;flex-wrap:wrap;">
           <a class="btn" href="https://mp.weixin.qq.com/s/AJHxKP-fLcjrAEAEUIB6xA" target="_blank" rel="noopener">关于烛逢</a>
@@ -522,20 +522,7 @@ font-weight:400;
 
       <section id="research" class="block">
         <h2 class="section-title">科研</h2>
-        <div class="pub-list">
-          <article class="pub">
-            <h3>论文成果占位</h3>
-            <div class="pub-meta"><span>出处占位 · 期刊 / 会议名</span><span class="pub-year">2026</span></div>
-          </article>
-          <article class="pub">
-            <h3>专利成果占位</h3>
-            <div class="pub-meta"><span>专利号占位 · 授权 / 公开</span><span class="pub-year">2025</span></div>
-          </article>
-          <article class="pub">
-            <h3>其他成果占位</h3>
-            <div class="pub-meta"><span>出处占位</span><span class="pub-year">2024</span></div>
-          </article>
-        </div>
+        <p class="body-text">科研记录陆续整理中。</p>
       </section>
 
       <section id="friends" class="block">
@@ -549,22 +536,8 @@ font-weight:400;
               <a href="https://wangnan.net" target="_blank" rel="noopener">wangnan.net</a>
             </div>
           </div>
-          <div class="card friend">
-            <div class="friend-avatar placeholder">待</div>
-            <div class="friend-info">
-              <h3>名字占位</h3>
-              <p>一句话介绍占位</p>
-              <a href="#" rel="noopener">博客链接占位</a>
-            </div>
-          </div>
-          <div class="card friend">
-            <div class="friend-avatar placeholder">待</div>
-            <div class="friend-info">
-              <h3>名字占位</h3>
-              <p>一句话介绍占位</p>
-              <a href="#" rel="noopener">博客链接占位</a>
-            </div>
-          </div>
+
+
         </div>
       </section>
 

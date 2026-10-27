@@ -52,6 +52,16 @@
   var zoom = { s: 1, tx: 0, ty: 0 };
   var pinch = null;
   var panLast = null;
+  var returnFocus = null;
+  var backgroundState = [];
+  var previousPadding = '';
+  var pendingLayouts = new WeakSet();
+
+  function scheduleLayout(container) {
+    if (pendingLayouts.has(container)) return;
+    pendingLayouts.add(container);
+    requestAnimationFrame(function () { pendingLayouts.delete(container); layoutMasonry(container); });
+  }
 
   function applyZoom() {
     if (zoom.s <= 1.01) {
@@ -98,7 +108,6 @@
 
   function showImage() {
     var el = seq[idx];
-    lbImg.src = fullSrc(el);
     lbImg.alt = el.alt || '';
     lbImg.classList.add('swap');
     lbError.classList.remove('show');
@@ -106,11 +115,18 @@
     lbCounter.textContent = (idx + 1) + ' / ' + seq.length;
     lbPrev.classList.toggle('hide', idx === 0);
     lbNext.classList.toggle('hide', idx === seq.length - 1);
+    lbPrev.disabled = idx === 0;
+    lbNext.disabled = idx === seq.length - 1;
+    if (document.activeElement === lbPrev && lbPrev.disabled || document.activeElement === lbNext && lbNext.disabled) lbClose.focus();
     resetZoom();
+    lbImg.src = fullSrc(el);
+    if (lbImg.complete && lbImg.naturalWidth) imageLoaded();
     preload();
   }
 
   function preload() {
+    var connection = navigator.connection;
+    if (connection && (connection.saveData || /(^|-)2g$/.test(connection.effectiveType))) return;
     var nextEl = seq[idx + 1];
     var prevEl = seq[idx - 1];
     if (nextEl) { var n = new Image(); n.src = fullSrc(nextEl); }
@@ -130,11 +146,18 @@
     if (!seq.length) return;
     idx = seq.indexOf(clickedEl);
     if (idx < 0) idx = 0;
+    returnFocus = document.activeElement;
+    // 鼠标点击图片时也应返回原照片，而不是返回 body。
+    if (!returnFocus || returnFocus === document.body) returnFocus = clickedEl;
     open = true;
+    previousPadding = document.body.style.paddingRight;
     document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px';
     document.body.classList.add('lb-open');
     lb.setAttribute('aria-hidden', 'false');
     lb.classList.add('open');
+    backgroundState = Array.prototype.slice.call(document.body.children).filter(function (el) { return el !== lb; }).map(function (el) {
+      var previous = el.inert; el.inert = true; return { el: el, inert: previous };
+    });
     showImage();
     lbClose.focus();
     document.dispatchEvent(new CustomEvent('tiger-pause'));
@@ -143,21 +166,26 @@
   function closeLightbox() {
     open = false;
     document.body.classList.remove('lb-open');
-    document.body.style.paddingRight = '';
+    document.body.style.paddingRight = previousPadding;
     lb.classList.remove('open');
     lb.setAttribute('aria-hidden', 'true');
-    lbImg.src = '';
+    lbImg.removeAttribute('src');
     lbLoading.classList.remove('show');
     lbError.classList.remove('show');
+    backgroundState.forEach(function (item) { item.el.inert = item.inert; });
+    backgroundState = [];
+    if (returnFocus && returnFocus.isConnected) returnFocus.focus({ preventScroll: true });
     document.dispatchEvent(new CustomEvent('tiger-resume'));
   }
 
-  function bindLightboxEvents() {
-    lbImg.addEventListener('load', function () {
+  function imageLoaded() {
       if (!open) return;
       lbImg.classList.remove('swap');
       lbLoading.classList.remove('show');
-    });
+  }
+
+  function bindLightboxEvents() {
+    lbImg.addEventListener('load', imageLoaded);
     lbImg.addEventListener('error', function () {
       if (!open) return;
       lbLoading.classList.remove('show');
@@ -167,6 +195,14 @@
 
     document.addEventListener('keydown', function (e) {
       if (!open) return;
+      if (e.key === 'Tab') {
+        var buttons = [lbClose, lbPrev, lbNext].filter(function (button) { return !button.disabled; });
+        var position = buttons.indexOf(document.activeElement);
+        e.preventDefault();
+        var nextPosition = position < 0 ? (e.shiftKey ? buttons.length - 1 : 0) : (position + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length;
+        buttons[nextPosition].focus();
+        return;
+      }
       if (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey) return;
       if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
@@ -270,33 +306,57 @@
 
   function init(container, opts) {
     opts = opts || {};
-    ensureLightbox();
     if (!container) return;
+    ensureLightbox();
+    if (container.dataset.albumInitialized) return;
+    container.dataset.albumInitialized = 'true';
+
+    var imgs = container.querySelectorAll('.ph-item img');
+    function markFailure(t) {
+      var item = t.closest('.ph-item');
+      if (!item || item.classList.contains('img-failed')) return;
+      item.classList.add('img-failed');
+      t.setAttribute('tabindex', '-1');
+      var retry = document.createElement('button');
+      retry.type = 'button'; retry.className = 'ph-retry';
+      retry.textContent = '缩略图暂不可用 · 查看原图';
+      item.appendChild(retry);
+      if (opts.masonry) scheduleLayout(container);
+    }
+    imgs.forEach(function (img) {
+      img.setAttribute('role', 'button');
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('aria-label', '查看原图：' + (img.alt || '照片'));
+      if (img.complete && !img.naturalWidth) markFailure(img);
+    });
 
     // 点击缩略图打开灯箱（seq = 容器内照片顺序）
     container.addEventListener('click', function (e) {
       var t = e.target;
       if (t.tagName === 'IMG' && t.closest('.ph-item')) {
         openLightbox(container, t);
+      } else if (t.closest('.ph-retry')) {
+        openLightbox(container, t.closest('.ph-item').querySelector('img'));
+      }
+    });
+    container.addEventListener('keydown', function (e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.ph-item img')) {
+        e.preventDefault(); openLightbox(container, e.target);
       }
     });
 
     // 图片加载失败 → 占位（error 不冒泡，需 capture）
     container.addEventListener('error', function (e) {
       var t = e.target;
-      if (t.tagName === 'IMG' && t.parentNode && t.parentNode.className === 'ph-item') {
-        t.parentNode.innerHTML = '<div class="ph">图片加载失败</div>';
-        if (opts.masonry) layoutMasonry(container);
-      }
+      if (t.tagName === 'IMG' && t.closest('.ph-item')) markFailure(t);
     }, true);
 
     if (opts.masonry) {
-      var imgs = container.querySelectorAll('.ph-item img');
       for (var i = 0; i < imgs.length; i++) {
-        imgs[i].addEventListener('load', function () { layoutMasonry(container); });
+        imgs[i].addEventListener('load', function () { scheduleLayout(container); });
       }
-      layoutMasonry(container);
-      window.addEventListener('resize', function () { layoutMasonry(container); });
+      scheduleLayout(container);
+      window.addEventListener('resize', function () { scheduleLayout(container); });
     }
   }
 
@@ -310,16 +370,18 @@
     var hs = [];
     for (var i = 0; i < cols; i++) hs.push(0);
     var items = container.querySelectorAll('.ph-item');
+    // 集中写入宽度，再集中测量，避免每张照片都触发布局。
+    items.forEach(function (item) { item.style.width = colW + 'px'; });
+    var heights = Array.prototype.map.call(items, function (item) { return item.offsetHeight; });
     for (var j = 0; j < items.length; j++) {
       var item = items[j];
       var c = 0;
       for (var k = 1; k < cols; k++) { if (hs[k] < hs[c]) c = k; }
-      item.style.width = colW + 'px';
       item.style.left = c * (colW + gap) + 'px';
       item.style.top = hs[c] + 'px';
-      hs[c] += item.offsetHeight + gap;
+      hs[c] += heights[j] + gap;
     }
-    container.style.height = (Math.max.apply(null, hs) - gap) + 'px';
+    container.style.height = Math.max(0, Math.max.apply(null, hs) - gap) + 'px';
   }
 
   window.Album = {
