@@ -38,11 +38,7 @@
     for (var i = 0; i < durations.length; i++) { if (cursor < durations[i]) return sequence[i]; cursor -= durations[i]; }
     return sequence[sequence.length - 1];
   }
-  function runPose(phase) {
-    var cycle = ((phase % 8) + 8) % 8, frame = Math.floor(cycle);
-    return { frame: frame, next: (frame + 1) % 8, mix: cycle - frame };
-  }
-  var model = { runPose: runPose, advance: advance, brake: brake, frameAt: frameAt, clamp: clamp };
+  var model = { advance: advance, brake: brake, frameAt: frameAt, clamp: clamp };
   if (typeof module !== 'undefined' && module.exports) module.exports = model;
   if (typeof document === 'undefined' || document.getElementById('tiger')) return;
 
@@ -146,37 +142,7 @@
     image.onerror = function () { asset.failed = true; };
     image.src = asset.src;
   }
-  var runBlendActive = false;
-  function paintRun(phase, direction) {
-    var asset = assets.run, pose = runPose(phase);
-    if (!smoothGroom || !asset.ready) { paint('run', pose.frame, direction); return; }
-    body.classList.remove('tiger-groom-blend');
-    body.classList.add('tiger-run-blend');
-    runBlendActive = true;
-    for (var i = 0; i < layers.length; i++) {
-      var layer = layers[i], index = i ? pose.next : pose.frame;
-      if (currentAsset !== 'run' || currentFacing !== direction) {
-        layer.style.backgroundImage = 'url("' + asset.src + '")';
-        layer.style.backgroundSize = (asset.cols * 100) + '% ' + (asset.rows * 100) + '%';
-        layer.style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scaleX(' + direction + ')';
-      }
-      layer.style.transitionDuration = '0ms';
-      layer.style.backgroundPosition = (index % asset.cols / (asset.cols - 1) * 100) + '% ' + (Math.floor(index / asset.cols) / (asset.rows - 1) * 100) + '%';
-      layer.style.opacity = String(i ? pose.mix : 1 - pose.mix);
-      layer.classList.add('visible');
-    }
-    activeLayer = pose.mix >= .5 ? 1 : 0;
-    currentAsset = 'run'; currentFacing = direction; currentFrame = pose.frame;
-  }
   function paint(assetName, frame, direction) {
-    if (runBlendActive) {
-      // Restore one opaque layer before returning to ordinary action crossfades.
-      for (var i = 0; i < layers.length; i++) {
-        layers[i].style.opacity = '';
-        layers[i].classList.toggle('visible', i === activeLayer);
-      }
-      body.classList.remove('tiger-run-blend'); runBlendActive = false;
-    }
     var asset = assets[assetName];
     if (!asset.ready) {
       load(assetName);
@@ -188,10 +154,11 @@
     if (assetName !== currentAsset || direction !== currentFacing || (assetName === 'groom' && frame !== currentFrame)) {
       // Additive crossfades keep identical opaque pixels at full brightness.
       // Source-over opacity blending otherwise dims the tiger at every grooming frame.
-      var grooming = assetName === 'groom';
+      var grooming = assetName === 'groom', running = assetName === 'run' || assetName === 'oldRun';
       body.classList.toggle('tiger-groom-blend', grooming && smoothGroom);
       for (var layerIndex = 0; layerIndex < layers.length; layerIndex++) {
-        layers[layerIndex].style.transitionDuration = grooming ? (smoothGroom ? '100ms' : '0ms') : '150ms';
+        // Keep distinct running silhouettes opaque to avoid duplicated paws and outlines.
+        layers[layerIndex].style.transitionDuration = running ? '0ms' : grooming ? (smoothGroom ? '100ms' : '0ms') : '150ms';
         layers[layerIndex].style.transitionTimingFunction = grooming ? 'linear' : 'ease';
       }
       layers[activeLayer].classList.remove('visible');
@@ -209,7 +176,7 @@
     var elapsed = Math.max(0, t - stateAt);
     if (state === 'move' || state === 'brake') {
       // Distance-based phase keeps the paws tied to travel speed rather than a fixed timer.
-      paintRun(stridePhase, facing);
+      paint('run', Math.floor(stridePhase) % 8, facing);
     } else {
       var clip = clips[state] || clips.idle;
       paint(clip.asset, reduced.matches ? clip.frames[0] : frameAt(clip.frames,clip.times,elapsed), 1);
