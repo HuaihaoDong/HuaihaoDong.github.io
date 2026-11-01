@@ -170,7 +170,7 @@
       layers[activeLayer].style.backgroundImage = 'url("' + asset.src + '")';
       layers[activeLayer].style.backgroundSize = (asset.cols * 100) + '% ' + (asset.rows * 100) + '%';
       // Match the existing action atlas to the idle head width; retain each pose.
-      var scale = cover ? (running ? 1.1 : assetName === 'actions' ? 1.08 : 1) : 1;
+      var scale = cover ? (running ? 1.21 : assetName === 'actions' ? 1.08 : 1) : 1;
       layers[activeLayer].style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scale(' + direction * scale + ',' + scale + ')';
       layers[activeLayer].classList.add('visible');
     }

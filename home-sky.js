@@ -1,13 +1,14 @@
 /* A photographic Milky Way, with the site's original interactive star links. */
 (function () {
   'use strict';
-  var sky = document.getElementById('sky'), stage = document.getElementById('stage');
-  if (!sky || !stage) return;
+  var galaxy = document.getElementById('galaxy'), sky = document.getElementById('sky'), stage = document.getElementById('stage');
+  if (!galaxy || !sky || !stage) return;
   var ctx = sky.getContext('2d'), textCtx = stage.getContext('2d');
   if (!ctx || !textCtx) return;
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
   var galaxyPhoto = new Image(), photoReady = false;
-  var w, h, dpr, backdrop, stars, particles, charSize, pointer = null;
+  var w, h, dpr, textDpr, pixelRatio, mobile, compact, stars, particles, charSize, pointer = null;
+  var stageTop = 0, stageHeight = 0, glyphAtlas, glyphStride, glyphPixels, textBuilt = false;
   var raf = null, previous = 0, skyAt = -Infinity, skyClock = 0, clock = 0, meteor = null, nextMeteor = 18;
   var seed = 57;
   function random() { seed = (Math.imul(seed, 1664525) + 1013904223) | 0; return (seed >>> 0) / 4294967296; }
@@ -34,7 +35,9 @@
     c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fill();
   }
   function makeBackdrop() {
-    var c = makeCanvas(Math.round(w * dpr), Math.round(h * dpr)), cctx = c.getContext('2d');
+    var c = galaxy, cctx = c.getContext('2d');
+    c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+    c.style.width = w + 'px'; c.style.height = h + 'px';
     cctx.scale(dpr, dpr);
     var base = cctx.createLinearGradient(0, 0, w * .25, h);
     base.addColorStop(0, '#050b18'); base.addColorStop(.6, '#0a1223'); base.addColorStop(1, '#0e1525');
@@ -92,39 +95,84 @@
     cctx.fillStyle = veil; cctx.fillRect(0, 0, w, h);
     return c;
   }
-  function makeStars() {
-    stars = [];
-    var n = Math.round(Math.min(w, h) / 7);
+  function makeStars(oldW, oldH) {
+    var before = stars || []; stars = [];
+    var desktop = w >= 900;
+    var n = Math.round(Math.min(w, h) / 7 * (desktop ? 1.08 : 1));
     for (var i = 0; i < n; i++) {
-      stars.push({ x: random() * w, y: random() * h, r: .55 + random() * 1.05,
+      if (before[i] && oldW && oldH) {
+        before[i].x *= w / oldW; before[i].y *= h / oldH;
+        before[i].r *= (desktop ? 1.08 : 1) / (oldW >= 900 ? 1.08 : 1);
+        stars.push(before[i]); continue;
+      }
+      stars.push({ x: random() * w, y: random() * h, r: (.55 + random() * 1.05) * (desktop ? 1.08 : 1),
         vx: (random() - .5) * .22, vy: (random() - .5) * .22,
         phase: random() * Math.PI * 2, speed: .25 + random() * .42, glow: i % 8 === 0 });
     }
   }
   function makeText() {
-    var fs = Math.min(200, w * .115), gap, rowGap;
-    var off = makeCanvas(Math.round(w), Math.round(h)), octx = off.getContext('2d');
+    var before = particles || [], lines = mobile ? ['Tiger', 'Captain'] : ['Tiger Captain'];
+    var fs = mobile ? Math.min(82, w * .2, h * .135) : Math.min(200, w * .115, compact ? h * .22 : 200);
+    var measure = makeCanvas(1,1).getContext('2d'), gap, rowGap;
     do {
-      octx.font = 'bold ' + fs + 'px Consolas, "Courier New", monospace';
-      if (octx.measureText('Tiger Captain').width <= w * .86) break;
-      fs -= 2;
+      measure.font = 'bold ' + fs + 'px Consolas, "Courier New", monospace';
+      if (Math.max.apply(null, lines.map(function (line) { return measure.measureText(line).width; })) <= w * (mobile ? .82 : .86)) break;
+      fs -= 1;
     } while (fs > 12);
-    gap = Math.max(3, Math.round(fs / 26)); rowGap = Math.ceil(gap * 1.3); charSize = gap * 1.6;
+    var lineStep = fs * 1.08, center = mobile ? h * .32 : compact ? Math.max(90, h * .29) : h * .4;
+    var titleHalf = (lines.length - 1) * lineStep / 2 + fs * .6;
+    var margin = mobile ? 88 : 126;
+    stageTop = Math.max(56, Math.floor(center - titleHalf - margin));
+    stageHeight = Math.max(1, Math.min(h - stageTop, Math.ceil(center + titleHalf + margin - stageTop)));
+    stage.width = Math.round(w * textDpr); stage.height = Math.round(stageHeight * textDpr);
+    stage.style.width = w + 'px'; stage.style.height = stageHeight + 'px';
+    stage.style.top = stageTop + 'px'; stage.style.bottom = 'auto';
+    textCtx.setTransform(textDpr,0,0,textDpr,0,0);
+    document.documentElement.style.setProperty('--cover-info-top', Math.round(center + titleHalf + 28) + 'px');
+    var off = makeCanvas(w, stageHeight), octx = off.getContext('2d');
+    octx.font = measure.font;
     octx.fillStyle = '#fff'; octx.textAlign = 'center'; octx.textBaseline = 'middle';
-    octx.fillText('Tiger Captain', w / 2, h * .4);
+    lines.forEach(function (line, i) { octx.fillText(line, w / 2, center + (i - (lines.length - 1) / 2) * lineStep - stageTop); });
     var data = octx.getImageData(0, 0, off.width, off.height).data; particles = [];
-    for (var y = 0; y < h; y += rowGap) {
-      for (var x = 0; x < w; x += gap) {
-        if (data[(y * off.width + x) * 4 + 3] <= 128) continue;
-        var mix = x / w;
-        particles.push({ tx: x, ty: y, x: reduced.matches ? x : random() * w,
-          y: reduced.matches ? y : random() * h, ch: random() < .5 ? '0' : '1',
-          color: 'rgb(' + Math.round(224 - 86 * mix) + ',' + Math.round(168 - 46 * mix) + ',' + Math.round(120 + 56 * mix) + ')' });
+    gap = Math.max(3, Math.round(fs / 26));
+    var targets;
+    do {
+      rowGap = Math.ceil(gap * 1.3); targets = [];
+      for (var y = 0; y < stageHeight; y += rowGap) {
+        for (var x = 0; x < w; x += gap) {
+          if (data[(y * off.width + x) * 4 + 3] > 128) targets.push({x:x,y:y});
+        }
+      }
+      if (targets.length <= (mobile ? 850 : 2400)) break;
+      gap++;
+    } while (gap < 12);
+    charSize = gap * 1.6;
+    targets.forEach(function (point, i) {
+      var old = before[i], dx = old ? old.x - old.tx : 0, dy = old ? old.y - old.ty : 0;
+      var enter = !textBuilt && !reduced.matches;
+      particles.push({tx:point.x,ty:point.y,
+        x:point.x + (enter ? (random() - .5) * 60 : dx), y:point.y + (enter ? (random() - .5) * 40 : dy),
+        ch:old ? old.ch : (random() < .5 ? 0 : 1), color:Math.min(23, Math.floor(point.x / w * 24))});
+    });
+    // Rasterize the small 0/1 glyphs once, rather than laying out text every frame.
+    glyphStride = Math.ceil(charSize + 5); glyphPixels = Math.ceil(glyphStride * textDpr);
+    glyphAtlas = makeCanvas(glyphPixels * 2, glyphPixels * 24);
+    var atlas = glyphAtlas.getContext('2d');
+    atlas.font = (charSize * textDpr) + 'px Consolas, "Courier New", monospace';
+    atlas.textAlign = 'center'; atlas.textBaseline = 'middle';
+    atlas.strokeStyle = 'rgba(2,6,16,.8)'; atlas.lineWidth = textDpr * 1.2;
+    for (var color = 0; color < 24; color++) {
+      var mix = color / 23;
+      atlas.fillStyle = 'rgb(' + Math.round(224 - 86 * mix) + ',' + Math.round(168 - 46 * mix) + ',' + Math.round(120 + 56 * mix) + ')';
+      for (var digit = 0; digit < 2; digit++) {
+        var gx = (digit + .5) * glyphPixels, gy = (color + .5) * glyphPixels;
+        atlas.strokeText(String(digit), gx, gy); atlas.fillText(String(digit), gx, gy);
       }
     }
+    textBuilt = true;
   }
   function paintSky() {
-    ctx.clearRect(0, 0, w, h); ctx.drawImage(backdrop, 0, 0, w, h);
+    ctx.clearRect(0, 0, w, h);
     var step = reduced.matches ? 0 : Math.min(clock - skyClock, .1) * 60;
     skyClock = clock;
     for (var a = 0; a < stars.length; a++) {
@@ -133,13 +181,14 @@
       if (moving.y < -12) moving.y = h + 12; else if (moving.y > h + 12) moving.y = -12;
     }
     // Preserve the original drifting star links, on top of the deeper sky.
-    ctx.lineWidth = .7;
+    var linkDistance = w >= 900 ? 126 : 118;
+    ctx.lineWidth = w >= 900 ? .75 : .7;
     for (var l = 0; l < stars.length; l++) {
       for (var b = l + 1; b < stars.length; b++) {
         var dx = stars[l].x - stars[b].x, dy = stars[l].y - stars[b].y;
         var distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance >= 118) continue;
-        ctx.strokeStyle = 'rgba(180,200,235,' + ((1 - distance / 118) * .22) + ')';
+        if (distance >= linkDistance) continue;
+        ctx.strokeStyle = 'rgba(180,200,235,' + ((1 - distance / linkDistance) * .22) + ')';
         ctx.beginPath(); ctx.moveTo(stars[l].x, stars[l].y); ctx.lineTo(stars[b].x, stars[b].y); ctx.stroke();
       }
     }
@@ -169,24 +218,25 @@
     }
   }
   function paintText(dt) {
-    textCtx.clearRect(0, 0, w, h); textCtx.font = charSize + 'px Consolas, "Courier New", monospace';
-    textCtx.textAlign = 'center'; textCtx.textBaseline = 'middle';
-    var factor = 1 - Math.pow(.92, dt * 60);
+    textCtx.clearRect(0, 0, w, stageHeight);
+    var factor = 1 - Math.exp(-12 * dt), radius = mobile ? 72 : 110;
+    if (pointer && pointer.until < clock) pointer = null;
     for (var i = 0; i < particles.length; i++) {
       var p = particles[i];
       if (pointer && !reduced.matches) {
         var dx = p.x - pointer.x, dy = p.y - pointer.y, d2 = dx * dx + dy * dy;
-        if (d2 < 12100 && d2 > .01) {
-          var d = Math.sqrt(d2), push = (110 - d) / 110 * 26 * dt * 60;
+        if (d2 < radius * radius && d2 > .01) {
+          var d = Math.sqrt(d2), push = (radius - d) / radius * (mobile ? 10 : 22) * dt * 60;
           p.x += dx / d * push; p.y += dy / d * push;
         }
       }
       if (reduced.matches) { p.x = p.tx; p.y = p.ty; }
       else {
         p.x += (p.tx - p.x) * factor; p.y += (p.ty - p.y) * factor;
-        if (random() < .02 * dt * 60) p.ch = random() < .5 ? '0' : '1';
+        if (random() < (mobile ? .25 : 1.2) * dt) p.ch = 1 - p.ch;
       }
-      textCtx.fillStyle = p.color; textCtx.fillText(p.ch, p.x, p.y);
+      textCtx.drawImage(glyphAtlas, p.ch * glyphPixels, p.color * glyphPixels, glyphPixels, glyphPixels,
+        p.x - glyphStride / 2, p.y - glyphStride / 2, glyphStride, glyphStride);
     }
   }
   function frame(t) {
@@ -194,8 +244,11 @@
     if (document.hidden) { previous = 0; return; }
     var dt = previous ? Math.min((t - previous) / 1000, .05) : 1 / 60;
     previous = t; clock += dt;
-    // The distant sky needs only 24 fps; the interactive title stays fluid.
-    if (t - skyAt >= 1000 / 24) { paintSky(); skyAt = t; }
+    // The static galaxy is a separate layer; links use 30 fps, the title uses RAF.
+    var skyInterval = 1000 / 30;
+    if (!Number.isFinite(skyAt) || t - skyAt >= skyInterval) {
+      paintSky(); skyAt = Number.isFinite(skyAt) ? t - ((t - skyAt) % skyInterval) : t;
+    }
     paintText(dt);
     if (!reduced.matches) raf = requestAnimationFrame(frame);
   }
@@ -205,18 +258,27 @@
     if (!document.hidden) raf = requestAnimationFrame(frame);
   }
   function resize() {
+    var oldW = w, oldH = h, oldRatio = pixelRatio;
     w = Math.max(1, Math.round(innerWidth)); h = Math.max(1, Math.round(innerHeight));
-    dpr = Math.min(devicePixelRatio || 1, 2); seed = 57;
-    [sky, stage].forEach(function (canvas) {
-      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
-      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-      canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
-    });
-    backdrop = makeBackdrop(); makeStars(); makeText(); meteor = null; start();
+    pixelRatio = devicePixelRatio || 1;
+    if (oldW === w && oldH === h && oldRatio === pixelRatio) return;
+    compact = h < 560; mobile = w <= 600 && h >= w;
+    dpr = Math.min(pixelRatio, mobile ? 1.5 : 2);
+    textDpr = Math.min(pixelRatio, 2);
+    var skyDpr = Math.min(pixelRatio, mobile ? 1.25 : 2); seed = 57;
+    sky.width = Math.round(w * skyDpr); sky.height = Math.round(h * skyDpr);
+    sky.style.width = w + 'px'; sky.style.height = h + 'px'; ctx.setTransform(skyDpr,0,0,skyDpr,0,0);
+    makeBackdrop(); makeStars(oldW,oldH); makeText(); pointer = null; meteor = null; start();
   }
-  window.addEventListener('pointermove', function (e) { pointer = { x: e.clientX, y: e.clientY }; }, { passive: true });
+  function followPointer(e) {
+    if (e.isPrimary === false) return;
+    if ((e.target.closest && e.target.closest('header,a,button,input,textarea,select,#tiger')) || e.clientY < stageTop || e.clientY > stageTop + stageHeight) { pointer = null; return; }
+    pointer = {x:e.clientX,y:e.clientY - stageTop,until:Infinity};
+  }
+  window.addEventListener('pointerdown', followPointer, { passive: true });
+  window.addEventListener('pointermove', followPointer, { passive: true });
   document.documentElement.addEventListener('pointerleave', function () { pointer = null; });
-  window.addEventListener('pointerup', function (e) { if (e.pointerType !== 'mouse') pointer = null; }, { passive: true });
+  window.addEventListener('pointerup', function (e) { if (e.pointerType !== 'mouse' && pointer) pointer.until = clock + .12; }, { passive: true });
   window.addEventListener('pointercancel', function () { pointer = null; });
   document.addEventListener('visibilitychange', start);
   reduced.addEventListener('change', function () { meteor = null; start(); });
@@ -224,7 +286,7 @@
   window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 100); });
   resize();
   galaxyPhoto.decoding = 'async'; galaxyPhoto.fetchPriority = 'high';
-  galaxyPhoto.onload = function () { photoReady = true; backdrop = makeBackdrop(); start(); };
+  galaxyPhoto.onload = function () { photoReady = true; makeBackdrop(); start(); };
   // The procedural sky remains available if the image cannot load.
   galaxyPhoto.src = 'assets/sky/cover-milkyway-v1.webp';
 })();

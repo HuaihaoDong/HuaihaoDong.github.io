@@ -17,7 +17,7 @@
     font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     overflow: hidden;
   }
-  #sky {
+  #galaxy, #sky {
     position: fixed;
     inset: 0;
     z-index: 0;
@@ -89,8 +89,29 @@
     color: #0a0e14;
   }
   @media (max-width: 600px) {
-    .info { bottom: 40px; }
+    .info { bottom: 32px; }
+    .info h2 { font-size: 20px; letter-spacing: 6px; }
+  }
+  @media (max-width: 600px) and (orientation: portrait) {
+    #stage { cursor: default; }
+    .info {
+      top: var(--cover-info-top, 55%); bottom: auto; padding: 0 24px;
+      display: grid; grid-template-columns: auto auto; justify-content: center; column-gap: 12px;
+    }
+    .info .name-link, .info .role { grid-column: 1 / -1; }
+    .info .role { margin-top: 8px; font-size: 13px; }
+    .info .leader-link, .info .links { margin-top: 18px; }
+    .info .leader-link, .info .links a { padding: 8px 14px; font-size: 12px; line-height: 1.4; }
+  }
+  @media (max-height: 559px) {
+    .info { bottom: 18px; }
     .info h2 { font-size: 18px; letter-spacing: 5px; }
+    .info .role { margin-top: 6px; font-size: 12px; }
+    .info .leader-link { margin-top: 10px; }
+    .info .links { margin-top: 10px; }
+  }
+  @media (max-width: 600px) and (orientation: portrait) and (max-height: 559px) {
+    .info { bottom: auto; }
   }
 </style>
 </head>
@@ -129,6 +150,7 @@
     <a href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
   </div>
 </header>
+<canvas id="galaxy" aria-hidden="true"></canvas>
 <canvas id="sky" aria-hidden="true"></canvas>
 <canvas id="stage" role="img" aria-label="Tiger Captain 粒子文字"></canvas>
 <div class="info">
@@ -139,9 +161,9 @@
     <a href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
   </div>
 </div>
-<script src="home-sky.js?v=20261101v4"></script>
+<script src="home-sky.js?v=20261101v6"></script>
 <script src="nav.js"></script>
-<script src="tiger.js?v=20261101v13"></script>
+<script src="tiger.js?v=20261101v14"></script>
 </body>
 </html>
 
