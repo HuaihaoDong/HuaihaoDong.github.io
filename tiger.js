@@ -88,6 +88,7 @@
     stretch: { asset: 'actions', frames: [4,5,6,7], times: [200,350,850,350], duration: 1750 },
     roll: { asset: 'actions', frames: [8,9,10,11,10,11,10,9,8], times: [120,240,480,300,300,300,350,240,180], duration: 2510 },
     groom: { asset: 'groom', frames: groomFrames, times: groomTimes, duration: 6600 },
+    groomAuto: { asset: 'groom', frames: groomFrames.slice(0,13), times: groomTimes.slice(0,13), duration: 2200 },
     bounce: { asset: 'idle', frames: [0,1,0], times: [180,120,350], duration: 650 }
   };
   var size = innerWidth <= 600 ? 78 : 96;
@@ -255,7 +256,7 @@
         stateTo('idle'); nextIdle=t+11000;
       }
       else if(t>=nextIdle) {
-        var choices=['groom','wave'];
+        var choices=[cover ? 'groomAuto' : 'groom','wave'];
         stateTo(choices[Math.floor(Math.random()*choices.length)]);
         nextIdle=t+10000+Math.random()*6000;
       }
