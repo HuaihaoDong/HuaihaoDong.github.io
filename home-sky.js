@@ -1,4 +1,4 @@
-/* A quiet, layered night sky. All artwork is rendered locally on canvas. */
+/* A photographic Milky Way, with the site's original interactive star links. */
 (function () {
   'use strict';
   var sky = document.getElementById('sky'), stage = document.getElementById('stage');
@@ -6,6 +6,7 @@
   var ctx = sky.getContext('2d'), textCtx = stage.getContext('2d');
   if (!ctx || !textCtx) return;
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  var galaxyPhoto = new Image(), photoReady = false;
   var w, h, dpr, backdrop, stars, particles, charSize, pointer = null;
   var raf = null, previous = 0, skyAt = -Infinity, skyClock = 0, clock = 0, meteor = null, nextMeteor = 18;
   var seed = 57;
@@ -38,6 +39,23 @@
     var base = cctx.createLinearGradient(0, 0, w * .25, h);
     base.addColorStop(0, '#050b18'); base.addColorStop(.6, '#0a1223'); base.addColorStop(1, '#0e1525');
     cctx.fillStyle = base; cctx.fillRect(0, 0, w, h);
+    if (photoReady) {
+      var fit = Math.max(w / galaxyPhoto.naturalWidth, h / galaxyPhoto.naturalHeight);
+      var photoW = galaxyPhoto.naturalWidth * fit, photoH = galaxyPhoto.naturalHeight * fit;
+      cctx.drawImage(galaxyPhoto, (w - photoW) * .53, (h - photoH) * .5, photoW, photoH);
+      // Keep the photographic dust lanes legible; only shade the reading zones.
+      var reading = cctx.createLinearGradient(0, 0, 0, h);
+      reading.addColorStop(0, 'rgba(3,8,20,.28)');
+      reading.addColorStop(.23, 'rgba(3,8,20,.12)');
+      reading.addColorStop(.4, 'rgba(3,8,20,.62)');
+      reading.addColorStop(.55, 'rgba(3,8,20,.08)');
+      reading.addColorStop(1, 'rgba(3,8,20,.36)');
+      cctx.fillStyle = reading; cctx.fillRect(0, 0, w, h);
+      var edge = cctx.createRadialGradient(w * .53, h * .48, h * .12, w * .53, h * .48, Math.max(w, h) * .7);
+      edge.addColorStop(0, 'rgba(2,6,17,0)'); edge.addColorStop(1, 'rgba(2,6,17,.38)');
+      cctx.fillStyle = edge; cctx.fillRect(0, 0, w, h);
+      return c;
+    }
     // Diffuse galactic light and irregular dust, generated once at low resolution.
     var small = makeCanvas(Math.max(180, Math.round(w / 3)), Math.max(160, Math.round(h / 3)));
     var nctx = small.getContext('2d'), data = nctx.createImageData(small.width, small.height);
@@ -205,4 +223,8 @@
   var resizeTimer;
   window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 100); });
   resize();
+  galaxyPhoto.decoding = 'async'; galaxyPhoto.fetchPriority = 'high';
+  galaxyPhoto.onload = function () { photoReady = true; backdrop = makeBackdrop(); start(); };
+  // The procedural sky remains available if the image cannot load.
+  galaxyPhoto.src = 'assets/sky/cover-milkyway-v1.webp';
 })();

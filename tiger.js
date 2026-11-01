@@ -79,11 +79,11 @@
     groomTimes = groomTimes.concat([120,140,200,140,140,140,200,140,160,260,160,200,200]);
   }
   var clips = {
-    idle: { asset: 'idle', frames: [0,1,0,2,0,3,0], times: [2300,110,1700,700,1600,700,1900] },
+    idle: { asset: 'idle', frames: cover ? [0,1,0] : [0,1,0,2,0,3,0], times: cover ? [3400,100,5200] : [2300,110,1700,700,1600,700,1900] },
     // The cover's resting pose uses the same character and registration as idle.
-    sit: { asset: cover ? 'idle' : 'sit', frames: [0,1,0], times: [3400,750,1800] },
+    sit: { asset: cover ? 'idle' : 'sit', frames: [0,1,0], times: cover ? [3400,100,1800] : [3400,750,1800] },
     sleep: { asset: 'sleep', frames: cover ? [0] : [0,1], times: cover ? [3400] : [1700,1700] },
-    turn: { asset: 'idle', frames: [2,0], times: [100,100], duration: 200 },
+    turn: { asset: 'idle', frames: cover ? [0] : [2,0], times: cover ? [200] : [100,100], duration: 200 },
     wave: { asset: 'actions', frames: [0,1,2,1,2,3], times: [150,180,230,170,230,200], duration: 1160 },
     stretch: { asset: 'actions', frames: [4,5,6,7], times: [200,350,850,350], duration: 1750 },
     roll: { asset: 'actions', frames: [8,9,10,11,10,11,10,9,8], times: [120,240,480,300,300,300,350,240,180], duration: 2510 },
@@ -168,7 +168,9 @@
       activeLayer = 1 - activeLayer; currentAsset = assetName; currentFacing = direction;
       layers[activeLayer].style.backgroundImage = 'url("' + asset.src + '")';
       layers[activeLayer].style.backgroundSize = (asset.cols * 100) + '% ' + (asset.rows * 100) + '%';
-      layers[activeLayer].style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scaleX(' + direction + ')';
+      // Match the existing action atlas to the idle head width; retain each pose.
+      var scale = cover ? (running ? 1.1 : assetName === 'actions' ? 1.08 : 1) : 1;
+      layers[activeLayer].style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scale(' + direction * scale + ',' + scale + ')';
       layers[activeLayer].classList.add('visible');
     }
     currentFrame = frame;
