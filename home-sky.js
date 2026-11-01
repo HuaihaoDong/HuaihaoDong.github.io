@@ -262,7 +262,7 @@
     w = Math.max(1, Math.round(innerWidth)); h = Math.max(1, Math.round(innerHeight));
     pixelRatio = devicePixelRatio || 1;
     if (oldW === w && oldH === h && oldRatio === pixelRatio) return;
-    compact = h < 560; mobile = w <= 600 && h >= w;
+    compact = h < 560 && w <= 900; mobile = w <= 600 && h >= w;
     dpr = Math.min(pixelRatio, mobile ? 1.5 : 2);
     textDpr = Math.min(pixelRatio, 2);
     var skyDpr = Math.min(pixelRatio, mobile ? 1.25 : 2); seed = 57;
