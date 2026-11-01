@@ -43,6 +43,7 @@
   if (typeof document === 'undefined' || document.getElementById('tiger')) return;
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var cover = document.body.hasAttribute('data-cover');
   var root = document.createElement('div');
   root.id = 'tiger';
   root.innerHTML = '<button type="button" class="tiger-hit" aria-label="摸摸老虎" aria-describedby="tigerHelp">'
@@ -79,8 +80,9 @@
   }
   var clips = {
     idle: { asset: 'idle', frames: [0,1,0,2,0,3,0], times: [2300,110,1700,700,1600,700,1900] },
-    sit: { asset: 'sit', frames: [0,1,0], times: [3400,750,1800] },
-    sleep: { asset: 'sleep', frames: [0,1], times: [1700,1700] },
+    // The cover's resting pose uses the same character and registration as idle.
+    sit: { asset: cover ? 'idle' : 'sit', frames: [0,1,0], times: [3400,750,1800] },
+    sleep: { asset: 'sleep', frames: cover ? [0] : [0,1], times: cover ? [3400] : [1700,1700] },
     turn: { asset: 'idle', frames: [2,0], times: [100,100], duration: 200 },
     wave: { asset: 'actions', frames: [0,1,2,1,2,3], times: [150,180,230,170,230,200], duration: 1160 },
     stretch: { asset: 'actions', frames: [4,5,6,7], times: [200,350,850,350], duration: 1750 },
@@ -155,10 +157,11 @@
       // Additive crossfades keep identical opaque pixels at full brightness.
       // Source-over opacity blending otherwise dims the tiger at every grooming frame.
       var grooming = assetName === 'groom', running = assetName === 'run' || assetName === 'oldRun';
+      var sleepTransition = cover && (assetName === 'sleep' || currentAsset === 'sleep');
       body.classList.toggle('tiger-groom-blend', grooming && smoothGroom);
       for (var layerIndex = 0; layerIndex < layers.length; layerIndex++) {
         // Keep distinct running silhouettes opaque to avoid duplicated paws and outlines.
-        layers[layerIndex].style.transitionDuration = running ? '0ms' : grooming ? (smoothGroom ? '100ms' : '0ms') : '150ms';
+        layers[layerIndex].style.transitionDuration = running ? '0ms' : grooming ? (smoothGroom ? '100ms' : '0ms') : sleepTransition ? '450ms' : '150ms';
         layers[layerIndex].style.transitionTimingFunction = grooming ? 'linear' : 'ease';
       }
       layers[activeLayer].classList.remove('visible');

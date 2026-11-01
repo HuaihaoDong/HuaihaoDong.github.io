@@ -24,6 +24,13 @@
 .tiger-groom-blend .tiger-frame { mix-blend-mode: plus-lighter; }
 #tiger[data-state="sleep"] .tiger-body { animation: tiger-breathe 3.2s ease-in-out infinite; }
 @keyframes tiger-breathe { 0%,100% { transform: scale(1,1); } 50% { transform: scale(1.018,.985); } }
+body[data-cover] #tiger[data-state="sleep"] .tiger-body { animation: tiger-cover-breathe 4.8s cubic-bezier(.45,0,.35,1) infinite; }
+/* One registered sleep image; a quiet inhale and a longer exhale, with no x scaling. */
+@keyframes tiger-cover-breathe {
+  0%, 100% { transform: scaleY(1); }
+  38% { transform: scaleY(1.012); }
+  82% { transform: scaleY(1); }
+}
 #tiger .tiger-bubble {
   bottom: calc(100% + 6px); max-width: min(230px, calc(100vw - 32px));
   padding: 6px 12px; line-height: 1.6; white-space: normal; width: max-content;
