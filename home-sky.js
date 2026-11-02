@@ -98,14 +98,14 @@
   function makeStars(oldW, oldH) {
     var before = stars || []; stars = [];
     var desktop = w >= 900;
-    var n = Math.round(Math.min(w, h) / 7 * (desktop ? 1.08 : 1));
+    var n = Math.round(Math.min(w, h) / 7 * (desktop ? 1.08 : 1) * 1.05);
     for (var i = 0; i < n; i++) {
       if (before[i] && oldW && oldH) {
         before[i].x *= w / oldW; before[i].y *= h / oldH;
         before[i].r *= (desktop ? 1.08 : 1) / (oldW >= 900 ? 1.08 : 1);
         stars.push(before[i]); continue;
       }
-      stars.push({ x: random() * w, y: random() * h, r: (.55 + random() * 1.05) * (desktop ? 1.08 : 1),
+      stars.push({ x: random() * w, y: random() * h, r: (.55 + random() * 1.05) * (desktop ? 1.08 : 1) * 1.1,
         vx: (random() - .5) * .22, vy: (random() - .5) * .22,
         phase: random() * Math.PI * 2, speed: .25 + random() * .42, glow: i % 8 === 0 });
     }
@@ -193,7 +193,11 @@
       }
     }
     for (var i = 0; i < stars.length; i++) {
-      var s = stars[i], alpha = reduced.matches ? .65 : .45 + .26 * Math.sin(clock * s.speed + s.phase);
+      var s = stars[i];
+      // Bell-shaped luminance levels, with just a few brighter guide stars.
+      var normal = (Math.sin(s.phase * 7.13) + Math.sin(s.phase * 11.71) + Math.sin(s.phase * 17.37)) / 3;
+      var level = i % 29 === 0 ? .96 : clamp(.67 + normal * .19, .45, .87);
+      var alpha = reduced.matches ? level : clamp(level + .07 * Math.sin(clock * s.speed + s.phase), .40, 1);
       if (s.glow) {
         var glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 6);
         glow.addColorStop(0, 'rgba(184,207,245,' + alpha * .21 + ')'); glow.addColorStop(1, 'rgba(184,207,245,0)');

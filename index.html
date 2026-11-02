@@ -95,7 +95,7 @@
   @media (max-width: 600px) and (orientation: portrait) {
     #stage { cursor: default; }
     .info {
-      top: var(--cover-info-top, 55%); bottom: auto; padding: 0 24px;
+      top: auto; bottom: max(40px, env(safe-area-inset-bottom)); padding: 0 24px;
       display: grid; grid-template-columns: auto auto; justify-content: center; column-gap: 12px;
     }
     .info .name-link, .info .role { grid-column: 1 / -1; }
@@ -111,7 +111,7 @@
     .info .links { margin-top: 10px; }
   }
   @media (max-width: 600px) and (orientation: portrait) and (max-height: 559px) {
-    .info { bottom: auto; }
+    .info { top: auto; bottom: max(20px, env(safe-area-inset-bottom)); }
   }
 </style>
 </head>
@@ -158,10 +158,10 @@
   <p class="role">北京航空航天大学</p>
   <a class="leader-link" href="about.html#leader">烛逢领队 · 老虎</a>
   <div class="links">
-    <a href="https://github.com/HuaihaoDong" target="_blank" rel="noopener">GitHub</a>
+    <a href="about.html#who">关于我</a>
   </div>
 </div>
-<script src="home-sky.js?v=20261101v7"></script>
+<script src="home-sky.js?v=20261102v1"></script>
 <script src="nav.js"></script>
 <script src="tiger.js?v=20261101v14"></script>
 </body>
