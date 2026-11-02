@@ -63,14 +63,14 @@
   var layers = root.querySelectorAll('.tiger-frame'), bubble = root.querySelector('.tiger-bubble');
   var zz = root.querySelector('.tiger-zz'), menu = root.querySelector('.tiger-menu');
   var assets = {
-    idle: { src: 'assets/tiger/idle-v3.webp', cols: 4, rows: 1 },
-    sit: { src: 'assets/tiger/sit-v3.webp', cols: 2, rows: 1 },
+    idle: { src: 'assets/tiger/idle-hd-v1.webp', cols: 4, rows: 1 },
+    sit: { src: 'assets/tiger/sit-hd-v1.webp', cols: 2, rows: 1 },
     sleep: { src: 'assets/tiger/sleep-v4.png', cols: 2, rows: 1 },
-    oldRun: { src: 'assets/tiger/run8-v3.webp', cols: 8, rows: 1 },
-    oldPlay: { src: 'assets/tiger/play-v3.webp', cols: 2, rows: 1 },
-    run: { src: 'assets/tiger/run-v3.webp', cols: 4, rows: 2, offset: 0.055 },
-    actions: { src: 'assets/tiger/actions-v3.webp', cols: 4, rows: 4, offset: 0.005 },
-    groom: { src: 'assets/tiger/groom-v3.webp', cols: 4, rows: 2 }
+    oldRun: { src: 'assets/tiger/oldRun-hd-v1.webp', cols: 8, rows: 1 },
+    oldPlay: { src: 'assets/tiger/oldPlay-hd-v1.webp', cols: 2, rows: 1 },
+    run: { src: 'assets/tiger/run-hd-v1.webp', cols: 4, rows: 2, offset: 0.055 },
+    actions: { src: 'assets/tiger/actions-hd-v1.webp', cols: 4, rows: 4, offset: 0.005 },
+    groom: { src: 'assets/tiger/groom-hd-v1.webp', cols: 4, rows: 2 }
   };
   // Three slow cycles: two licks, then a complete cheek-to-eye wipe.
   var groomFrames = [], groomTimes = [];
@@ -161,10 +161,11 @@
       // Source-over opacity blending otherwise dims the tiger at every grooming frame.
       var grooming = assetName === 'groom', running = assetName === 'run' || assetName === 'oldRun';
       var sleepTransition = cover && (assetName === 'sleep' || currentAsset === 'sleep');
-      body.classList.toggle('tiger-groom-blend', grooming && smoothGroom);
+      body.classList.toggle('tiger-groom-blend', grooming && smoothGroom && !cover);
+      var crispAction = cover && (assetName === 'actions' || assetName === 'groom' || currentAsset === 'actions' || currentAsset === 'groom');
       for (var layerIndex = 0; layerIndex < layers.length; layerIndex++) {
         // Keep distinct running silhouettes opaque to avoid duplicated paws and outlines.
-        layers[layerIndex].style.transitionDuration = running ? '0ms' : grooming ? (smoothGroom ? '100ms' : '0ms') : sleepTransition ? '450ms' : '150ms';
+        layers[layerIndex].style.transitionDuration = running || crispAction ? '0ms' : grooming ? (smoothGroom ? '100ms' : '0ms') : sleepTransition ? '450ms' : '150ms';
         layers[layerIndex].style.transitionTimingFunction = grooming ? 'linear' : 'ease';
       }
       layers[activeLayer].classList.remove('visible');
@@ -173,7 +174,12 @@
       layers[activeLayer].style.backgroundSize = (asset.cols * 100) + '% ' + (asset.rows * 100) + '%';
       // Match the existing action atlas to the idle head width; retain each pose.
       var scale = cover ? (running ? 1.331 : assetName === 'actions' ? 1.134 : assetName === 'idle' ? 1 : 1.05) : 1;
-      layers[activeLayer].style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scale(' + direction * scale + ',' + scale + ')';
+      var renderSize = size * scale;
+      layers[activeLayer].style.width = renderSize + 'px';
+      layers[activeLayer].style.height = renderSize + 'px';
+      layers[activeLayer].style.left = (size - renderSize) / 2 + 'px';
+      layers[activeLayer].style.top = ((size - renderSize) * .94 + (asset.offset || 0) * size) + 'px';
+      layers[activeLayer].style.transform = 'scaleX(' + direction + ')';
       layers[activeLayer].classList.add('visible');
     }
     currentFrame = frame;
