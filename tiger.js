@@ -104,10 +104,12 @@
   function limits() { return { speed: size === 78 ? 155 : 205, acceleration: 420, brake: 650 }; }
   function bounds() {
     var safeBottom = 12;
-    p.x = clamp(p.x, 8, Math.max(8, innerWidth - size - 8));
-    p.y = clamp(p.y, 66, Math.max(66, innerHeight - size - safeBottom));
-    target.x = clamp(target.x, 8, Math.max(8, innerWidth - size - 8));
-    target.y = clamp(target.y, 66, Math.max(66, innerHeight - size - safeBottom));
+    var side = cover ? Math.ceil(size * .331 / 2) + 2 : 8;
+    var top = cover ? 66 + Math.ceil(size * .331 * .94) : 66;
+    p.x = clamp(p.x, side, Math.max(side, innerWidth - size - side));
+    p.y = clamp(p.y, top, Math.max(top, innerHeight - size - safeBottom));
+    target.x = clamp(target.x, side, Math.max(side, innerWidth - size - side));
+    target.y = clamp(target.y, top, Math.max(top, innerHeight - size - safeBottom));
   }
   function say(text, duration) {
     if (text !== '嗷呜～') return;
@@ -170,7 +172,7 @@
       layers[activeLayer].style.backgroundImage = 'url("' + asset.src + '")';
       layers[activeLayer].style.backgroundSize = (asset.cols * 100) + '% ' + (asset.rows * 100) + '%';
       // Match the existing action atlas to the idle head width; retain each pose.
-      var scale = cover ? (running ? 1.21 : assetName === 'actions' ? 1.08 : 1) : 1;
+      var scale = cover ? (running ? 1.331 : assetName === 'actions' ? 1.134 : assetName === 'idle' ? 1 : 1.05) : 1;
       layers[activeLayer].style.transform = 'translateY(' + ((asset.offset || 0) * size) + 'px) scale(' + direction * scale + ',' + scale + ')';
       layers[activeLayer].classList.add('visible');
     }
