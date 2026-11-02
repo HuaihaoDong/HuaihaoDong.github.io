@@ -63,14 +63,14 @@
   var layers = root.querySelectorAll('.tiger-frame'), bubble = root.querySelector('.tiger-bubble');
   var zz = root.querySelector('.tiger-zz'), menu = root.querySelector('.tiger-menu');
   var assets = {
-    idle: { src: 'assets/tiger/idle-hd-v1.webp', cols: 4, rows: 1 },
-    sit: { src: 'assets/tiger/sit-hd-v1.webp', cols: 2, rows: 1 },
+    idle: { src: 'assets/tiger/idle-hd-v2.webp', cols: 4, rows: 1 },
+    sit: { src: 'assets/tiger/sit-hd-v2.webp', cols: 2, rows: 1 },
     sleep: { src: 'assets/tiger/sleep-v4.png', cols: 2, rows: 1 },
-    oldRun: { src: 'assets/tiger/oldRun-hd-v1.webp', cols: 8, rows: 1 },
-    oldPlay: { src: 'assets/tiger/oldPlay-hd-v1.webp', cols: 2, rows: 1 },
-    run: { src: 'assets/tiger/run-hd-v1.webp', cols: 4, rows: 2, offset: 0.055 },
-    actions: { src: 'assets/tiger/actions-hd-v1.webp', cols: 4, rows: 4, offset: 0.005 },
-    groom: { src: 'assets/tiger/groom-hd-v1.webp', cols: 4, rows: 2 }
+    oldRun: { src: 'assets/tiger/oldRun-hd-v2.webp', cols: 8, rows: 1 },
+    oldPlay: { src: 'assets/tiger/oldPlay-hd-v2.webp', cols: 2, rows: 1 },
+    run: { src: 'assets/tiger/run-hd-v2.webp', cols: 4, rows: 2, offset: 0.055 },
+    actions: { src: 'assets/tiger/actions-hd-v2.webp', cols: 4, rows: 4, offset: 0.005 },
+    groom: { src: 'assets/tiger/groom-hd-v2.webp', cols: 4, rows: 2 }
   };
   // Three slow cycles: two licks, then a complete cheek-to-eye wipe.
   var groomFrames = [], groomTimes = [];
