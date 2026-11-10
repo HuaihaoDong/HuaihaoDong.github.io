@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>课间｜教学资料室</title>
+  <meta name="description" content="小班教学资料室，老师与学生账号操作演示。">
+  <link rel="stylesheet" href="styles.css">
+  <script src="demo.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 5.2h5a3.7 3.7 0 0 1 3.5 2.4 3.7 3.7 0 0 1 3.5-2.4h5v12.2h-5a3.9 3.9 0 0 0-3.5 2.1 3.9 3.9 0 0 0-3.5-2.1h-5V5.2Zm8.5 2.4v11.9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+        <span>课间 <span class="brand-divider">/</span> 教学资料室</span>
+      </div>
+      <span class="demo-tag"><span aria-hidden="true"></span> 演示版</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="welcome" class="welcome">
+      <div class="welcome-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> 小班教学资料室</p>
+        <h1>把课件和录音<br>收在一个地方。</h1>
+        <p class="lede">老师整理资料、发放账号。学生凭老师提供的账号和密码登录，查看已开放的内容。</p>
+        <section class="bulletin" aria-labelledby="public-title">
+          <p class="eyebrow">公开通知</p>
+          <h2 id="public-title">课堂公告</h2>
+          <p id="public-notice"></p>
+        </section>
+      </div>
+      <section class="card login" aria-labelledby="login-title">
+        <p class="eyebrow">资料室入口</p>
+        <h2 id="login-title">登录资料室</h2>
+        <div class="segmented" aria-label="选择登录身份">
+          <button type="button" id="role-student" aria-pressed="true">学生登录</button>
+          <button type="button" id="role-teacher" aria-pressed="false">老师登录</button>
+        </div>
+        <form id="login-form" autocomplete="off">
+          <label for="username">账号</label>
+          <input id="username" type="text" value="2026" required maxlength="24" autocapitalize="off" spellcheck="false">
+          <label for="password">密码</label>
+          <div class="password-field">
+            <input id="password" type="password" value="2026" required maxlength="32">
+            <button type="button" id="toggle-password" class="text-button" aria-pressed="false" aria-label="显示密码">显示</button>
+          </div>
+          <p id="login-error" class="form-error" role="alert" hidden></p>
+          <button class="primary login-submit" type="submit">登录</button>
+        </form>
+        <p id="login-hint" class="login-hint"></p>
+      </section>
+    </div>
+
+    <section id="workspace" hidden aria-labelledby="workspace-title">
+      <div class="workspace-head">
+        <div><p id="workspace-kicker" class="eyebrow"></p><h1 id="workspace-title" tabindex="-1"></h1><p id="workspace-note" class="muted"></p></div>
+        <button id="logout" class="secondary" type="button">退出登录</button>
+      </div>
+      <nav id="teacher-nav" class="nav" aria-label="老师工作台">
+        <button type="button" data-panel="materials" aria-pressed="true">教学资料</button>
+        <button type="button" data-panel="accounts" aria-pressed="false">学生账号</button>
+        <button type="button" data-panel="notices" aria-pressed="false">公开通知</button>
+      </nav>
+
+      <section id="materials" class="panel" aria-labelledby="materials-title">
+        <div class="section-heading"><div><h2 id="materials-title">资料列表</h2><p id="materials-note" class="muted"></p></div><button id="add-material" class="primary" type="button">＋ 新增示例资料</button></div>
+        <div class="segmented filters" id="material-filters" aria-label="按资料类型筛选">
+          <button type="button" data-filter="all" aria-pressed="true">全部</button><button type="button" data-filter="document" aria-pressed="false">课件</button><button type="button" data-filter="audio" aria-pressed="false">音频</button>
+        </div>
+        <div class="resource-grid" id="material-list"></div>
+      </section>
+
+      <section id="accounts" class="panel" aria-labelledby="accounts-title" hidden>
+        <div class="section-heading"><div><h2 id="accounts-title">学生账号</h2><p class="muted">老师发放账号，学生拿到账号后直接登录。</p></div></div>
+        <div class="mode-grid" aria-label="选择学生登录方案">
+          <button type="button" class="mode-card" data-mode="shared" aria-pressed="true"><span class="mode-label">方案一</span><strong>全班共用账号</strong><span>发一组账号密码，所有学生看相同资料。</span></button>
+          <button type="button" class="mode-card" data-mode="individual" aria-pressed="false"><span class="mode-label">方案二</span><strong>每名学生一个账号</strong><span>逐个发放，可单独暂停或删除。</span></button>
+        </div>
+        <section id="shared-settings" class="card settings-card" aria-labelledby="shared-title">
+          <div class="section-heading"><div><h3 id="shared-title">全班账号</h3><p class="muted">修改后，整个班级都要用新账号密码登录。</p></div><button id="edit-shared" class="secondary" type="button">修改账号密码</button></div>
+          <div class="account-row"><div><strong id="shared-name"></strong><p class="muted">共用账号</p></div><span class="tag tag-green">已启用</span></div>
+        </section>
+        <section id="individual-settings" class="card settings-card" aria-labelledby="individual-title" hidden>
+          <div class="section-heading"><div><h3 id="individual-title">学生名单</h3><p class="muted">新增后，由老师把账号和初始密码发给对应的学生。</p></div><button id="add-account" class="primary" type="button">＋ 新增账号</button></div>
+          <div id="account-list"></div>
+        </section>
+      </section>
+
+      <section id="notices" class="panel" aria-labelledby="notices-title" hidden>
+        <div class="section-heading"><div><h2 id="notices-title">公开通知</h2><p class="muted">课堂公告在登录页也能看到。</p></div></div>
+        <form id="notice-form" class="card settings-card">
+          <label for="notice-message">公告内容</label>
+          <textarea id="notice-message" required maxlength="160" rows="4"></textarea>
+          <button class="primary" type="submit">发布示例公告</button>
+        </form>
+      </section>
+
+      <section id="student-notice" class="bulletin workspace-notice" aria-labelledby="student-notice-title" hidden><h2 id="student-notice-title">课堂公告</h2><p id="student-notice-copy"></p></section>
+    </section>
+  </main>
+
+  <footer class="wrap footer"><p>演示操作只在当前页面暂存，刷新后恢复初始内容。请使用示例账号和资料。</p></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="editor" aria-labelledby="editor-title">
+    <form id="editor-form" autocomplete="off">
+      <h2 id="editor-title"></h2>
+      <p id="editor-note" class="muted"></p>
+      <div id="editor-fields"></div>
+      <p id="editor-error" class="form-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button type="button" id="editor-cancel" class="secondary">取消</button><button type="submit" id="editor-save" class="primary">保存</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="preview" aria-labelledby="preview-title">
+    <form method="dialog">
+      <p class="eyebrow" id="preview-kind"></p><h2 id="preview-title"></h2><p id="preview-note" class="muted"></p>
+      <div id="preview-placeholder" class="preview-placeholder"></div>
+      <div class="dialog-actions"><button class="secondary" type="submit">关闭</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
