@@ -228,7 +228,7 @@ function field(config) {
 }
 
 function openEditor(title, note, fields, onSave, label = '保存') {
-  byId('editor-title').textContent = title;
+  byId('editor-heading').textContent = title;
   byId('editor-note').textContent = note;
   byId('editor-fields').replaceChildren(...fields.map(field));
   byId('editor-save').textContent = label;
