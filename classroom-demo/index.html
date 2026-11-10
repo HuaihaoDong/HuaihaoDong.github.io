@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>课间 · 教学资料室</title>
+<style>
+:root{font:16px/1.65 system-ui,'Microsoft YaHei',sans-serif;color:#223832;background:#f6f5ef;--ink:#223832;--green:#245746;--line:#d9e1d6;--paper:#fffef9}*{box-sizing:border-box}body{margin:0}header{padding:18px max(5vw,18px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}header strong{letter-spacing:.12em}small,.muted{color:#50655b}.badge{background:#e5eddf;border-radius:30px;padding:5px 12px;font-size:.82rem}main{max-width:1040px;margin:auto;padding:56px 20px}h1,h2,h3,p{margin:0 0 12px}h1{font-size:clamp(2rem,6vw,3.5rem);line-height:1.12}h2{font-size:1.4rem}.intro{max-width:550px;margin-bottom:26px}.eyebrow{font-size:.82rem;font-weight:700;letter-spacing:.17em;color:var(--green);margin-bottom:10px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:17px;margin-bottom:16px}.auth{max-width:510px}.role,.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--green);color:var(--green);background:transparent;padding:8px 14px;border-radius:9px}button.primary,button[aria-pressed=true]{background:var(--green);color:white}label{display:block;margin:10px 0}input,select,textarea{display:block;width:100%;padding:9px;border:1px solid #9faea3;border-radius:7px;background:white;color:var(--ink)}textarea{min-height:85px}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #b18137;outline-offset:2px}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}.row button{flex:none}audio{width:100%;margin-top:12px}footer{padding:0 20px 30px;text-align:center}[hidden]{display:none!important}@media(max-width:640px){main{padding-top:28px}.grid{grid-template-columns:1fr}.card{padding:17px}}
+</style>
+<header><strong>课间 · 教学资料室</strong><span class="badge">交互演示</span></header>
+<main>
+  <section id="entry">
+    <div class="eyebrow">教学资料空间</div><h1>课件、录音和课堂通知</h1>
+    <p class="intro muted">老师在这里整理资料并管理访问权限。学生登录后查看老师开放的资料。</p>
+    <div class="card auth"><h2>登录资料室</h2>
+      <div class="role" aria-label="选择登录身份"><button id="teacher" type="button" aria-pressed="true">老师登录</button><button id="student" type="button" aria-pressed="false">学生登录</button></div>
+      <form id="login"><label>演示账号<input id="demo-user" value="demo-teacher" readonly></label><label>演示密码<input type="password" value="demo-only" readonly></label><button class="primary" type="submit">进入演示</button></form>
+      <small>账号和密码仅用于展示页面。请勿输入真实账号或资料。</small>
+    </div>
+  </section>
+  <section id="dashboard" hidden>
+    <div class="toolbar"><button id="logout" type="button">返回登录</button></div>
+    <div class="eyebrow">教学资料空间</div><h1 id="dashboard-title" tabindex="-1"></h1>
+    <p id="role-note" class="intro muted"></p>
+    <div id="teacher-panel" class="grid" hidden>
+      <section class="card"><h2>添加资料</h2><p class="muted">模拟上传，只登记占位标题和类型。</p>
+        <form id="resource-form"><label>资料标题<input name="title" required maxlength="60" placeholder="例如 第三讲复习资料"></label><label>资料类型<select name="kind"><option>课件</option><option>音频</option></select></label><button class="primary">添加示例资料</button></form>
+      </section>
+      <section class="card"><h2>学生访问</h2><p class="muted">切换示例学生授权后，返回登录进入学生端查看效果。</p><div class="row"><span>示例学生<br><small id="permission-label"></small></span><button id="permission" type="button"></button></div></section>
+      <section class="card"><h2>更新公开通知</h2><form id="notice-form"><label>通知内容<textarea name="message" required maxlength="160"></textarea></label><button class="primary">发布演示通知</button></form></section>
+    </div>
+    <section id="resources" class="card"><h2 id="resource-heading">资料列表</h2><div id="resource-list"></div><div id="resource-preview" aria-live="polite"></div></section>
+  </section>
+  <section class="card" aria-labelledby="notice-heading"><div class="eyebrow">公开信息 · 示例</div><h2 id="notice-heading">课堂通知</h2><p id="notice-text" aria-live="polite">示例通知：本周课件将在课前更新。</p></section>
+  <p id="status" class="muted" role="status"></p>
+</main>
+<footer><small>演示内容只在当前页面中保留，刷新即恢复。</small></footer>
+<script src="./demo.js" defer></script>
+</html>
