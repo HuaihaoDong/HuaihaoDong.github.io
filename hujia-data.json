@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "entries": [],
+  "messages": [],
+  "encounters": [],
+  "contributors": [
+    { "id": "shuangge", "displayName": "爽哥" },
+    { "id": "achen", "displayName": "阿尘" },
+    { "id": "bingyang", "displayName": "冰洋" },
+    { "id": "lanmei", "displayName": "蓝莓" }
+  ],
+  "leaderProfiles": [
+    { "id": "daydreamer", "name": "白日梦想家领队", "link": "group.html#leadersTitle" },
+    { "id": "xiaoyang", "name": "小羊领队", "link": "group.html#leadersTitle" }
+  ]
+}

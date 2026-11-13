@@ -258,6 +258,38 @@ body::before{
   letter-spacing:0.04em;
 }
 .leader-link{margin-top:24px;}
+.leader-hujia-entry{
+  flex:0 0 100%;
+  box-sizing:border-box;
+  min-width:0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:20px;
+  padding:24px;
+  border:1px solid rgba(201,162,107,.45);
+  border-radius:12px;
+  background:linear-gradient(125deg,rgba(201,162,107,.08),transparent 65%),var(--panel);
+  color:var(--text);
+  text-decoration:none;
+  transition:border-color .18s ease,background-color .18s ease;
+}
+.leader-hujia-entry:hover{border-color:var(--accent);background-color:var(--panel-2);}
+.leader-hujia-entry:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
+.leader-hujia-title{display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px;}
+.leader-hujia-title strong{font-size:20px;line-height:1.55;}
+.leader-hujia-badge{
+  flex:none;
+  padding:3px 10px;
+  border:1px solid rgba(201,162,107,.4);
+  border-radius:999px;
+  color:var(--accent);
+  font-size:12px;
+  line-height:1.6;
+  letter-spacing:.12em;
+}
+.leader-hujia-description{display:block;margin-top:10px;color:var(--sub);font-size:14px;line-height:1.85;}
+.leader-hujia-arrow{color:var(--accent);font-size:26px;line-height:1;}
 
 /* ===== #hobby 介绍与照片 ===== */
 .hobby-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
@@ -396,6 +428,8 @@ font-weight:400;
   .block{margin-bottom:56px;}
   .photo{flex-basis:220px;}
   .section-title{font-size:18px;}
+  .leader-hujia-entry{gap:12px;padding:20px 18px;}
+  .leader-hujia-title strong{font-size:18px;}
 }
 </style>
 </head>
@@ -499,6 +533,13 @@ font-weight:400;
           <a class="btn" href="story.html">我和烛逢的故事</a>
           <a class="btn" href="group.html">我的小组</a>
           <a class="btn" href="reviews.html">小伙伴对老虎的评价</a>
+          <a class="leader-hujia-entry" href="hujia.html">
+            <span>
+              <span class="leader-hujia-title"><strong>老虎朋友们的快乐老家</strong><span class="leader-hujia-badge">虎家</span></span>
+              <span class="leader-hujia-description">好吃的、好玩的、户外经验，还有想对老虎说的话，都慢慢放在这里。</span>
+            </span>
+            <span class="leader-hujia-arrow" aria-hidden="true">↗</span>
+          </a>
           <a class="btn" href="group-fund.html" style="border-color:var(--accent);color:var(--accent);">小组共建记录</a>
         </div>
         <p class="body-text"><strong>生活向往：</strong>工作不太忙，爱人伴身旁，日子小富裕，偶尔有闲暇，三五挚友相伴，露营烧烤聊天，时常旅行看世界，能给父母家庭一个坚实的依靠（这才是努力的意义啊！）</p>

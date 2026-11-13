@@ -15,6 +15,23 @@
     },
     xiaoyang: { name: '小羊领队', poster: 'assets/leaders/xiaoyang.jpg', paragraphs: [] }
   };
+  var sharedGrid = document.querySelector('[data-leaders-grid]');
+  if (sharedGrid) {
+    sharedGrid.replaceChildren();
+    Object.keys(leaders).forEach(function (id) {
+      var leader = leaders[id];
+      var button = document.createElement('button');
+      button.type = 'button'; button.className = 'leader-card';
+      button.dataset.leader = id; button.setAttribute('aria-haspopup', 'dialog');
+      var image = document.createElement('img');
+      image.src = leader.poster; image.alt = leader.name + '的小组海报'; image.loading = 'lazy';
+      image.width = 86; image.height = 129;
+      var copy = document.createElement('span'); copy.className = 'leader-card-copy';
+      var name = document.createElement('span'); name.className = 'leader-name'; name.textContent = leader.name;
+      var more = document.createElement('span'); more.className = 'leader-more'; more.textContent = '认识领队 · 查看介绍与海报 ↗';
+      copy.append(name, more); button.append(image, copy); sharedGrid.appendChild(button);
+    });
+  }
   var intro = document.getElementById('leaderIntro');
   var content = dialog.querySelector('.leader-dialog-content');
   var previousOverflow = '', trigger = null;
