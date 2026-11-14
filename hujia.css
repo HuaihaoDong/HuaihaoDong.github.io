@@ -5,10 +5,11 @@ body{background:radial-gradient(ellipse at 85% 0%,#25302e 0,transparent 45%),#0b
 
 .h-section-links{display:flex;gap:20px;flex-wrap:wrap;color:#dfbb87}
 
-/* Keep all eight original photographs visible at each screen size. */
+/* Original-photo wall: 22 user-selected memories, art-directed for both layouts. */
 .h-hero-collage{height:auto;isolation:isolate;background:#101b28;border:1px solid #354252;box-shadow:0 14px 36px #0003}
 .h-hero-collage picture{display:block}
-.h-hero-collage img{display:block;width:100%;height:auto;aspect-ratio:2400/894;object-fit:contain}
-.h-hero-collage:after{inset:0 0 auto;height:34%;background:linear-gradient(180deg,#07101bb8,transparent);pointer-events:none}
-.h-hero-collage span{top:22px;bottom:auto;left:26px;right:20px;font-size:clamp(18px,2.3vw,25px);line-height:1.6;color:#fff;text-shadow:0 2px 8px #000b;letter-spacing:.035em}
-@media(max-width:600px){.h-hero-collage{border-radius:16px}.h-hero-collage img{aspect-ratio:960/1470}.h-hero-collage:after{height:90px}.h-hero-collage span{top:13px;left:14px;right:10px;font-size:clamp(16px,4.6vw,20px);letter-spacing:0}}
+.h-hero-collage img{display:block;width:100%;height:auto;aspect-ratio:2600/1050;object-fit:contain}
+.h-hero-collage:after{inset:0;background:linear-gradient(180deg,#07101b14,#07101b40),radial-gradient(ellipse at center,#07101ba8 0%,#07101b48 48%,#07101b18 100%);pointer-events:none}
+.h-hero-collage span{top:50%;bottom:auto;left:20px;right:20px;transform:translateY(-50%);text-align:center;font-size:clamp(24px,3.3vw,42px);line-height:1.65;color:#fffaf1;text-shadow:0 2px 16px #0009;letter-spacing:.06em;font-weight:600}
+.h-wall-break{display:none}
+@media(max-width:600px){.h-hero-collage{border-radius:16px}.h-hero-collage img{aspect-ratio:1200/1140}.h-hero-collage span{left:12px;right:12px;font-size:clamp(25px,6.8vw,34px);line-height:1.7;letter-spacing:.08em}.h-wall-break{display:block}}
