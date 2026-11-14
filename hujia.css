@@ -4,3 +4,11 @@ body{background:radial-gradient(ellipse at 85% 0%,#25302e 0,transparent 45%),#0b
 .h-about-toggle,.h-mobile-about{border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;text-align:left}.h-mobile-about{width:100%}.h-about-toggle{height:40px}.navbar.scrolled{background:#0b1120f5}.h-filters{padding-bottom:8px}.h-filter{min-height:44px}.h-nav a{min-height:44px;display:inline-flex;align-items:center}.h-card h2{line-height:1.5}.h-person{list-style:none}
 
 .h-section-links{display:flex;gap:20px;flex-wrap:wrap;color:#dfbb87}
+
+/* Keep all eight original photographs visible at each screen size. */
+.h-hero-collage{height:auto;isolation:isolate;background:#101b28;border:1px solid #354252;box-shadow:0 14px 36px #0003}
+.h-hero-collage picture{display:block}
+.h-hero-collage img{display:block;width:100%;height:auto;aspect-ratio:2400/894;object-fit:contain}
+.h-hero-collage:after{inset:0 0 auto;height:34%;background:linear-gradient(180deg,#07101bb8,transparent);pointer-events:none}
+.h-hero-collage span{top:22px;bottom:auto;left:26px;right:20px;font-size:clamp(18px,2.3vw,25px);line-height:1.6;color:#fff;text-shadow:0 2px 8px #000b;letter-spacing:.035em}
+@media(max-width:600px){.h-hero-collage{border-radius:16px}.h-hero-collage img{aspect-ratio:960/1470}.h-hero-collage:after{height:90px}.h-hero-collage span{top:13px;left:14px;right:10px;font-size:clamp(16px,4.6vw,20px);letter-spacing:0}}
