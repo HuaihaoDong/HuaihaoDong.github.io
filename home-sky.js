@@ -111,7 +111,7 @@
     }
   }
   function makeText() {
-    var before = particles || [], lines = mobile ? ['Tiger', 'Captain'] : ['Tiger Captain'];
+    var before = particles || [], lines = mobile ? ['Captain', 'Tiger'] : ['Captain Tiger'];
     var fs = mobile ? Math.min(82, w * .2, h * .135) : Math.min(200, w * .115, compact ? h * .22 : 200);
     var measure = makeCanvas(1,1).getContext('2d'), gap, rowGap;
     do {
